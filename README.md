@@ -1,1 +1,3 @@
 # TradingBot
+
+A trading project that trades based on signals from tradingview. Each of the microservices is a .net 7 api. Identity side is protected with IdentityServer4. Api's are protected with Client Credential and Users are protected with Resource Owner Password. Gateway API acts as a bridge between Clients and Microservices. The client id and client secret associated with the roles in the bearer token of the relevant logged in user are received and communication with the apis is established through the client credential. Blazor is used on the UI side and Blazor MAUI is used on the mobile side.
