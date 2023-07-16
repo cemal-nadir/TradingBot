@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TradingBot.Backend.Libraries.Infrastructure\TradingBot.Backend.Libraries.Infrastructure.csproj" />
+    <ProjectReference Include="..\TradingBot.Backend.Libraries.Persistence\TradingBot.Backend.Libraries.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

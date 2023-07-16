@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CNG.Aspects" Version="1.0.2" />
+    <PackageReference Include="Hangfire" Version="1.8.3" />
+    <PackageReference Include="Hangfire.InMemory" Version="0.5.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TradingBot.Backend.Libraries.Application\TradingBot.Backend.Libraries.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Seeds\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
+
+</Project>
