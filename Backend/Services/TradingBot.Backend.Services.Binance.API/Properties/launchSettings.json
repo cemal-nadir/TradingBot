@@ -1,0 +1,26 @@
+﻿{
+    "profiles": {
+        "TradingBot.Backend.Services.Binance.API": {
+            "commandName": "Project",
+            "dotnetRunMessages": false,
+            "launchBrowser": false,
+            "applicationUrl": "http://localhost:2000",
+            "environmentVariables": {
+                "RABBITMQ_HOST": "localhost",
+                "RABBITMQ_USER_NAME": "guest",
+                "RABBITMQ_PASSWORD": "guest",
+                "RABBITMQ_PORT": "10004",
+                "MONGODB_HOST": "localhost",
+                "MONGODB_USER_NAME": "",
+                "MONGODB_PASSWORD": "",
+                "MONGODB_PORT": "1001",
+                "PROJECT_NAME": "Binance",
+                "GROUP_NAME": "TradingBot",
+                "IDENTITY_URL": "http://localhost:1999",
+                "IDENTITY_RESOURCE_NAME": "TradingBotBinanceApi"
+            }
+
+        }
+
+    }
+}

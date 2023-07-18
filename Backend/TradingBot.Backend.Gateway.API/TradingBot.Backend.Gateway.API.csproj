@@ -6,4 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="CNG.Abstractions" Version="1.0.2" />
+    <!-- ReSharper disable once VulnerablePackage -->
+    <PackageReference Include="CNG.Cap" Version="1.0.1" />
+    <PackageReference Include="CNG.Core" Version="1.0.1" />
+    <PackageReference Include="CNG.Extensions" Version="1.0.1" />
+    <PackageReference Include="CNG.Http" Version="2.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Dtos\Responses\" />
+  </ItemGroup>
+
 </Project>

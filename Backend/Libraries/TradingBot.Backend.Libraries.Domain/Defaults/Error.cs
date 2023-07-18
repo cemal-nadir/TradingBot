@@ -8,6 +8,7 @@
 		}
 		public static class BadRequest
 		{
+			public const string RemoteApiErrorResponse = "RemoteApiErrorResponse";
 		}
 		public static class DbException
 		{
