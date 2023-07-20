@@ -21,5 +21,8 @@ namespace TradingBot.Backend.Libraries.Infrastructure.Services.Binance
 		public IBinanceAccountService BinanceAccountService =>
 			_binanceAccountService ??= new BinanceAccountService(_binanceRestClient);
 		private BinanceAccountService? _binanceAccountService;
+		public IBinanceOrderService BinanceOrderService =>
+			_binanceOrderService ??= new BinanceOrderService(_binanceRestClient);
+		private BinanceOrderService? _binanceOrderService;
 	}
 }

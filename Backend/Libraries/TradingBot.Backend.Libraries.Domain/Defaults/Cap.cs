@@ -1,6 +1,7 @@
 ﻿namespace TradingBot.Backend.Libraries.Domain.Defaults
 {
-	public class Cap
+	public static class Cap
 	{
+		public const string BinanceHook = "BinanceHook";
 	}
 }

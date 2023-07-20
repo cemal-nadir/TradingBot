@@ -2,7 +2,7 @@
 
 namespace TradingBot.Backend.Libraries.Application.Dtos.User
 {
-	public class TradingAccountsDto : IListDto<string?>
+	public class TradingAccountsDto :TradingAccountDto, IListDto<string?>
 	{
 		public string? Id { get; set; }
 	}

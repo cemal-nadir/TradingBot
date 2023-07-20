@@ -1,4 +1,5 @@
 ﻿using CNG.Core.Exceptions;
+using DotNetCore.CAP;
 using TradingBot.Backend.Gateway.API.Dtos.Enums;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks;
 using TradingBot.Backend.Gateway.API.Extensions;
@@ -13,11 +14,13 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Gateway
 	{
 		private readonly ITradingAccountService _tradingAccountService;
 		private readonly IBinanceAccountService _binanceAccountService;
+		private readonly ICapPublisher _capPublisher;
 		private const string BinanceMainAsset = "USDT";
-		public IndicatorHookGateway(ITradingAccountService tradingAccountService, IBinanceAccountService binanceAccountService)
+		public IndicatorHookGateway(ITradingAccountService tradingAccountService, IBinanceAccountService binanceAccountService, ICapPublisher capPublisher)
 		{
 			_tradingAccountService = tradingAccountService;
 			_binanceAccountService = binanceAccountService;
+			_capPublisher = capPublisher;
 		}
 
 		public async Task HookAsync(string indicatorId, IndicatorHookDto dto, CancellationToken cancellationToken = default)

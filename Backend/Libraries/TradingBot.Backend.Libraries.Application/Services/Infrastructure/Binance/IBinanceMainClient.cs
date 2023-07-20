@@ -6,5 +6,6 @@ namespace TradingBot.Backend.Libraries.Application.Services.Infrastructure.Binan
 	{
 		void SetClient(string apiKey, string secretKey);
 		IBinanceAccountService BinanceAccountService { get; }
+		IBinanceOrderService BinanceOrderService { get; }
 	}
 }

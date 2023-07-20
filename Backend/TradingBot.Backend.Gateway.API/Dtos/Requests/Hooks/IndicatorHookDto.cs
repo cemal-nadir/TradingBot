@@ -5,7 +5,6 @@ namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
     public class IndicatorHookDto
     {
 	    public Order? Order { get; set; }
-		public bool? ClosePosition { get; set; }
         public decimal? TakeProfitPercentage { get; set; }
         public decimal? StopLossPercentage { get; set; }
         public TrailingStopLoss? TrailingStopLoss { get; set; }
@@ -23,5 +22,7 @@ namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
 		public Side? Side { get; set; }
 		public OrderType OrderType { get; set; }
         public int Leverage { get; set; }
-    }
+        public bool? ClosePosition { get; set; }
+
+	}
 }
