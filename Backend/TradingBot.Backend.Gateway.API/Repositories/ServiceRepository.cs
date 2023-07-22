@@ -1,5 +1,4 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using Amazon.Runtime.Internal.Transform;
 using CNG.Abstractions.Signatures;
 using CNG.Http.Services;

@@ -1,5 +1,4 @@
 ﻿using CNG.Abstractions.Signatures;
-using TradingBot.Backend.Libraries.Domain.Entities.User;
 using TradingBot.Backend.Libraries.Domain.Enums;
 
 namespace TradingBot.Backend.Libraries.Application.Dtos.User
@@ -14,6 +13,5 @@ namespace TradingBot.Backend.Libraries.Application.Dtos.User
 		public BalanceSettingsDto? BalanceSettings { get; set; }
 		public TradingPlatform Platform { get; set; }
 		public List<IndicatorDto>? Indicators { get; set; }
-		public List<string>? CurrentPositions { get; set; }
 	}
 }

@@ -1,10 +1,5 @@
-﻿using System.Net;
-using System.Security;
-using System.Security.Authentication;
-using CNG.Core.Exceptions;
-using TradingBot.Backend.Gateway.API.Dtos.Requests.Users;
+﻿using TradingBot.Backend.Gateway.API.Dtos.Requests.Users;
 using TradingBot.Backend.Gateway.API.Extensions;
-using TradingBot.Backend.Gateway.API.Responses;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Api.User;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Gateway;
 

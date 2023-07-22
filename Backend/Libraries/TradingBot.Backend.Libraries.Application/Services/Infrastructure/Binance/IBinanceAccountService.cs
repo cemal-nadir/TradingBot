@@ -15,5 +15,7 @@ namespace TradingBot.Backend.Libraries.Application.Services.Infrastructure.Binan
 
 		Task<List<BinanceUsdFuturesAccountBalance>> GetAccountBalanceFutures(
 			CancellationToken cancellationToken = default);
+
+		Task<decimal> GetTotalAccountBalance(CancellationToken cancellationToken = default);
 	}
 }

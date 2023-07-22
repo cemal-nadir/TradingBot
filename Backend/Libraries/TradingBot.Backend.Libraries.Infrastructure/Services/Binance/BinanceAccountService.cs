@@ -1,6 +1,7 @@
 ﻿using Binance.Net.Interfaces.Clients;
 using Binance.Net.Objects.Models.Futures;
 using Binance.Net.Objects.Models.Spot;
+using CNG.Core.Exceptions;
 using TradingBot.Backend.Libraries.Application.Services.Infrastructure.Binance;
 using TradingBot.Backend.Libraries.Infrastructure.Extensions;
 
@@ -29,5 +30,17 @@ namespace TradingBot.Backend.Libraries.Infrastructure.Services.Binance
 		public async Task<List<BinanceUsdFuturesAccountBalance>> GetAccountBalanceFutures(
 			CancellationToken cancellationToken = default) =>
 			(await _binanceRestClient.UsdFuturesApi.Account.GetBalancesAsync(null, cancellationToken)).CheckError().ToList();
+
+		public async Task<decimal> GetTotalAccountBalance(CancellationToken cancellationToken=default)
+		{
+			var futuresBalance = GetAccountBalanceFutures(cancellationToken);
+			var spotBalance = GetAccountBalanceSpot(cancellationToken);
+			await Task.WhenAll(futuresBalance, spotBalance);
+			var futuresAsset = futuresBalance.Result
+				.FirstOrDefault(x => x.Asset == Domain.Defaults.TradingPlatform.DefaultAsset)?.WalletBalance??throw new NotFoundException("Futures Balance Not Found");
+			var spotAsset = spotBalance.Result
+				.FirstOrDefault(x => x.Asset == Domain.Defaults.TradingPlatform.DefaultAsset)?.Total??throw new NotFoundException("Spot Balance Not Found") ;
+			return futuresAsset + spotAsset;
+		}
 	}
 }

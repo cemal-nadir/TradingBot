@@ -1,9 +1,6 @@
-﻿using CNG.Core.Exceptions;
-using DotNetCore.CAP;
-using TradingBot.Backend.Gateway.API.Dtos.Enums;
+﻿using DotNetCore.CAP;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks;
 using TradingBot.Backend.Gateway.API.Extensions;
-using TradingBot.Backend.Gateway.API.Services.Abstract.Api.Binance;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Api.User;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Gateway;
 
@@ -13,14 +10,13 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Gateway
 	public class IndicatorHookGateway : IIndicatorHookGateway
 	{
 		private readonly ITradingAccountService _tradingAccountService;
-		private readonly IBinanceAccountService _binanceAccountService;
+		private readonly ITradingHistoryService _tradingHistoryService;
 		private readonly ICapPublisher _capPublisher;
-		private const string BinanceMainAsset = "USDT";
-		public IndicatorHookGateway(ITradingAccountService tradingAccountService, IBinanceAccountService binanceAccountService, ICapPublisher capPublisher)
+		public IndicatorHookGateway(ITradingAccountService tradingAccountService, ICapPublisher capPublisher, ITradingHistoryService tradingHistoryService)
 		{
 			_tradingAccountService = tradingAccountService;
-			_binanceAccountService = binanceAccountService;
 			_capPublisher = capPublisher;
+			_tradingHistoryService = tradingHistoryService;
 		}
 
 		public async Task HookAsync(string indicatorId, IndicatorHookDto dto, CancellationToken cancellationToken = default)
@@ -30,44 +26,18 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Gateway
 				tradingAccount.Indicators?.FirstOrDefault(x => x.Id == indicatorId) is null ||
 				!tradingAccount.Indicators.First(x => x.Id == indicatorId).IsActive) return;
 
-			switch (tradingAccount.Platform)
+			if (dto.Order is null) return;
+
+
+			var tradingHistory = await _tradingHistoryService.GetLastOrder(dto.Order.Symbol ?? "",
+				tradingAccount.Id ?? "", dto.Order.OrderType, cancellationToken);
+
+			await _capPublisher.PublishAsync(Defaults.Cap.BinanceHook, new HookModel()
 			{
-				case TradingPlatform.Binance:
-				default:
-					switch (dto.Order?.OrderType)
-					{
-						case OrderType.Futures:
-						default:
-						{
-							var balance = (await _binanceAccountService.GetAccountBalanceFuturesAsync(
-								              tradingAccount.ApiKey ?? "",
-								              tradingAccount.SecretKey ?? "", cancellationToken)).CheckResponse()
-							              ?.FirstOrDefault(x => x.Asset == BinanceMainAsset) ??
-							              throw new NotFoundException("Balance not found");
-
-							if (balance.WalletBalance < tradingAccount.BalanceSettings?.MinimumBalance ||
-							    balance.AvailableBalance < tradingAccount.BalanceSettings?.CurrentAdjustedBalance)
-								return;
-
-							break;
-						}
-						case OrderType.Spot:
-						{
-							var balance = (await _binanceAccountService.GetAccountBalanceSpotAsync(
-								              tradingAccount.ApiKey ?? "",
-								              tradingAccount.SecretKey ?? "", cancellationToken)).CheckResponse()
-							              ?.FirstOrDefault(x => x.Asset == BinanceMainAsset) ??
-							              throw new NotFoundException("Balance not found");
-							if (balance.Total < tradingAccount.BalanceSettings?.MinimumBalance ||
-							    balance.Available < tradingAccount.BalanceSettings?.CurrentAdjustedBalance)
-								return;
-							break;
-						}
-					}
-					break;
-
-			}
-
+				IndicatorHook = dto,
+				Account = tradingAccount,
+				TradingHistory = tradingHistory.Data
+			}, cancellationToken: cancellationToken);
 		}
 	}
 }

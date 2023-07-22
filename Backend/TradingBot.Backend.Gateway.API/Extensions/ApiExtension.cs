@@ -2,7 +2,6 @@
 using System.Net;
 using System.Security.Authentication;
 using System.Security;
-using CNG.Abstractions.Signatures;
 using TradingBot.Backend.Gateway.API.Defaults;
 using TradingBot.Backend.Gateway.API.Responses;
 

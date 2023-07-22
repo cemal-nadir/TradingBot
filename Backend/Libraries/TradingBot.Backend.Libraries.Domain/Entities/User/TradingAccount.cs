@@ -16,7 +16,7 @@ namespace TradingBot.Backend.Libraries.Domain.Entities.User
 		public BalanceSettings? BalanceSettings { get; set; }
 		public TradingPlatform Platform { get; set; }
 		public List<Indicator>?Indicators { get; set; }
-		public List<string>?CurrentPositions { get; set; }
+		
 	}
 
 	public class Indicator :IEntity<string>

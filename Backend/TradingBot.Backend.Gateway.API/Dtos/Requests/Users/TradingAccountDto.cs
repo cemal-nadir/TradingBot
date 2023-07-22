@@ -13,6 +13,5 @@ namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Users
 		public BalanceSettingsDto? BalanceSettings { get; set; }
 		public TradingPlatform Platform { get; set; }
 		public List<IndicatorDto>? Indicators { get; set; }
-		public List<string>? CurrentPositions { get; set; }
 	}
 }

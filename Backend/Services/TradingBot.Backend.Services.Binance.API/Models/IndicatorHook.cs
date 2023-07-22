@@ -21,6 +21,7 @@ namespace TradingBot.Backend.Services.Binance.API.Models
 		public string? Symbol { get; set; }
 		public Side? Side { get; set; }
 		public OrderType OrderType { get; set; }
+		public MarginType MarginType { get; set; }
 		public int Leverage { get; set; }
 		public bool? ClosePosition { get; set; }
 	}
