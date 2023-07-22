@@ -6,7 +6,7 @@ namespace TradingBot.Backend.Libraries.Application.Repositories.User
 {
 	public interface ITradingHistoryRepository: IMongoDbRepository<TradingHistory,string>
 	{
-		Task<TradingHistory?> GetLastOrderForSymbol(string symbol, string tradingAccountId, OrderType orderType,
+		Task<TradingHistory?> GetLastOrderForSymbolAsync(string symbol, string tradingAccountId, OrderType orderType,
 			CancellationToken cancellationToken = default);
 	}
 }

@@ -18,11 +18,11 @@ namespace TradingBot.Backend.Libraries.Persistence.Services.User
 			_mapper = mapper;
 		}
 
-		public async Task<TradingHistoryDto?> GetLastOrderForSymbolAsync(string symbol, string tradingAccountId, OrderType orderType,
+		public async Task<TradingHistoriesDto?> GetLastOrderForSymbolAsync(string symbol, string tradingAccountId, OrderType orderType,
 				CancellationToken cancellationToken = default)
 		{
 			var model= await _repository.GetLastOrderForSymbolAsync(symbol, tradingAccountId, orderType, cancellationToken);
-			return _mapper.Map<TradingHistoryDto>(model);
+			return _mapper.Map<TradingHistoriesDto>(model);
 		}
 	}
 }
