@@ -1,0 +1,15 @@
+@using Variant = MudBlazor.Variant
+@inherits MultipleSelectListRazor
+
+<MudSelect
+    MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
+    MultiSelection="true"
+    T="string"
+    Label="Roles"
+    @bind-SelectedValues="SelectedValues"
+    AnchorOrigin="Origin.BottomCenter" Variant="Variant.Text" Clearable>
+    @foreach (var entity in Entities)
+    {
+        <MudSelectItem T="string" Value="@entity.Id">@entity.Description</MudSelectItem>
+    }
+</MudSelect>

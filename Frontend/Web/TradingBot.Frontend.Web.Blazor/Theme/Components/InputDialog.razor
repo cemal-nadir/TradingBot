@@ -1,0 +1,13 @@
+@using Variant = MudBlazor.Variant
+@inherits InputDialogRazor
+@attribute [Authorize]
+<MudDialog>
+    <DialogContent>
+        <MudPaper Width="100%" Height="180px" Class="pa-3" Elevation="0">
+            <MudTextField @bind-Value="@Value" T="string" Required="true" Class="mt-5" RequiredError="@Localizer["Required"]" Placeholder="@Localizer[Placeholder]" />
+        </MudPaper>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit" StartIcon="@Icon">@Localizer[ButtonText]</MudButton>
+    </DialogActions>
+</MudDialog>

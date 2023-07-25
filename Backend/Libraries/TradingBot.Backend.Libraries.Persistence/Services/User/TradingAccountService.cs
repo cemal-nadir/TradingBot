@@ -23,5 +23,14 @@ namespace TradingBot.Backend.Libraries.Persistence.Services.User
 			return _mapper.Map<TradingAccountsDto>(await _repository.GetByIndicatorId(indicatorId, cancellationToken) ??
 			                                       throw new NotFoundException($"{nameof(Indicator)} not found"));
 		}
+
+		public async Task<List<TradingAccountsDto>> GetAllAsync(CancellationToken cancellationToken = default)
+		{
+			return _mapper.Map<List<TradingAccountsDto>>(await _repository.GetAllAsync(null, cancellationToken));
+		}
+		public async Task<List<TradingAccountsDto>> GetAllByUserIdAsync(string userId, CancellationToken cancellationToken = default)
+		{
+			return _mapper.Map<List<TradingAccountsDto>>(await _repository.GetAllAsync(x=>x.UserId==userId, cancellationToken));
+		}
 	}
 }

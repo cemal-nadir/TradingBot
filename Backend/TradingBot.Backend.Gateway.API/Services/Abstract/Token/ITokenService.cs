@@ -2,6 +2,7 @@
 {
 	public interface ITokenService
 	{
-		Task<string> GetToken(CancellationToken cancellationToken=default);
+		Task<string> GetClientCredentialToken(CancellationToken cancellationToken=default);
+		string GetResourceOwnerPasswordToken(CancellationToken cancellationToken = default);
 	}
 }

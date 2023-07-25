@@ -1,0 +1,10 @@
+@inherits StatusChipRazor
+
+@if (Status)
+{
+    <MudChip Size="@Size" Label="@Label" Variant="@ActiveVariant" Icon="@ActiveIcon" Color="@ActiveColor">@ActiveTitle</MudChip>
+}
+else
+{
+    <MudChip Size="@Size" Label="@Label" Variant="@InactiveVariant" Icon="@InactiveIcon" Color="@InactiveColor">@InactiveTitle</MudChip>
+}

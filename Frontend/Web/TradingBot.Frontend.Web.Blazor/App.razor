@@ -1,0 +1,43 @@
+﻿<CascadingAuthenticationState>
+
+	
+
+	<Router AppAssembly="@typeof(App).Assembly">
+
+		<Found Context="routeData">
+			<AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+				<Authorizing>
+					<div class="w-100 justify-center d-flex align-center h-100 flex-column">
+						<div>
+							<lottie-player src="/LottieFiles/loading.json" background="transparent" speed="1" style="width:400px; height: 400px;" loop autoplay />
+						</div>
+						<div> Please wait, we are authorizing the user!</div>
+					</div>
+
+				</Authorizing>
+				<NotAuthorized>
+					<RedirectLogin/>
+				</NotAuthorized>
+			</AuthorizeRouteView>
+			<FocusOnNavigate RouteData="@routeData" Selector="h1" />
+
+
+		</Found>
+		<NotFound>
+			<PageTitle>nf</PageTitle>
+			<LayoutView Layout="@typeof(MainLayout)">
+
+				<div class="w-100 d-flex align-center  flex-column">
+					<div>
+						<lottie-player src="/LottieFiles/page-not-found.json" background="transparent" speed="1" style="width:450px; height: 400px;" loop autoplay />
+					</div>
+					<div>
+						<p role="alert" class="h3">Sorry, there's nothing at this address.</p>
+					</div>
+				</div>
+
+			</LayoutView>
+		</NotFound>
+	</Router>
+
+</CascadingAuthenticationState>

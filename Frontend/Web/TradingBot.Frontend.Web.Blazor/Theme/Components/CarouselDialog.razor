@@ -1,0 +1,11 @@
+@inherits CarouselDialogRazor
+@attribute [Authorize]
+<MudCarousel  Class="mud-width-full" Style="height: 600px" 
+             ShowArrows="true" ShowBullets="false" EnableSwipeGesture="true" AutoCycle="true" TData="object">
+        @foreach (var image in Images)
+        {
+            <MudCarouselItem Transition="Transition" Color="@Color.Transparent">
+            <MudImage Class="mud-width-full" Src="@image" Elevation="1" Height="600" />
+            </MudCarouselItem>
+        }
+    </MudCarousel>

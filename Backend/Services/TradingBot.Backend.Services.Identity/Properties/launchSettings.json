@@ -1,0 +1,19 @@
+﻿{
+    "profiles": {
+        "TradingBot.Backend.Services.Identity.Api": {
+            "commandName": "Project",
+            "dotnetRunMessages": false,
+            "launchBrowser": false,
+            "applicationUrl": "http://localhost:1999",
+            "environmentVariables": {
+                "DATABASE_HOST": "localhost",
+                "DATABASE_NAME": "TradingBotIdentity",
+                "DATABASE_USER_NAME": "sa",
+                "DATABASE_PASSWORD": "cMYZ9ATA7P__",
+                "DATABASE_PORT": "1000"
+            }
+
+        }
+
+    }
+}

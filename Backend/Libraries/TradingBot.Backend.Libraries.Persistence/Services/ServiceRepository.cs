@@ -15,13 +15,13 @@ namespace TradingBot.Backend.Libraries.Persistence.Services
 	{
 		private readonly IMapper _mapper;
 		private readonly TRepository _repository;
-		protected readonly string? LanguageId;
+		protected readonly string? UserId;
 
 		protected ServiceRepository(TRepository repository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
 		{
 			_repository = repository;
 			_mapper = mapper;
-			LanguageId = httpContextAccessor.HttpContext?.Request.Headers["X-Language"];
+			UserId = httpContextAccessor.HttpContext?.Request.Headers["X-User"];
 		}
 
 
@@ -43,6 +43,10 @@ namespace TradingBot.Backend.Libraries.Persistence.Services
 				entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt))?.SetValue(entity, DateTime.UtcNow);
 			if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt)) != null)
 				entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt))?.SetValue(entity, DateTime.UtcNow);
+			if (entity.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId)) != null)
+				entity.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId))?.SetValue(entity, UserId);
+			if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedUserId)) != null)
+				entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedUserId))?.SetValue(entity, UserId);
 
 			await _repository.InsertAsync(entity, cancellationToken);
 		}
@@ -57,6 +61,10 @@ namespace TradingBot.Backend.Libraries.Persistence.Services
 					entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt))?.SetValue(entity, DateTime.UtcNow);
 				if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt)) != null)
 					entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt))?.SetValue(entity, DateTime.UtcNow);
+				if (entity.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId)) != null)
+					entity.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId))?.SetValue(entity, UserId);
+				if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedUserId)) != null)
+					entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedUserId))?.SetValue(entity, UserId);
 
 			});
 			await _repository.InsertRangeAsync(entities, cancellationToken);
@@ -73,12 +81,17 @@ namespace TradingBot.Backend.Libraries.Persistence.Services
 				entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt))?.SetValue(entity, DateTime.UtcNow);
 			if (entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt)) != null)
 				entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt))?.SetValue(entity, current.GetType().GetProperty(nameof(UpdatedBase.CreatedAt))?.GetValue(current, null));
+			if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedUserId)) != null)
+				entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedUserId))?.SetValue(entity, UserId);
+			if (entity.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId)) != null)
+				entity.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId))?.SetValue(entity, current.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId))?.GetValue(current, null));
 
 			await _repository.UpdateAsync(entity, cancellationToken);
 		}
 
 		public virtual async Task UpdateRangeAsync(Dictionary<TKey, TDto> listOfDto, CancellationToken cancellationToken = default)
 		{
+
 			foreach (var item in listOfDto)
 			{
 				await UpdateAsync(item.Key, item.Value, cancellationToken);

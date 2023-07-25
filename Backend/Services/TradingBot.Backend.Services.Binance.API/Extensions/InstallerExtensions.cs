@@ -17,10 +17,7 @@ namespace TradingBot.Backend.Services.Binance.API.Extensions
 			var env = new EnvironmentModel
 			{
 
-				Redis = new RedisModel(
-					host: Environment.GetEnvironmentVariable(variable: "REDIS_HOST") ?? "",
-					port: (Environment.GetEnvironmentVariable(variable: "REDIS_PORT") ?? "").ToInt()
-				),
+				
 				MongoDb = new MongoDbModel(
 					host: Environment.GetEnvironmentVariable(variable: "MONGODB_HOST") ?? "",
 					userName: Environment.GetEnvironmentVariable(variable: "MONGODB_USER_NAME") ?? "",
@@ -35,9 +32,9 @@ namespace TradingBot.Backend.Services.Binance.API.Extensions
 				),
 				Project = new ProjectModel(projectName: Environment.GetEnvironmentVariable(variable: "PROJECT_NAME") ?? "",
 					groupName: Environment.GetEnvironmentVariable(variable: "GROUP_NAME") ?? ""),
-				//Identity = new IdentityModel(
-				//	identityUrl: Environment.GetEnvironmentVariable(variable: "IDENTITY_URL") ?? "",
-				//	identityResourceName: Environment.GetEnvironmentVariable(variable: "IDENTITY_RESOURCE_NAME") ?? "")
+				Identity = new IdentityModel(
+					identityUrl: Environment.GetEnvironmentVariable(variable: "IDENTITY_URL") ?? "",
+					identityResourceName: Environment.GetEnvironmentVariable(variable: "IDENTITY_RESOURCE_NAME") ?? "")
 			};
 
 			services.AddSingleton(env);

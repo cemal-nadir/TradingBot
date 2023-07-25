@@ -1,0 +1,18 @@
+﻿@inherits MainLayoutRazor
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    @if (Navigation != null && !Navigation.Uri.Contains("login"))
+    {
+        <MudPaper Class="main-container d-flex flex-column flex-grow-1" Elevation="0" Width="width: calc(100% - 300px);" Height="calc(100% - 64px);">
+            @Body
+        </MudPaper>
+    }
+    else
+    {
+        @Body
+    }
+</MudLayout>

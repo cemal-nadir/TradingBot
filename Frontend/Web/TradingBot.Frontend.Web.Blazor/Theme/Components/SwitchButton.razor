@@ -1,0 +1,8 @@
+@inherits SwitchButtonRazor
+<MudSwitch class="@Class" @bind-Checked="@Checked" 
+           ReadOnly="ReadOnly"
+           
+           ThumbIcon="@(Checked ? Icons.Material.Filled.Done : Icons.Material.Filled.Close)"
+           ThumbIconColor="@(Checked ? Color : UnCheckedColor)">
+    <MudText>@(Checked ? CheckedText : UnCheckedText)</MudText>
+</MudSwitch>

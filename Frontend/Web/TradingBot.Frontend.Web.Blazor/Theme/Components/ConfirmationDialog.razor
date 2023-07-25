@@ -1,0 +1,12 @@
+@using Variant = MudBlazor.Variant
+@inherits ConfirmationDialogRazor
+@attribute [Authorize]
+<MudDialog>
+    <DialogContent>
+        <MudText>@ContentText</MudText>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="Cancel">@CancelButtonText</MudButton>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit">@OkButtonText</MudButton>
+    </DialogActions>
+</MudDialog>

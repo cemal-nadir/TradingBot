@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using TradingBot.Backend.Libraries.ApiCore.Repositories;
 using TradingBot.Backend.Libraries.Application.Dtos.User;
 using TradingBot.Backend.Libraries.Application.Services.User;
@@ -12,6 +13,11 @@ namespace TradingBot.Backend.Services.User.API.Controllers
 		{
 			_tradingHistoryService = tradingHistoryService;
 		}
+		[Authorize(Policy = "FullOrRead")]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[HttpPost("LastOrder")]
 		public async Task<IActionResult> GetLastOrderForSymbol([FromBody]GetLastOrderDto dto,CancellationToken cancellationToken=default)
 		{

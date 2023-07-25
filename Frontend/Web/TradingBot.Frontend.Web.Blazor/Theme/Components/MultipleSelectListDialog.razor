@@ -1,0 +1,25 @@
+﻿@using Variant = MudBlazor.Variant
+@inherits MultipleSelectListDialogRazor
+@attribute [Authorize]
+<MudDialog>
+    <DialogContent>
+        <MudPaper Width="100%" Height="180px" Class="pa-3" Elevation="0">
+            <MudSelect Clearable="true" Required="true" Class="mt-5" AnchorOrigin="Origin.BottomCenter" Variant="Variant.Text"
+                       MultiSelectionTextFunc="@(new Func<List<string>, string>(GetMultiSelectionText))"
+                       MultiSelection="true"
+                       T="string"
+                       Label="@Label"
+                       @bind-SelectedValues="SelectedValues"
+                       RequiredError="@Localizer["Required"]"
+                       Placeholder="@Placeholder">
+                @foreach (var entity in Items)
+                {
+                    <MudSelectItem T="string" Value="@entity.Id">@entity.Description</MudSelectItem>
+                }
+            </MudSelect>
+        </MudPaper>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Color="@Color" Variant="Variant.Filled" OnClick="Submit" StartIcon="@Icon">@ButtonText</MudButton>
+    </DialogActions>
+</MudDialog>

@@ -17,7 +17,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Binance
 			_client = client;
 			_client.SetClient(Client.DefaultClient);
 			_url = $"{env.MicroServices?.Binance}{Defaults.Gateway.Binance.AccountService}";
-			_client.SetBearerAuthentication(tokenService.GetToken().Result);
+			_client.SetBearerAuthentication(tokenService.GetClientCredentialToken().Result);
 		}
 
 		public async Task<Response<AccountInfoSpotDto>> GetAccountInfoSpotAsync(string apiKey,string secretKey, CancellationToken cancellationToken = default)

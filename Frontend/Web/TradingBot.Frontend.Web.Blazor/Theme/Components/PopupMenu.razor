@@ -1,0 +1,78 @@
+@inherits PopupMenuRazor
+
+@if (Menu != null)
+{
+    
+    <MudMenu 
+        
+        Label="@Menu.MenuHeader.Title"  
+             Icon="@(string.IsNullOrEmpty(Menu.MenuHeader.Title)?Menu.MenuHeader.Icon:null)"
+             EndIcon="@(!string.IsNullOrEmpty(Menu.MenuHeader.Title)?Menu.MenuHeader.Icon:null)"
+             Variant="@Menu.MenuHeader.Variant"
+             AnchorOrigin="@Menu.MenuHeader.AnchorOrigin"
+             TransformOrigin="@Menu.MenuHeader.TransformOrigin"
+             >
+      <ChildContent >
+            <MudPaper Width="@Menu.NavMenuHeader.Width" Elevation="@Menu.NavMenuHeader.Elevation" Class="@Menu.NavMenuHeader.Class">
+                <MudNavMenu  Color="@Menu.NavMenuHeader.Color" Class="@Menu.NavMenuHeader.Class">
+                    @foreach (var item in Menu.NavMenuHeader.Items)
+                    {
+                        if (item.Items?.Any() ?? false)
+                        {
+                            <MudNavGroup Title="@item.Title" Icon="@item.Icon">
+                                @foreach (var subItem in item.Items)
+                                {
+                                    if (!string.IsNullOrEmpty(subItem.Href))
+                                    {
+                                        <MudNavLink ActiveClass="@subItem.ActiveClass" Class="@subItem.Class" IconColor="@subItem.IconColor" Href="@subItem.Href" ForceLoad="@subItem.ForceLoad" Icon="@subItem.Icon" Disabled="@subItem.Disabled">@subItem.Title</MudNavLink>
+                                    }
+                                    else
+                                    {
+                                        <MudNavLink
+                                            ActiveClass="@subItem.ActiveClass"
+                                            Class="@subItem.Class" IconColor="@subItem.IconColor" Icon="@subItem.Icon" Disabled="@subItem.Disabled"
+                                            OnClick="@(() => NavMenuOnClicked(new NavMenuOnClickResult(subItem.Id,subItem.OnClickCommand)))">
+                                            @subItem.Title
+                                        </MudNavLink>
+                                    }
+                                    if (subItem.AddDivider)
+                                    {
+                                        <MudDivider/>
+                                    }
+                                }
+                                @if (item.AddDivider)
+                                {
+                                    <MudDivider/>
+                                }
+                            </MudNavGroup>
+                        }
+                        else
+                        {
+                            if (!string.IsNullOrEmpty(item.Href))
+                            {
+                                <MudNavLink
+                                    ActiveClass="@item.ActiveClass"
+                                    Class="@item.Class" IconColor="item.IconColor" Href="@item.Href" ForceLoad="@item.ForceLoad" Icon="@item.Icon" Disabled="@item.Disabled">
+                                    @item.Title
+                                </MudNavLink>
+                            }
+                            else
+                            {
+                                <MudNavLink
+                                    ActiveClass="@item.ActiveClass"
+                                    Class="@item.Class" IconColor="item.IconColor" Icon="@item.Icon" Disabled="@item.Disabled"
+                                    OnClick="@(() => NavMenuOnClicked(new NavMenuOnClickResult(item.Id,item.OnClickCommand)))">
+                                    @item.Title
+                                </MudNavLink>
+                            }
+                            if (item.AddDivider)
+                            {
+                                <MudDivider/>
+                            }
+                        }
+                    }
+                </MudNavMenu>
+            </MudPaper>
+        </ChildContent>
+    </MudMenu>
+}

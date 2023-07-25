@@ -23,7 +23,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Token
 			_env = env;
 			_identityServerService = identityServerService;
 		}
-		public async Task<string> GetToken(CancellationToken cancellationToken = default)
+		public async Task<string> GetClientCredentialToken(CancellationToken cancellationToken = default)
 		{
 			if (_httpContextAccessor.HttpContext?.User.Identity is null || !_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
 			{
@@ -44,6 +44,9 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Token
 
 			return "";
 		}
+
+		public string GetResourceOwnerPasswordToken(CancellationToken cancellationToken = default) =>
+			_httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString().Replace("Bearer ", "") ?? "";
 
 		private async Task<string> GetToken(AuthType authType = AuthType.UserClient, CancellationToken cancellationToken = default)
 		{

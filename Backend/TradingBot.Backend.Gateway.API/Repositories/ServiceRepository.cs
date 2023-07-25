@@ -19,7 +19,7 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 			_client = client;
 			_client.SetClient(clientName);
 			_url = url;
-			_client.SetBearerAuthentication(tokenService.GetToken().Result);
+			_client.SetBearerAuthentication(tokenService.GetClientCredentialToken().Result);
 			_client.SetHeader(new Dictionary<string, string>()
 			{
 				new("X-User",httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(x=>x.Type==JwtRegisteredClaimNames.Sub)?.Value??"") 

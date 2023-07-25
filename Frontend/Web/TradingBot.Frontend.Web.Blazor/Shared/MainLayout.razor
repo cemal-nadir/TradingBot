@@ -1,0 +1,25 @@
+﻿@inherits MainLayoutRazor
+
+
+
+<MudLayout Style="height:100vh; overflow-x:hidden;overflow-y:scroll;">
+	<LoadingPage Visible="@Loading"></LoadingPage>
+	@if (!Loading)
+	{
+		<MudPaper Elevation="0">
+
+
+			<Header></Header>
+			<MudMainContent>
+				@Body
+			</MudMainContent>
+			<Footer></Footer>
+		</MudPaper>
+	}
+
+</MudLayout>
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+

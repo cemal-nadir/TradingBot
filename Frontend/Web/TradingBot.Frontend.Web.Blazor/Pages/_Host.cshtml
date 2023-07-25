@@ -1,0 +1,10 @@
+﻿@page "/"
+@using TradingBot.Frontend.Web.Blazor
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@namespace TradingBot.Frontend.Web.Blazor.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@{
+	Layout = "_Layout";
+}
+
+<component type="typeof(App)" render-mode="Server"/>

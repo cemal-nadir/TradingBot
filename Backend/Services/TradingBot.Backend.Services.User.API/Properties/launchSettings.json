@@ -1,28 +1,22 @@
 ﻿{
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:47172",
-      "sslPort": 0
+    "profiles": {
+        "TradingBot.Backend.Services.User.API": {
+            "commandName": "Project",
+            "dotnetRunMessages": false,
+            "launchBrowser": false,
+            "applicationUrl": "http://localhost:2001",
+            "environmentVariables": {
+                "MONGODB_HOST": "localhost",
+                "MONGODB_USER_NAME": "",
+                "MONGODB_PASSWORD": "",
+                "MONGODB_PORT": "1001",
+                "PROJECT_NAME": "User",
+                "GROUP_NAME": "TradingBot",
+                "IDENTITY_URL": "http://localhost:1999",
+                "IDENTITY_RESOURCE_NAME": "TradingBotUserApi"
+            }
+
+        }
+
     }
-  },
-  "profiles": {
-    "http": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:5071",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    }
-  }
 }
