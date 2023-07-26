@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using TradingBot.Frontend.Libraries.Blazor.Models;
 
 namespace TradingBot.Frontend.Web.Blazor.Theme.Components;
 

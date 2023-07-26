@@ -1,6 +1,8 @@
 using System.Net;
+using CNG.Extensions;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
+using TradingBot.Frontend.Libraries.Blazor.Models;
 using TradingBot.Frontend.Libraries.Blazor.Repositories;
 using TradingBot.Frontend.Libraries.Blazor.Signatures;
 using TradingBot.Frontend.Web.Blazor.Theme.Components;
@@ -21,7 +23,6 @@ public class BaseListPage<TDto, TListDto, TKey, TService, TDetailPage> : BaseCom
     {
         await GetAllAsync();
     }
-
     protected virtual async Task NavMenuOnClickAsync(NavMenuOnClickResult result)
     {
         switch (result.Command)

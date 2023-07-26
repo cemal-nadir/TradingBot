@@ -1,28 +1,16 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "http://localhost:13946",
-      "sslPort": 0
+    "profiles": {
+        "TradingBot.Frontend.Web.Blazor": {
+            "applicationUrl": "http://localhost:2023",
+            "commandName": "Project",
+            "environmentVariables": {
+                "CLIENT_ID": "TradingBotBlazorWebClient",
+                "CLIENT_SECRET": "SmNK7ieDbESioB597WrV3ptABnGDYqCK",
+                "ASPNETCORE_ENVIRONMENT": "Development",
+                "DYLD_FALLBACK_LIBRARY_PATH": "/opt/homebrew/lib:",
+                "GATEWAY_URL": "http://localhost:1990",
+                "IDENTITY_URL": "http://localhost:1999"
+            }
+        }
     }
-  },
-  "profiles": {
-    "http": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:5098",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    },
-    "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
-    }
-  }
 }

@@ -7,8 +7,8 @@ namespace TradingBot.Frontend.Web.Blazor.Theme.Components;
 
 public class SubmitButtonRazor : ComponentBase
 {
+	[Parameter] public EventCallback SubmitButtonOnClick { get; set; }
     [Inject] public IStringLocalizer<Resource> Localizer { get; set; } = null!;
-
 
     [Parameter] public bool Processing { get; set; }
 
@@ -26,4 +26,9 @@ public class SubmitButtonRazor : ComponentBase
     [Parameter] public bool FullWidth { get; set; }
     [Parameter] public Size Size { get; set; } = Size.Medium;
     [Parameter] public string Style { get; set; } = string.Empty;
+
+    protected async Task Click()
+    {
+	    await SubmitButtonOnClick.InvokeAsync();
+	}
 }

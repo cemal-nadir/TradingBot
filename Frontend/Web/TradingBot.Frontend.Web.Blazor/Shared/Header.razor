@@ -1,1 +1,23 @@
-﻿@inherits HeaderRazor
+﻿@using System.Globalization
+@inherits HeaderRazor
+<MudAppBar Elevation="1" Fixed="true" WrapContent="true" Color="Color.Dark">
+	<MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="@ToggleMenuDrawer" />
+	<MudSpacer />
+	<MudIconButton Icon="@Icons.Material.Outlined.AccountCircle" Color="Color.Inherit" Size="Size.Medium" OnClick="@ToggleProfileMenuDrawer" />
+</MudAppBar>
+<MudDrawer @bind-Open="@OpenMenu" Elevation="1" Color="Color.Primary" Fixed="true" Anchor="Anchor.Left" ClipMode="DrawerClipMode.Never">
+	<MudDrawerHeader>
+		<MudText Typo="Typo.h6">Trading Bot</MudText>
+	</MudDrawerHeader>
+	<MudNavMenu Margin="Margin.Dense" Rounded="true" Bordered="true" Color="Color.Warning">
+		<MudNavGroup Icon="@Icons.Material.Filled.Groups" IconColor="Color.Inherit" Title="@Localizer["Users"]" Expanded="true">
+			<MudNavLink Href="/Users" Match="NavLinkMatch.All">@Localizer["All_Users"]</MudNavLink>
+			<MudNavLink Href="/Users/Add" Match="NavLinkMatch.All">@Localizer["Add_User"]</MudNavLink>
+		</MudNavGroup>
+		<MudNavGroup Icon="@Icons.Material.Filled.AccountBalance" IconColor="Color.Inherit" Title="@Localizer["Trading Accounts"]" Expanded="true">
+			<MudNavLink Href="/Users/TradingAccounts" Match="NavLinkMatch.All">@Localizer["All_TradingAccounts"]</MudNavLink>
+			<MudNavLink Href="/Users/TradingAccounts/Add" Match="NavLinkMatch.All">@Localizer["Add_TradingAccount"]</MudNavLink>
+		</MudNavGroup>
+	</MudNavMenu>
+	<MudNavLink Href="/Users/TradingAccounts/TradingHistories" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WorkHistory" IconColor="Color.Inherit">@Localizer["Trading Histories"]</MudNavLink>
+</MudDrawer>

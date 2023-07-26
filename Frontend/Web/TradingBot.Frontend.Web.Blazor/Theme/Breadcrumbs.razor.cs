@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using MudBlazor;
+using TradingBot.Frontend.Libraries.Blazor.Models;
 using TradingBot.Frontend.Web.Blazor.Resources;
 
 namespace TradingBot.Frontend.Web.Blazor.Theme;

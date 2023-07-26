@@ -1,7 +1,5 @@
 ﻿<CascadingAuthenticationState>
 
-	
-
 	<Router AppAssembly="@typeof(App).Assembly">
 
 		<Found Context="routeData">
@@ -26,16 +24,22 @@
 		<NotFound>
 			<PageTitle>nf</PageTitle>
 			<LayoutView Layout="@typeof(MainLayout)">
+				<AuthorizeView>
+					<Authorized>
+						<div class="w-100 d-flex align-center  flex-column">
+							<div>
+								<lottie-player src="/LottieFiles/page-not-found.json" background="transparent" speed="1" style="width:450px; height: 400px;" loop autoplay/>
+							</div>
+							<div>
+								<p role="alert" class="h3">Sorry, there's nothing at this address.</p>
+							</div>
+						</div>
+					</Authorized>
+					<NotAuthorized>
+						<RedirectLogin/>
 
-				<div class="w-100 d-flex align-center  flex-column">
-					<div>
-						<lottie-player src="/LottieFiles/page-not-found.json" background="transparent" speed="1" style="width:450px; height: 400px;" loop autoplay />
-					</div>
-					<div>
-						<p role="alert" class="h3">Sorry, there's nothing at this address.</p>
-					</div>
-				</div>
-
+					</NotAuthorized>
+				</AuthorizeView>
 			</LayoutView>
 		</NotFound>
 	</Router>

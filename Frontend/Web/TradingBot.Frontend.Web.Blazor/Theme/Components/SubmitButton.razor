@@ -1,5 +1,7 @@
 @inherits SubmitButtonRazor
-<MudButton Style="@Style" Size="Size.Large" Disabled="@Processing" ButtonType="@ButtonType" Variant="Variant" Color="Color" Class="@Class" FullWidth="FullWidth">
+
+
+<MudButton Style="@Style" Size="Size.Large" Disabled="@Processing" ButtonType="@ButtonType" Variant="Variant" Color="Color" Class="@Class" FullWidth="FullWidth" OnClick="Click">
     @if (Processing)
     {
         <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true"/>

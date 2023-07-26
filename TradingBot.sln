@@ -35,9 +35,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{A885B8
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Libraries", "Libraries", "{B874E3F2-4555-4154-B45C-A6C4A503985E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingBot.Frontend.Web.Blazor", "Frontend\Web\TradingBot.Frontend.Web.Blazor\TradingBot.Frontend.Web.Blazor.csproj", "{6B2F1ED6-13B7-4460-877C-0D76E1B668E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingBot.Frontend.Web.Blazor", "Frontend\Web\TradingBot.Frontend.Web.Blazor\TradingBot.Frontend.Web.Blazor.csproj", "{6B2F1ED6-13B7-4460-877C-0D76E1B668E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TradingBot.Frontend.Libraries.Blazor", "Frontend\Libraries\TradingBot.Frontend.Libraries.Blazor\TradingBot.Frontend.Libraries.Blazor.csproj", "{A0592728-083F-4F26-8731-070A1214F43B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TradingBot.Frontend.Libraries.Blazor", "Frontend\Libraries\TradingBot.Frontend.Libraries.Blazor\TradingBot.Frontend.Libraries.Blazor.csproj", "{A0592728-083F-4F26-8731-070A1214F43B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

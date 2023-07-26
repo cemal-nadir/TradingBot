@@ -20,8 +20,12 @@ namespace TradingBot.Frontend.Web.Blazor.Shared
 		[Inject] private GlobalRenderService GlobalRenderService { get; set; } = null!;
 
 		protected bool Loading { get; set; }
+		protected bool ProfileMenuShowing { get; set; }
 
-	
+		protected void ProfileMenuClicked()
+		{
+			ProfileMenuShowing = !ProfileMenuShowing;
+		}
 
 		private void HandleError(object? sender,ExceptionResponse exceptionResponse)
 		{
