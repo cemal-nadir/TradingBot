@@ -59,5 +59,50 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Duplicate record benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string DuplicateRecord {
+            get {
+                return ResourceManager.GetString("DuplicateRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Role not found benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string RoleNotFound {
+            get {
+                return ResourceManager.GetString("RoleNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Record already has a relationship in another table benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TableRelated {
+            get {
+                return ResourceManager.GetString("TableRelated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   User not found benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   E-mail or Password wrong benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string WrongPassword {
+            get {
+                return ResourceManager.GetString("WrongPassword", resourceCulture);
+            }
+        }
     }
 }

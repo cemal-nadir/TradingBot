@@ -1,0 +1,22 @@
+﻿@page "/Users/TradingAccounts"
+@inherits TradingAccountsRazor
+
+
+
+
+<h1>FENERBAHÇE ANANIN AMI</h1>
+
+
+
+
+
+<MudDataGrid Items="@Entities">
+	<Columns>
+		<PropertyColumn Property="x=>x.UserId" Title="Nr" />
+		<PropertyColumn Property="x => x.Name" />
+		<PropertyColumn Property="x => x.ApiKey" />
+		<PropertyColumn Property="x => x.SecretKey" />
+		<PropertyColumn Property="x => x.IsActive" Title="Molar mass" />
+		<PropertyColumn Property="x => x.Platform" Title="Molar mass" />
+	</Columns>
+</MudDataGrid>

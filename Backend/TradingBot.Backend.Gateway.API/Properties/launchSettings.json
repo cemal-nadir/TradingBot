@@ -12,7 +12,7 @@
                 "API_CLIENTS_MEMBER_SECRET": "q9bLfoMsKLsH8v7c234lugrn9l0LQFYV",
                 "SERVICE_USER": "http://localhost:2001/api/",
                 "SERVICE_BINANCE": "http://localhost:2000/api/",
-                "SERVICE_IDENTITY": "http://localhost:1999/api/",
+                "SERVICE_IDENTITY": "http://localhost:1999",
                 "RABBITMQ_HOST": "localhost",
                 "RABBITMQ_USER_NAME": "guest",
                 "RABBITMQ_PASSWORD": "guest",

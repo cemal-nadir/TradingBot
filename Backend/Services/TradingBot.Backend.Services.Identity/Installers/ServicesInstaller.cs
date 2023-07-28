@@ -1,6 +1,10 @@
 ﻿using System.Reflection;
+using IdentityModel;
+using IdentityServer4.AspNetIdentity;
 using IdentityServer4.EntityFramework.Stores;
+using IdentityServer4.Services;
 using IdentityServer4.Stores;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TradingBot.Backend.Services.Identity.Api.CustomTokenProviders;
@@ -69,13 +73,19 @@ public static class InstallerExtension
         // not recommended for production - you need to store your key material somewhere secure
         builder.AddDeveloperSigningCredential();
         services.AddAuthentication();
+  //      services.AddAuthentication().AddOpenIdConnect("oidc", options =>
+  //      {
+	 //       options.Scope.Add("roles");
+	 //       options.ClaimActions.MapJsonKey(JwtClaimTypes.Role, JwtClaimTypes.Role, JwtClaimTypes.Role);
+	 //       options.TokenValidationParameters.RoleClaimType = JwtClaimTypes.Role;
+		//});
 
         services.Configure<DataProtectionTokenProviderOptions>(opt =>
             opt.TokenLifespan = TimeSpan.FromHours(2));
         services.Configure<EmailConfirmationTokenProviderOptions>(opt =>
             opt.TokenLifespan = TimeSpan.FromDays(20));
-
-        services.AddScoped<IUserService, UserService>();
+		services.AddTransient<IProfileService, CustomProfileService>();
+		services.AddScoped<IUserService, UserService>();
 
 
     }

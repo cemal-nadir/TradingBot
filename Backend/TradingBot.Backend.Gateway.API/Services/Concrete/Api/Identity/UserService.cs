@@ -17,8 +17,8 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 		public UserService(IHttpClientService client,EnvironmentModel env, ITokenService tokenService)
 		{
 			_client = client;
-			_client.SetClient(Client.DefaultClient);
-			_url = $"{env.MicroServices?.Identity}{Defaults.Gateway.User.UserService}";
+			_client.SetClient(Client.ResourceOwnerPasswordClient);
+			_url = $"{env.MicroServices?.Identity}/api/{Defaults.Gateway.User.UserService}";
 			_client.SetBearerAuthentication(tokenService.GetResourceOwnerPasswordToken());
 		}
 
@@ -158,8 +158,5 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 		}
 
 		#endregion
-
-
-
 	}
 }

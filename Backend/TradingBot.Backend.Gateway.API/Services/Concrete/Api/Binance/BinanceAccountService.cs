@@ -1,4 +1,5 @@
 ﻿using CNG.Http.Services;
+using Microsoft.IdentityModel.JsonWebTokens;
 using TradingBot.Backend.Gateway.API.Defaults;
 using TradingBot.Backend.Gateway.API.Dtos;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Binance;
@@ -12,12 +13,16 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Binance
 	{
 		private readonly IHttpClientService _client;
 		private readonly string _url;
-		public BinanceAccountService(IHttpClientService client, ITokenService tokenService,EnvironmentModel env)
+		public BinanceAccountService(IHttpClientService client, ITokenService tokenService,EnvironmentModel env, IHttpContextAccessor httpContextAccessor)
 		{
 			_client = client;
-			_client.SetClient(Client.DefaultClient);
+			_client.SetClient(Client.ResourceOwnerPasswordClient);
 			_url = $"{env.MicroServices?.Binance}{Defaults.Gateway.Binance.AccountService}";
 			_client.SetBearerAuthentication(tokenService.GetClientCredentialToken().Result);
+			_client.SetHeader(new Dictionary<string, string>()
+			{
+				{"X-User",httpContextAccessor.HttpContext?.Request.HttpContext.User.Claims.FirstOrDefault(x=>x.Type==JwtRegisteredClaimNames.Sub)?.Value??""}
+			});
 		}
 
 		public async Task<Response<AccountInfoSpotDto>> GetAccountInfoSpotAsync(string apiKey,string secretKey, CancellationToken cancellationToken = default)

@@ -3,7 +3,6 @@ using Consul;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Identity;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Users;
 using TradingBot.Backend.Gateway.API.Extensions;
-using TradingBot.Backend.Gateway.API.Responses;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Api.Identity;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Api.User;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Gateway;

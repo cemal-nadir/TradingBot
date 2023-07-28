@@ -1,4 +1,5 @@
-﻿using IdentityServer4;
+﻿using IdentityModel;
+using IdentityServer4;
 using IdentityServer4.Models;
 
 namespace TradingBot.Backend.Services.Identity.Api;
@@ -30,7 +31,7 @@ public static class Config
             new IdentityResources.OpenId(),
             new IdentityResources.Profile(),
             new IdentityResources.Phone(),
-            new(){Name="roles",DisplayName="Roles",Description="User roles",UserClaims=new[]{"role" } }
+            new("roles", new[] { JwtClaimTypes.Role }),
         };
     public static IEnumerable<Client> Clients =>
         new[]

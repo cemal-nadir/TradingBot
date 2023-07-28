@@ -8,6 +8,7 @@ public class ApplicationUser : IdentityUser
     public string? SurName { get; set; }
     public DateTime BirthDate { get; set; }
     public Gender Gender { get; set; }
+    public bool IsBanned { get; set; }
 }
 public enum Gender
 {

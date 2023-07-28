@@ -1,5 +1,9 @@
-﻿using CNG.Core.Exceptions;
+﻿using System.Text;
+using CNG.Core.Exceptions;
 using CNG.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using TradingBot.Backend.Gateway.API.Dtos;
 using TradingBot.Backend.Gateway.API.Middlewares;
 
@@ -12,7 +16,7 @@ namespace TradingBot.Backend.Gateway.API.Extensions
 			services.AddControllers();
 			services.AddCors(options => options.AddDefaultPolicy(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 			services.AddConsoleLogService();
-			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+			services.AddHttpContextAccessor();
 			var env = new EnvironmentModel
 			{
 				MongoDb = new MongoDbModel(
@@ -68,8 +72,7 @@ namespace TradingBot.Backend.Gateway.API.Extensions
 				.Cast<IServiceInstaller>().ToList();
 		
 			installers.ForEach(action: x => x.InstallServices(services: services, env: env));
-
-
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 			ServiceTool.Create(services);
 		}
 
@@ -92,6 +95,8 @@ namespace TradingBot.Backend.Gateway.API.Extensions
 				.Cast<IConfigureInstaller>().ToList();
 		
 			installers.ForEach(x => x.InstallConfigures(app));
+			app.UseAuthentication();
+			app.UseAuthorization();
 			app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
 
 		}

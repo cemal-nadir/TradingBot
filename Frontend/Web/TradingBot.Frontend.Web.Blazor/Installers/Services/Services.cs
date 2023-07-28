@@ -2,6 +2,8 @@ using CNG.Http.Extensions;
 using TradingBot.Frontend.Libraries.Blazor.Defaults;
 using TradingBot.Frontend.Libraries.Blazor.Models;
 using TradingBot.Frontend.Libraries.Blazor.Services;
+using TradingBot.Frontend.Web.Blazor.Services.Abstract.User;
+using TradingBot.Frontend.Web.Blazor.Services.Concrete.User;
 
 namespace TradingBot.Frontend.Web.Blazor.Installers.Services;
 
@@ -16,7 +18,10 @@ public class Services : IServiceInstaller
 
         #region Api Services
 
+        builder.Services.AddScoped<ITradingAccountService, TradingAccountService>();
+        builder.Services.AddScoped<ITradingHistoryService, TradingHistoryService>();
+        builder.Services.AddScoped<IUserService, UserService>();
 
-		#endregion
-	}
+        #endregion
+    }
 }

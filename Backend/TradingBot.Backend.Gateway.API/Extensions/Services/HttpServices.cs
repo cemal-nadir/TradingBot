@@ -14,8 +14,10 @@ namespace TradingBot.Backend.Gateway.API.Extensions.Services
 	{
 		public void InstallServices(IServiceCollection services, EnvironmentModel env)
 		{
-			services.AddHttpClientService();
+			services.AddHttpClientService(ServiceLifetime.Transient);
 			services.AddHttpClient(Client.DefaultClient);
+			services.AddHttpClient(Client.ResourceOwnerPasswordClient);
+
 			#region Api
 
 			#region Binance

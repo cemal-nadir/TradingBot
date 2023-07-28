@@ -8,7 +8,7 @@
                 "CLIENT_SECRET": "SmNK7ieDbESioB597WrV3ptABnGDYqCK",
                 "ASPNETCORE_ENVIRONMENT": "Development",
                 "DYLD_FALLBACK_LIBRARY_PATH": "/opt/homebrew/lib:",
-                "GATEWAY_URL": "http://localhost:1990",
+                "GATEWAY_URL": "http://localhost:1990/api/",
                 "IDENTITY_URL": "http://localhost:1999"
             }
         }

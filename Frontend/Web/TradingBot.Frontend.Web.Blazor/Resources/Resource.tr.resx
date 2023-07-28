@@ -117,8 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="test" xml:space="preserve">
-    <value>test</value>
-    <comment>test</comment>
+  <data name="DuplicateRecord" xml:space="preserve">
+    <value>Mükerrer kayıt</value>
+    <comment>DuplicateRecord</comment>
+  </data>
+  <data name="RoleNotFound" xml:space="preserve">
+    <value>Yetki bulunamadı</value>
+    <comment>RoleNotFound</comment>
+  </data>
+  <data name="TableRelated" xml:space="preserve">
+    <value>Kaydın hali hazırda başka bir tabloda ilişkisi mevcut</value>
+    <comment>TableRelated</comment>
+  </data>
+  <data name="UserNotFound" xml:space="preserve">
+    <value>Kullanıcı bulunamadı</value>
+    <comment>UserNotFound</comment>
+  </data>
+  <data name="WrongPassword" xml:space="preserve">
+    <value>E-posta yada Şifre hatalı</value>
+    <comment>WrongPassword</comment>
   </data>
 </root>

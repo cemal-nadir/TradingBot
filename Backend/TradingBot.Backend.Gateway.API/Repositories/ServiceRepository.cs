@@ -1,6 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Amazon.Runtime.Internal.Transform;
-using CNG.Abstractions.Signatures;
+﻿using CNG.Abstractions.Signatures;
 using CNG.Http.Services;
 using TradingBot.Backend.Gateway.API.Responses;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Token;
@@ -19,11 +17,12 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 			_client = client;
 			_client.SetClient(clientName);
 			_url = url;
+			//TODO BURASI DEĞİŞECEK HEADERLARI BUGA SOKUYOR
+			//_client.SetHeader(new Dictionary<string, string>()
+			//{
+			//	{"X-User",httpContextAccessor.HttpContext?.Request.HttpContext.User.Claims.FirstOrDefault(x=>x.Type==JwtRegisteredClaimNames.Sub)?.Value??""}
+			//});
 			_client.SetBearerAuthentication(tokenService.GetClientCredentialToken().Result);
-			_client.SetHeader(new Dictionary<string, string>()
-			{
-				new("X-User",httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(x=>x.Type==JwtRegisteredClaimNames.Sub)?.Value??"") 
-			});
 		}
 		public virtual async Task<Response<List<TListDto>>> GetAllAsync(CancellationToken cancellationToken = default)
 		{

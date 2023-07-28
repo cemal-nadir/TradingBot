@@ -179,6 +179,9 @@ namespace TradingBot.Backend.Services.Identity.Api.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsBanned")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("boolean");
 

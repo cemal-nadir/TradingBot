@@ -18,13 +18,11 @@ namespace TradingBot.Frontend.Libraries.Blazor.Services
 	public class IdentityService : ServerAuthenticationStateProvider, IIdentityService
 	{
 		private readonly IIdentityServerService _identityServerService;
-		private readonly IHttpClientService _httpClientService;
 		private readonly ProtectedLocalStorage _localStorageService;
-		public IdentityService(Env env, IIdentityServerService identityServerService, ProtectedLocalStorage localStorageService, IHttpClientService httpClientService)
+		public IdentityService(Env env, IIdentityServerService identityServerService, ProtectedLocalStorage localStorageService)
 		{
 			_identityServerService = identityServerService;
 			_localStorageService = localStorageService;
-			_httpClientService = httpClientService;
 			_identityServerService.SetClient(env.IdentityUrl, env.Client.Id ?? "", env.Client.Secret ?? "", ClientDefaults.DefaultClient);
 		}
 		public async Task GetAccessTokenByRefreshToken(CancellationToken cancellationToken = default)
@@ -75,8 +73,6 @@ namespace TradingBot.Frontend.Libraries.Blazor.Services
 
 			if (!userResponse.Success)
 				return new ErrorResponse(userResponse.Message, HttpStatusCode.BadRequest);
-				
-
 
 			if (userResponse.Data?.UserInfo is null)
 				return new ErrorResponse(ErrorDefaults.NotFound.UserInfoNotFound, HttpStatusCode.NotFound);
@@ -115,7 +111,6 @@ namespace TradingBot.Frontend.Libraries.Blazor.Services
 					new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token.AccessToken), "jwtAuthType")));
 			await GetAccessTokenByRefreshToken();
 			token = (await _localStorageService.GetAsync<AuthenticationTokenWithClaims>(nameof(AuthenticationTokenWithClaims))).Value;
-			_httpClientService.SetBearerAuthentication(token?.AccessToken??"");
 			return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token?.AccessToken ?? ""), "jwtAuthType")));
 
 		}

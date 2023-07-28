@@ -17,9 +17,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.User
 		public TradingAccountService(IHttpClientService client, EnvironmentModel env, IHttpContextAccessor httpContextAccessor, ITokenService tokenService) : base(client, $"{env.MicroServices?.User}{Defaults.Gateway.User.TradingAccountService}", Defaults.Client.DefaultClient, httpContextAccessor, tokenService)
 		{
 			_client = client;
-			_client.SetClient(Client.DefaultClient);
 			_url = $"{env.MicroServices?.User}{Defaults.Gateway.User.TradingAccountService}";
-			_client.SetBearerAuthentication(tokenService.GetClientCredentialToken().Result);
 		}
 
 		public async Task<Response<List<TradingAccountsDto>>> GetAllByUserIdAsync(string userId, CancellationToken cancellationToken = default)

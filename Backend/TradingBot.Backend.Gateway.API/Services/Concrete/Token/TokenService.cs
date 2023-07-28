@@ -1,12 +1,18 @@
 ﻿using CNG.Core.Exceptions;
 using CNG.Http.Responses;
 using CNG.Http.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Caching.Memory;
+using System.Security.Claims;
 using TradingBot.Backend.Gateway.API.Defaults;
 using TradingBot.Backend.Gateway.API.Dtos;
 using TradingBot.Backend.Gateway.API.Dtos.Enums;
+using TradingBot.Backend.Gateway.API.Helpers;
 using TradingBot.Backend.Gateway.API.Models;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Token;
+using static TradingBot.Backend.Gateway.API.Defaults.Gateway;
 
 namespace TradingBot.Backend.Gateway.API.Services.Concrete.Token
 {
@@ -25,19 +31,25 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Token
 		}
 		public async Task<string> GetClientCredentialToken(CancellationToken cancellationToken = default)
 		{
+			var identity = new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(_httpContextAccessor.HttpContext?.Request
+				.Headers["Authorization"].ToString()
+				.Replace("bearer ", "") ?? ""), JwtBearerDefaults.AuthenticationScheme);
+
+			_httpContextAccessor.HttpContext!.User=new ClaimsPrincipal(identity);
+
 			if (_httpContextAccessor.HttpContext?.User.Identity is null || !_httpContextAccessor.HttpContext.User.Identity.IsAuthenticated)
 			{
 				return "";
 			}
 
-			if (_httpContextAccessor.HttpContext.User.IsInRole("admin"))
+			if (_httpContextAccessor.HttpContext.User.CustomIsInRole("admin"))
 			{
 				return await GetToken(AuthType.FullClient, cancellationToken);
 			}
 
 		
 
-			if (_httpContextAccessor.HttpContext.User.IsInRole("user"))
+			if (_httpContextAccessor.HttpContext.User.CustomIsInRole("member"))
 			{
 				return await GetToken(AuthType.UserClient, cancellationToken);
 			}
@@ -46,7 +58,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Token
 		}
 
 		public string GetResourceOwnerPasswordToken(CancellationToken cancellationToken = default) =>
-			_httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString().Replace("Bearer ", "") ?? "";
+			_httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString().Replace("bearer ", "") ?? "";
 
 		private async Task<string> GetToken(AuthType authType = AuthType.UserClient, CancellationToken cancellationToken = default)
 		{
