@@ -1,56 +1,65 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using MudBlazor;
-using TradingBot.Frontend.Libraries.Blazor.Models;
 using TradingBot.Frontend.Web.Blazor.Resources;
 
 namespace TradingBot.Frontend.Web.Blazor.Theme;
 
 public class BreadcrumbsRazor : ComponentBase
 {
-    [Inject] public NavigationManager? NavigationManager { get; set; }
-    [Inject] public IStringLocalizer<Resource> Localizer { get; set; } = null!;
-    protected List<BreadcrumbItem>? Items { get; set; }
-    [Parameter] public List<BreadcrumbItem>? BreadcrumbItems { get; set; }
-    [Parameter] public List<BreadcrumbItem>? AddItems { get; set; }
+	[Inject] public NavigationManager NavigationManager { get; set; } = null!;
+	[Inject] public IStringLocalizer<Resource> Localizer { get; set; } = null!;
+	protected List<BreadcrumbItem>? Items { get; set; }
+	[Parameter] public List<BreadcrumbItem>? BreadcrumbItems { get; set; }
+	[Parameter] public List<BreadcrumbItem>? AddItems { get; set; }
 
-    private List<HeaderMenuModel.Item>? MenuItems { get; set; }
-    protected override void OnParametersSet()
-    {
-        MenuItems = new();
+	protected override void OnParametersSet()
+	{
+		Items = new List<BreadcrumbItem>();
+		if (BreadcrumbItems != null)
+		{
+			Items.AddRange(BreadcrumbItems);
+		}
+		else if (AddItems != null)
+		{
+			Items = GetBreadcrumbs();
+			Items.AddRange(AddItems);
+		}
+		else
+		{
+			Items = GetBreadcrumbs();
+		}
+		NavigationManager.LocationChanged += NavigationManager_LocationChanged;
+	}
 
+	private string CurrentLink;
+	private void NavigationManager_LocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
+	{
+		if (e.Location == CurrentLink) return;
+		CurrentLink = e.Location;
+		OnParametersSet();
+		StateHasChanged();
+	}
 
-        Items = new List<BreadcrumbItem>();
-        if (BreadcrumbItems != null)
-        {
-            Items.AddRange(BreadcrumbItems);
-        }
-        else if (AddItems != null)
-        {
-            Items = GetBreadcrumbs();
-            Items.AddRange(AddItems);
-        }
-        else
-        {
-            Items = GetBreadcrumbs();
-        }
-    }
+	private List<BreadcrumbItem> GetBreadcrumbs()
+	{
+		List<BreadcrumbItem> items = new()
+			{ new BreadcrumbItem(Localizer["Home"], NavigationManager.BaseUri.Substring(0,NavigationManager.BaseUri.Length-1), false, BreadCrumbIcons["Home"]) };
+		foreach (var link in NavigationManager.Uri.Replace(NavigationManager.BaseUri, "").Split("/").Where(x => !string.IsNullOrEmpty(x)).ToList())
+		{
+			if (!BreadCrumbIcons.TryGetValue(link, out var icon)) icon = Icons.Material.Filled.Grid3x3;
 
-    private List<BreadcrumbItem> GetBreadcrumbs()
-    {
-        var url = NavigationManager?.Uri.Replace(NavigationManager?.BaseUri ?? "", "").Split("/").FirstOrDefault();
+			items.Add(new BreadcrumbItem(Localizer[link], $"{items.LastOrDefault()?.Href ?? NavigationManager.BaseUri}/{link}", false, icon));
+		}
 
-        var menu = MenuItems!.FirstOrDefault(x =>  x.Href == url);
-        var result = new List<BreadcrumbItem> { new("", "/", false, Icons.Material.Filled.Home) };
-        if (menu == null)
-        {
-            //result.Add(new BreadcrumbItem("Home", "/"));
-            return result;
-        }
+		return items;
+	}
 
-        result.Add(new BreadcrumbItem(Localizer[menu.Title], "", true));
-        result.AddRange(MenuItems!.Where(x => x.Href == url).Select(item => new BreadcrumbItem(Localizer[item.Title], item.Href)));
-
-        return result;
-    }
+	private static readonly Dictionary<string, string> BreadCrumbIcons = new()
+	{
+		{"Home", Icons.Material.Filled.Home },
+		{"Users", Icons.Material.Filled.Groups },
+		{"TradingAccounts",Icons.Material.Filled.CurrencyExchange},
+		{"Add",Icons.Material.Filled.Add}
+	};
 }

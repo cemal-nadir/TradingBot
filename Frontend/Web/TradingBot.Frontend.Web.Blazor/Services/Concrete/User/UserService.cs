@@ -3,7 +3,6 @@ using CNG.Http.Services;
 using TradingBot.Frontend.Libraries.Blazor.Defaults;
 using TradingBot.Frontend.Libraries.Blazor.Models;
 using TradingBot.Frontend.Libraries.Blazor.Responses;
-using TradingBot.Frontend.Libraries.Blazor.Signatures;
 using TradingBot.Frontend.Web.Blazor.Dtos.Identity;
 using TradingBot.Frontend.Web.Blazor.Services.Abstract.User;
 
@@ -31,6 +30,16 @@ namespace TradingBot.Frontend.Web.Blazor.Services.Concrete.User
 			return new SuccessResponse<List<UsersDto>>(response.Data);
 
 		}
+		public async Task<Response<List<UsersDto>>> GetAllByNameSurname(string? searchText,CancellationToken cancellationToken = default)
+		{
+			
+			var response = await _client.GetAsync<List<UsersDto>>($"{_url}/Search?searchText={searchText}", cancellationToken);
+			if (!response.Success) return new ErrorResponse<List<UsersDto>>(response.Message, response.StatusCode);
+
+			return new SuccessResponse<List<UsersDto>>(response.Data);
+
+		}
+
 
 
 		public async Task<Response<UserDto>> GetUser(string id, CancellationToken cancellationToken = default)

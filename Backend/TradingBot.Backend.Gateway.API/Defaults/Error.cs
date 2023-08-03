@@ -6,6 +6,7 @@
 		{
 			public const string RemoteApiEmptyResponse = "RemoteApiEmptyResponse";
 			public const string DataEmptyResponse = "DataEmptyResponse";
+			public const string TradingPlatformNotFound = "TradingPlatformNotFound";
 		}
 		public static class BadRequest
 		{

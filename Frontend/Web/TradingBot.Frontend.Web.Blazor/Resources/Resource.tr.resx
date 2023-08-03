@@ -117,21 +117,197 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Active" xml:space="preserve">
+    <value>Aktif</value>
+    <comment>Active</comment>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Ekle</value>
+    <comment>Add</comment>
+  </data>
+  <data name="AddTradingAccount" xml:space="preserve">
+    <value>Ticaret Hesabı Ekle</value>
+    <comment>Add_TradingAccount</comment>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Kullanıcı Ekle</value>
+    <comment>Add_User</comment>
+  </data>
+  <data name="AllTradingAccounts" xml:space="preserve">
+    <value>Tüm Ticaret Hesapları</value>
+    <comment>All_TradingAccounts</comment>
+  </data>
+  <data name="AllUsers" xml:space="preserve">
+    <value>Tüm Kullanıcılar</value>
+    <comment>All_Users</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>İptal</value>
+    <comment>Cancel</comment>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Sil</value>
+    <comment>Delete</comment>
+  </data>
+  <data name="Delete_Confirm_Content" xml:space="preserve">
+    <value>Seçili öğe/öğeleri silmek istediğinize emin misiniz ? Bu işlemin geri dönüşü olmayacaktır.</value>
+    <comment>Delete_Confirm_Content</comment>
+  </data>
   <data name="DuplicateRecord" xml:space="preserve">
     <value>Mükerrer kayıt</value>
     <comment>DuplicateRecord</comment>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Anasayfa</value>
+    <comment>Home</comment>
+  </data>
+  <data name="Login_Button" xml:space="preserve">
+    <value>Giriş Yap</value>
+    <comment>Login_Button</comment>
+  </data>
+  <data name="Login_Mail" xml:space="preserve">
+    <value>E-Posta</value>
+    <comment>Login_Mail</comment>
+  </data>
+  <data name="Login_Password" xml:space="preserve">
+    <value>Şifre</value>
+    <comment>Login_Password</comment>
+  </data>
+  <data name="Login_Processing" xml:space="preserve">
+    <value>Giriş Yapılıyor.. Lüften Bekleyin</value>
+    <comment>Login_Processing</comment>
+  </data>
+  <data name="Passive" xml:space="preserve">
+    <value>Pasif</value>
+    <comment>Passive</comment>
+  </data>
+  <data name="PleaseCheckForm" xml:space="preserve">
+    <value>Lütfen Formu Kontrol Edin</value>
+    <comment>PleaseCheckForm</comment>
+  </data>
+  <data name="Process" xml:space="preserve">
+    <value>İşlem</value>
+    <comment>Process</comment>
   </data>
   <data name="RoleNotFound" xml:space="preserve">
     <value>Yetki bulunamadı</value>
     <comment>RoleNotFound</comment>
   </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Değişiklikleri Kaydet</value>
+    <comment>SaveChanges</comment>
+  </data>
+  <data name="SaveChangesSuccess" xml:space="preserve">
+    <value>Değişiklikler Başarıyla Kaydedildi</value>
+    <comment>SaveChangesSuccess</comment>
+  </data>
   <data name="TableRelated" xml:space="preserve">
     <value>Kaydın hali hazırda başka bir tabloda ilişkisi mevcut</value>
     <comment>TableRelated</comment>
   </data>
+  <data name="TradingAccounts" xml:space="preserve">
+    <value>Ticaret Hesapları</value>
+    <comment>TradingAccounts</comment>
+  </data>
+  <data name="TradingAccounts_IsActive" xml:space="preserve">
+    <value>Aktiflik Durumu</value>
+    <comment>TradingAccounts_IsActive</comment>
+  </data>
+  <data name="TradingAccounts_Name" xml:space="preserve">
+    <value>Hesap Adı</value>
+    <comment>TradingAccounts_Name</comment>
+  </data>
+  <data name="TradingAccounts_Platform" xml:space="preserve">
+    <value>Platform</value>
+    <comment>TradingAccounts_Platform</comment>
+  </data>
+  <data name="TradingAccounts_User_Mail" xml:space="preserve">
+    <value>Kullanıcı Mail'i</value>
+    <comment>TradingAccounts_User_Mail</comment>
+  </data>
+  <data name="TradingAccounts_User_NameAndSurname" xml:space="preserve">
+    <value>Kullanıcı Adı ve Soyadı</value>
+    <comment>TradingAccounts_User_NameAndSurname</comment>
+  </data>
+  <data name="TradingAccount_AdjustBalanceError" xml:space="preserve">
+    <value>Bakiye hesaplanırken bir sorun oluştu. Platformdaki mevcut bakiyeniz, hesaplama sıklığınız ve bakiye yüzdeniz 0'dan büyük olmalıdır.</value>
+    <comment>TradingAccount_AdjustBalanceError</comment>
+  </data>
+  <data name="TradingAccount_AdjustBalancePercentage" xml:space="preserve">
+    <value>Robot Bakiye Yüzdesi</value>
+    <comment>TradingAccount_AdjustBalancePercentage</comment>
+  </data>
+  <data name="TradingAccount_AdjustBalanceSettings" xml:space="preserve">
+    <value>Robot Bakiye Ayarları</value>
+    <comment>TradingAccount_AdjustBalanceSettings</comment>
+  </data>
+  <data name="TradingAccount_AdjustFrequencyDay" xml:space="preserve">
+    <value>Robot Bakiye Hesaplama Sıklığı (Gün)</value>
+    <comment>TradingAccount_AdjustFrequencyDay</comment>
+  </data>
+  <data name="TradingAccount_Api" xml:space="preserve">
+    <value>Api Anahtarı</value>
+    <comment>TradingAccount_Api</comment>
+  </data>
+  <data name="TradingAccount_CurrentAdjustedBalance" xml:space="preserve">
+    <value>Bakiye</value>
+    <comment>TradingAccount_CurrentAdjustedBalance</comment>
+  </data>
+  <data name="TradingAccount_CurrentAdjustedBalanceSettings" xml:space="preserve">
+    <value>Mevcut Hesaplanmış Bakiye</value>
+    <comment>TradingAccount_CurrentAdjustedBalanceSettings</comment>
+  </data>
+  <data name="TradingAccount_CurrentBalance" xml:space="preserve">
+    <value>Mevcut Bakiye</value>
+    <comment>TradingAccount_CurrentBalance</comment>
+  </data>
+  <data name="TradingAccount_IsActive" xml:space="preserve">
+    <value>Aktiflik Durumu</value>
+    <comment>TradingAccount_IsActive</comment>
+  </data>
+  <data name="TradingAccount_LastAdjust" xml:space="preserve">
+    <value>Son Hesaplama</value>
+    <comment>TradingAccount_LastAdjust</comment>
+  </data>
+  <data name="TradingAccount_MinimumBalance" xml:space="preserve">
+    <value>Çalışması İçin Gerekli Minimum Bakiye</value>
+    <comment>TradingAccount_MinimumBalance</comment>
+  </data>
+  <data name="TradingAccount_Name" xml:space="preserve">
+    <value>Hesap Adı</value>
+    <comment>TradingAccount_Name</comment>
+  </data>
+  <data name="TradingAccount_Secret" xml:space="preserve">
+    <value>Api Secret</value>
+    <comment>TradingAccount_Secret</comment>
+  </data>
+  <data name="TradingAccount_SelectPlatform" xml:space="preserve">
+    <value>Platformu Seç</value>
+    <comment>TradingAccount_SelectPlatform</comment>
+  </data>
+  <data name="TradingAccount_TradingPlatformBalanceSettings" xml:space="preserve">
+    <value>Bakiye Ayarları</value>
+    <comment>TradingAccount_TradingPlatformBalanceSettings</comment>
+  </data>
+  <data name="TradingAccount_TradingPlatformSettings" xml:space="preserve">
+    <value>Platform Ayarları</value>
+    <comment>TradingAccount_TradingPlatformSettings</comment>
+  </data>
+  <data name="TradingAccount_User" xml:space="preserve">
+    <value>Kullanıcı</value>
+    <comment>TradingAccount_User</comment>
+  </data>
+  <data name="TradingHistories" xml:space="preserve">
+    <value>Ticaret Geçmişi</value>
+    <comment>TradingHistories</comment>
+  </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>Kullanıcı bulunamadı</value>
     <comment>UserNotFound</comment>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Kullanıcılar</value>
+    <comment>Users</comment>
   </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>E-posta yada Şifre hatalı</value>

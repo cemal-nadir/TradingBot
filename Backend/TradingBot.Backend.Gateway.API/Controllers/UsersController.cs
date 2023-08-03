@@ -176,7 +176,6 @@ namespace TradingBot.Backend.Gateway.API.Controllers
 
 		#endregion
 
-
 		#region TradingAccount
 
 		#region GET
@@ -201,7 +200,17 @@ namespace TradingBot.Backend.Gateway.API.Controllers
 		{
 			return Ok(await _userGateway.GetTradingAccountsByUserIdAsync(id,cancellationToken));
 		}
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[ProducesResponseType(StatusCodes.Status404NotFound)]
 
+		[HttpGet("TradingAccount/{tradingAccountId}")]
+		public async Task<IActionResult> TradingAccountById([FromRoute] string tradingAccountId, CancellationToken cancellationToken = default)
+		{
+			return Ok(await _userGateway.GetTradingAccountAsync(tradingAccountId, cancellationToken));
+		}
 
 		#endregion
 
@@ -278,9 +287,9 @@ namespace TradingBot.Backend.Gateway.API.Controllers
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[HttpDelete("TradingAccount")]
-		public async Task<IActionResult> DeleteTradingAccounts([FromQuery] List<string> tradingAccountIds, CancellationToken cancellationToken = default)
+		public async Task<IActionResult> DeleteTradingAccounts([FromQuery] List<string> listOfId, CancellationToken cancellationToken = default)
 		{
-			await _userGateway.DeleteRangeTradingAccountsAsync(tradingAccountIds, cancellationToken);
+			await _userGateway.DeleteRangeTradingAccountsAsync(listOfId, cancellationToken);
 			return StatusCode(204);
 		}
 

@@ -1,10 +1,9 @@
 @inherits BreadcrumbsRazor
-<MudPaper Elevation="0" Class="mt-3 ml-3">
+<MudPaper Elevation="0" Class="mt-3 ml-3" Style="padding: 3px 10px 3px 49px;
+    box-shadow: 0px 0px 20px 3px #77420073;">
     <MudPaper Elevation="0" Class="custom-breadcrumb" >
-        <MudBreadcrumbs Items="Items" Style="padding:3px 10px 3px 49px">
-            <SeparatorTemplate>
-                <MudIcon Icon="@Icons.Material.Filled.ArrowRight" Size="Size.Small" />
-            </SeparatorTemplate>
+        <MudBreadcrumbs Items="Items"  Separator=">">
+          
         </MudBreadcrumbs>
     </MudPaper>
 </MudPaper>

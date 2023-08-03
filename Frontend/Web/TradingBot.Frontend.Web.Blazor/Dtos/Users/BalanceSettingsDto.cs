@@ -7,6 +7,6 @@
 		public decimal AdjustBalancePercentage { get; set; }
 		public decimal CurrentAdjustedBalance { get; set; }
 		public int AdjustFrequencyDay { get; set; }
-		public DateTime LastAdjust { get; set; }
+		public DateTime? LastAdjust { get; set; }
 	}
 }

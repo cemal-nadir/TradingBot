@@ -15,6 +15,9 @@ namespace TradingBot.Frontend.Web.Blazor.Services.Abstract.User
 		Task<Response> DeleteUser(string id, CancellationToken cancellationToken = default);
 		Task<Response<UserDto>> GetCurrentUser(CancellationToken cancellationToken = default);
 
+		Task<Response<List<UsersDto>>> GetAllByNameSurname(string? searchText,
+			CancellationToken cancellationToken = default);
+
 		#endregion
 
 		#region Roles

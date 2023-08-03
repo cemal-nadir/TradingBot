@@ -1,1 +1,182 @@
-﻿@inherits TradingAccountRazor
+﻿@using TradingBot.Frontend.Web.Blazor.Dtos.Enums
+@page "/Users/TradingAccounts/Add"
+@inherits TradingAccountRazor
+<LoadingPage Visible="Loading" InComponent="true"></LoadingPage>
+<MudPaper Elevation="25" Class="pa-5" Square="true" >
+
+	<MudCard Elevation="0">
+		<MudForm Model="@Entity" @ref="@Form" Validation="@Validator.ValidateValue" ValidationDelay="1">
+			<MudCardContent>
+				<MudGrid>
+					<MudItem xs="12">
+						@{
+							if (AuthState.User.IsInRole("admin"))
+							{
+								<MudAutocomplete T="string" Label="@Localizer["TradingAccount_User"]" @bind-Value="@SelectedUser" SearchFunc="@SearchComboBox"
+										 ResetValueOnEmptyText="true"
+										 CoerceText="true" CoerceValue="false"
+										 AdornmentIcon="@Icons.Material.Filled.Search" AdornmentColor="Color.Primary" />
+							}
+							else
+							{
+								<MudTextField Value="@SelectedUser" InputType="InputType.Text" AdornmentIcon="@Icons.Material.Filled.VerifiedUser" Adornment="Adornment.End" Label="@Localizer["TradingAccount_User"]" ReadOnly="true" />
+							}
+							<MudSwitch @bind-Value="Entity.IsActive"
+							           For="@(() => Entity.IsActive)"
+							           Label="@Localizer["TradingAccount_IsActive"]" />
+						}
+
+					</MudItem>
+					<MudItem xs="12" Class="pa-5" Style="box-shadow: 0 0 20px 0px #00000085;border-radius: 1rem; margin:1rem;">
+						<MudPaper Class="pa-3" Elevation="0" >
+							<MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+								<MudText Typo="Typo.inherit" Color="Color.Primary">@Localizer["TradingAccount_TradingPlatformSettings"]</MudText>
+								<MudIconButton OnClick="ConnectTradingPlatform" Disabled="@(string.IsNullOrEmpty(Entity.ApiKey) || string.IsNullOrEmpty(Entity.SecretKey))" Icon="@Icons.Material.Filled.BrowserUpdated" Color="Color.Primary"></MudIconButton>
+							</MudStack>
+							<MudDivider DividerType="DividerType.FullWidth" Light="false"></MudDivider>
+							<MudItem xs="12">
+								<MudSelect Immediate="true" For="@(() => Entity.Platform)" Label="@Localizer["TradingAccount_SelectPlatform"]" @bind-Value="@Entity.Platform" AdornmentIcon="@Icons.Material.Filled.CurrencyExchange" Placeholder="@Localizer["TradingAccount_SelectPlatform"]">
+									@foreach (TradingPlatform item in Enum.GetValues(typeof(TradingPlatform)))
+									{
+										<MudSelectItem Value="@item">@item</MudSelectItem>
+									}
+								</MudSelect>
+							</MudItem>
+
+							<MudItem xs="12">
+								<MudTextField @bind-Value="Entity.Name"
+											  For="@(() => Entity.Name)"
+											  InputType="InputType.Text"
+											  AdornmentIcon="@Icons.Material.Filled.Title"
+											  Adornment="Adornment.End"
+											  Immediate="true"
+											  Label="@Localizer["TradingAccount_Name"]" />
+							</MudItem>
+						
+							<MudItem xs="12">
+								<MudTextField @bind-Value="Entity.ApiKey"
+											  For="@(() => Entity.ApiKey)"
+											  InputType="InputType.Text"
+											  AdornmentIcon="@Icons.Material.Filled.Api"
+											  Adornment="Adornment.End"
+											  Immediate="true"
+											  Label="@Localizer["TradingAccount_Api"]" />
+							</MudItem>
+							<MudItem xs="12">
+								<MudTextField @bind-Value="Entity.SecretKey"
+											  For="@(() => Entity.SecretKey)"
+											  InputType="InputType.Text"
+											  AdornmentIcon="@Icons.Material.Filled.Security"
+											  Adornment="Adornment.End"
+											  Immediate="true"
+											  Label="@Localizer["TradingAccount_Secret"]" />
+							</MudItem>
+						</MudPaper>
+					</MudItem>
+					<MudItem xs="12" Class="pa-5" Style="box-shadow: 0 0 20px 0px #00000085;border-radius: 1rem; margin:1rem;">
+
+						<MudPaper Class="pa-3" Elevation="0" >
+							<MudText Typo="Typo.inherit" Color="Color.Primary">@Localizer["TradingAccount_TradingPlatformBalanceSettings"]</MudText>
+							<MudDivider DividerType="DividerType.FullWidth" Light="false"></MudDivider>
+
+							<MudItem xs="12">
+								<MudTextField @bind-Value="Entity.BalanceSettings.CurrentBalance"
+											  For="@(() => Entity.BalanceSettings.CurrentBalance)"
+											  
+											  AdornmentIcon="@Icons.Material.Filled.AttachMoney"
+											  Adornment="Adornment.End"
+											  ReadOnly="true"
+											  Label="@Localizer["TradingAccount_CurrentBalance"]" />
+							</MudItem>
+							<MudItem xs="12">
+								<MudNumericField @bind-Value="Entity.BalanceSettings.MinimumBalance"
+												 Label="@Localizer["TradingAccount_MinimumBalance"]"
+								                 Step=".2M"
+												 Min="0"
+												 For="@(() => Entity.BalanceSettings.MinimumBalance)"
+								                 AdornmentIcon="@Icons.Material.Filled.Percent"
+								                 Adornment="Adornment.End"
+								                 Immediate="true" />
+							
+							</MudItem>
+						</MudPaper>
+					</MudItem>
+					<MudItem xs="12" Class="pa-5" Style="box-shadow: 0 0 20px 0px #00000085;border-radius: 1rem; margin:1rem;">
+
+						<MudPaper Class="pa-3" Elevation="0" >
+							<MudText Typo="Typo.inherit" Color="Color.Primary">@Localizer["TradingAccount_AdjustBalanceSettings"]</MudText>
+							<MudDivider DividerType="DividerType.FullWidth" Light="false"></MudDivider>
+
+							<MudItem xs="12">
+								<MudNumericField @bind-Value="Entity.BalanceSettings.AdjustBalancePercentage"
+												 Label="@Localizer["TradingAccount_AdjustBalancePercentage"]"
+												 Step=".2M"
+												 Max="99"
+												 Min="0"
+												 For="@(() => Entity.BalanceSettings.AdjustBalancePercentage)"
+												 AdornmentIcon="@Icons.Material.Filled.Percent"
+												 Adornment="Adornment.End"
+												 Immediate="true" />
+
+
+							</MudItem>
+							<MudItem xs="12">
+								<MudNumericField @bind-Value="Entity.BalanceSettings.AdjustFrequencyDay"
+												 Label="@Localizer["TradingAccount_AdjustFrequencyDay"]"
+												 For="@(() => Entity.BalanceSettings.AdjustFrequencyDay)"
+												 AdornmentIcon="@Icons.Material.Filled.Today"
+												 Max="365"
+												 Min="1"
+												 Adornment="Adornment.End"
+												 Immediate="true"
+												 T="int" />
+							</MudItem>
+						</MudPaper>
+					</MudItem>
+
+					@if (Entity.BalanceSettings.CurrentBalance > 0 && Entity.BalanceSettings.AdjustFrequencyDay > 0 && Entity.BalanceSettings.AdjustBalancePercentage > 0)
+					{
+						<MudItem xs="12" Class="pa-5" Style="box-shadow: 0 0 20px 0px #00000085;border-radius: 1rem; margin:1rem;">
+
+							<MudPaper Class="pa-3" Elevation="0" >
+								<MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
+									<MudText Typo="Typo.inherit" Color="Color.Primary">@Localizer["TradingAccount_CurrentAdjustedBalanceSettings"]</MudText>
+									<MudIconButton OnClick="AdjustBalance" Disabled="@(!(Entity.BalanceSettings.CurrentBalance > 0 && Entity.BalanceSettings.AdjustFrequencyDay > 0 && Entity.BalanceSettings.AdjustBalancePercentage > 0))" Icon="@Icons.Material.Filled.Calculate" Color="Color.Primary"></MudIconButton>
+								</MudStack>
+								<MudDivider DividerType="DividerType.FullWidth" Light="false"></MudDivider>
+								<MudItem xs="12">
+									<MudTextField @bind-Value="Entity.BalanceSettings.CurrentAdjustedBalance"
+											  For="@(() => Entity.BalanceSettings.CurrentAdjustedBalance)"
+											  AdornmentIcon="@Icons.Material.Filled.PriceCheck"
+											  Adornment="Adornment.End"
+											  ReadOnly="true"
+											  Label="@Localizer["TradingAccount_CurrentAdjustedBalance"]" />
+								</MudItem>
+								<MudItem xs="12">
+									<MudDatePicker Label="@Localizer["TradingAccount_LastAdjust"]"
+											   @bind-Date="Entity.BalanceSettings.LastAdjust"
+											   ReadOnly="true"
+											   AdornmentIcon="@Icons.Material.Filled.Update"
+											   Adornment="Adornment.End" />
+								</MudItem>
+							</MudPaper>
+						</MudItem>
+					}
+
+
+				
+				</MudGrid>
+				<MudStack Row="false" AlignItems="AlignItems.Center">
+
+					<MudSpacer />
+					<MudButton OnClick="CheckAndSaveChangesAsync" FullWidth="true" Color="Color.Success" Variant="Variant.Outlined" Size="Size.Large" EndIcon="@Icons.Material.Filled.DoneAll">@Localizer["SaveChanges"]</MudButton>
+
+				</MudStack>
+			</MudCardContent>
+
+		</MudForm>
+	</MudCard>
+
+
+
+</MudPaper>

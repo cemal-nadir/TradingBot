@@ -1,5 +1,4 @@
 ﻿using CNG.Core;
-using Consul;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Identity;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Users;
 using TradingBot.Backend.Gateway.API.Extensions;
@@ -134,11 +133,48 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Gateway
 			(await _tradingAccountService.GetAsync(tradingAccountId, cancellationToken)).CheckResponse();
 
 		public async Task<List<TradingAccountsDto>?> GetTradingAccountsAsync(
-			CancellationToken cancellationToken = default) =>
-			(await _tradingAccountService.GetAllAsync(cancellationToken)).CheckResponse();
+			CancellationToken cancellationToken = default)
+		{
+			var tradingAccounts=(await _tradingAccountService.GetAllAsync(cancellationToken)).CheckResponse();
+			var users = (await _userService.GetAllByUserIdsAsync(tradingAccounts?.Select(x=>x.UserId).Distinct().ToList()!  , cancellationToken)).CheckResponse();
+			return tradingAccounts?.Select(x => new TradingAccountsDto
+			{
+				BalanceSettings = x.BalanceSettings,
+				UserId = x.UserId,
+				IsActive = x.IsActive,
+				ApiKey = x.ApiKey,
+				Id = x.Id,
+				Name = x.Name,
+				SecretKey = x.SecretKey,
+				Indicators = x.Indicators,
+				Platform = x.Platform,
+				UserName =
+					$"{users?.FirstOrDefault(y => y.Id == x.UserId)?.Name} {users?.FirstOrDefault(y => y.Id == x.UserId)?.SurName}",
+				UserMail = users?.FirstOrDefault(y => y.Id == x.UserId)?.Email
+			}).ToList();
+		}
+
 		public async Task<List<TradingAccountsDto>?> GetTradingAccountsByUserIdAsync(string userId,
-			CancellationToken cancellationToken = default) =>
-			(await _tradingAccountService.GetAllByUserIdAsync(userId, cancellationToken)).CheckResponse();
+			CancellationToken cancellationToken = default)
+		{
+			var tradingAccounts=(await _tradingAccountService.GetAllByUserIdAsync(userId, cancellationToken)).CheckResponse();
+			var user = (await _userService.GetUser(userId, cancellationToken)).CheckResponse();
+			return tradingAccounts?.Select(x => new TradingAccountsDto
+			{
+				BalanceSettings = x.BalanceSettings,
+				UserId = x.UserId,
+				IsActive = x.IsActive,
+				ApiKey = x.ApiKey,
+				Id = x.Id,
+				Name = x.Name,
+				SecretKey = x.SecretKey,
+				Indicators = x.Indicators,
+				Platform = x.Platform,
+				UserName =
+					$"{user.Name} {user.SurName}",
+				UserMail = user.Email
+			}).ToList();
+		}
 
 		public async Task InsertTradingAccountAsync(TradingAccountDto dto,
 			CancellationToken cancellationToken = default) =>

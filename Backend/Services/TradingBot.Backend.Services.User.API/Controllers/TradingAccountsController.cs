@@ -1,5 +1,4 @@
-﻿using CNG.Abstractions.Signatures;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TradingBot.Backend.Libraries.ApiCore.Repositories;
 using TradingBot.Backend.Libraries.Application.Dtos.User;

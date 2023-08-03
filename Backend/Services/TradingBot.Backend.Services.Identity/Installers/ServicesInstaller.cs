@@ -1,10 +1,7 @@
 ﻿using System.Reflection;
-using IdentityModel;
-using IdentityServer4.AspNetIdentity;
 using IdentityServer4.EntityFramework.Stores;
 using IdentityServer4.Services;
 using IdentityServer4.Stores;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TradingBot.Backend.Services.Identity.Api.CustomTokenProviders;

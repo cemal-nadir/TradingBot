@@ -6,5 +6,10 @@
 		{
 			public const string UserService = "Users";
 		}
+		public static class TradingPlatform
+		{
+			public const string TradingPlatformService = "Platforms";
+
+		}
 	}
 }

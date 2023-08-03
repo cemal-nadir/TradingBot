@@ -61,11 +61,164 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Active benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Active {
+            get {
+                return ResourceManager.GetString("Active", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Add benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Add Trading Account benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AddTradingAccount {
+            get {
+                return ResourceManager.GetString("AddTradingAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Add User benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AddUser {
+            get {
+                return ResourceManager.GetString("AddUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   All Trading Accounts benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AllTradingAccounts {
+            get {
+                return ResourceManager.GetString("AllTradingAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   All Users benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string AllUsers {
+            get {
+                return ResourceManager.GetString("AllUsers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Cancel benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Delete benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Are you sure you want to delete the selected item(s)? This operation will be irreversible. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Delete_Confirm_Content {
+            get {
+                return ResourceManager.GetString("Delete_Confirm_Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Duplicate record benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string DuplicateRecord {
             get {
                 return ResourceManager.GetString("DuplicateRecord", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Home benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Home {
+            get {
+                return ResourceManager.GetString("Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sign In benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Login_Button {
+            get {
+                return ResourceManager.GetString("Login_Button", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   E-Mail benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Login_Mail {
+            get {
+                return ResourceManager.GetString("Login_Mail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Password benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Login_Password {
+            get {
+                return ResourceManager.GetString("Login_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Login Processing.. Please Wait benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Login_Processing {
+            get {
+                return ResourceManager.GetString("Login_Processing", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Passive benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Passive {
+            get {
+                return ResourceManager.GetString("Passive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Please Check The Form benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string PleaseCheckForm {
+            get {
+                return ResourceManager.GetString("PleaseCheckForm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Process benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Process {
+            get {
+                return ResourceManager.GetString("Process", resourceCulture);
             }
         }
         
@@ -79,6 +232,24 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Save Changes benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SaveChanges {
+            get {
+                return ResourceManager.GetString("SaveChanges", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Changes Successfully Completed benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string SaveChangesSuccess {
+            get {
+                return ResourceManager.GetString("SaveChangesSuccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Record already has a relationship in another table benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string TableRelated {
@@ -88,11 +259,236 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         }
         
         /// <summary>
+        ///   There was a problem calculating the balance. Your current balance on the platform, your calculation frequency and your balance percentage must be greater than 0. benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_AdjustBalanceError {
+            get {
+                return ResourceManager.GetString("TradingAccount_AdjustBalanceError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Automation Balance Percentage benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_AdjustBalancePercentage {
+            get {
+                return ResourceManager.GetString("TradingAccount_AdjustBalancePercentage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Automation Balance Settings benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_AdjustBalanceSettings {
+            get {
+                return ResourceManager.GetString("TradingAccount_AdjustBalanceSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Automation Balance Calculate Frequency (Day) benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_AdjustFrequencyDay {
+            get {
+                return ResourceManager.GetString("TradingAccount_AdjustFrequencyDay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Api Key benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_Api {
+            get {
+                return ResourceManager.GetString("TradingAccount_Api", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Balance benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_CurrentAdjustedBalance {
+            get {
+                return ResourceManager.GetString("TradingAccount_CurrentAdjustedBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Current Calculated Balance benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_CurrentAdjustedBalanceSettings {
+            get {
+                return ResourceManager.GetString("TradingAccount_CurrentAdjustedBalanceSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Current Balance benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_CurrentBalance {
+            get {
+                return ResourceManager.GetString("TradingAccount_CurrentBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Active Status benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_IsActive {
+            get {
+                return ResourceManager.GetString("TradingAccount_IsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Last Calculate benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_LastAdjust {
+            get {
+                return ResourceManager.GetString("TradingAccount_LastAdjust", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Minimum Balance to Run benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_MinimumBalance {
+            get {
+                return ResourceManager.GetString("TradingAccount_MinimumBalance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Account Name benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_Name {
+            get {
+                return ResourceManager.GetString("TradingAccount_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Api Secret benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_Secret {
+            get {
+                return ResourceManager.GetString("TradingAccount_Secret", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select Platform benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_SelectPlatform {
+            get {
+                return ResourceManager.GetString("TradingAccount_SelectPlatform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Balance Settings benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_TradingPlatformBalanceSettings {
+            get {
+                return ResourceManager.GetString("TradingAccount_TradingPlatformBalanceSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Platform Settings benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_TradingPlatformSettings {
+            get {
+                return ResourceManager.GetString("TradingAccount_TradingPlatformSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   User benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccount_User {
+            get {
+                return ResourceManager.GetString("TradingAccount_User", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   TradingAccounts benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccounts {
+            get {
+                return ResourceManager.GetString("TradingAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Active Status benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccounts_IsActive {
+            get {
+                return ResourceManager.GetString("TradingAccounts_IsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Account Name benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccounts_Name {
+            get {
+                return ResourceManager.GetString("TradingAccounts_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Platform benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccounts_Platform {
+            get {
+                return ResourceManager.GetString("TradingAccounts_Platform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   User Mail benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccounts_User_Mail {
+            get {
+                return ResourceManager.GetString("TradingAccounts_User_Mail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   User Name and Surname benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccounts_User_NameAndSurname {
+            get {
+                return ResourceManager.GetString("TradingAccounts_User_NameAndSurname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Trading Histories benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingHistories {
+            get {
+                return ResourceManager.GetString("TradingHistories", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   User not found benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string UserNotFound {
             get {
                 return ResourceManager.GetString("UserNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Users benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Users {
+            get {
+                return ResourceManager.GetString("Users", resourceCulture);
             }
         }
         

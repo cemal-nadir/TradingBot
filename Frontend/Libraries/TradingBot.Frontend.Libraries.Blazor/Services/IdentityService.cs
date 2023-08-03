@@ -44,7 +44,7 @@ namespace TradingBot.Frontend.Libraries.Blazor.Services
 
 			NotifyAuthenticationStateChanged(Task.FromResult(
 				new AuthenticationState(
-					new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(authenticationToken.AccessToken ?? ""), "jwtAuthType")))));
+					new CustomPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(authenticationToken.AccessToken ?? ""), "jwtAuthType")))));
 
 			if (tokenResponse.Data is null) throw new NotFoundException(ErrorDefaults.NotFound.RemoteApiEmptyResponse);
 		}
@@ -62,7 +62,7 @@ namespace TradingBot.Frontend.Libraries.Blazor.Services
 
 			await _localStorageService.DeleteAsync(nameof(AuthenticationTokenWithClaims));
 
-			NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()))));
+			NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new CustomPrincipal(new ClaimsIdentity()))));
 			return new SuccessResponse();
 		}
 
@@ -93,7 +93,7 @@ namespace TradingBot.Frontend.Libraries.Blazor.Services
 
 			NotifyAuthenticationStateChanged(Task.FromResult(
 				new AuthenticationState(
-					new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(authenticationToken.AccessToken ?? ""), "jwtAuthType")))));
+					new CustomPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(authenticationToken.AccessToken ?? ""), "jwtAuthType")))));
 			return new SuccessResponse();
 		}
 		public override async Task<AuthenticationState> GetAuthenticationStateAsync()
@@ -103,15 +103,15 @@ namespace TradingBot.Frontend.Libraries.Blazor.Services
 
 			if (token?.AccessToken == null || string.IsNullOrEmpty(token.AccessToken))
 			{
-				return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity()));
+				return new AuthenticationState(new CustomPrincipal(new ClaimsIdentity()));
 			}
 
 			if (token.Expired >= DateTime.Now)
 				return new AuthenticationState(
-					new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token.AccessToken), "jwtAuthType")));
+					new CustomPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token.AccessToken), "jwtAuthType")));
 			await GetAccessTokenByRefreshToken();
 			token = (await _localStorageService.GetAsync<AuthenticationTokenWithClaims>(nameof(AuthenticationTokenWithClaims))).Value;
-			return new AuthenticationState(new ClaimsPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token?.AccessToken ?? ""), "jwtAuthType")));
+			return new AuthenticationState(new CustomPrincipal(new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(token?.AccessToken ?? ""), "jwtAuthType")));
 
 		}
 	}

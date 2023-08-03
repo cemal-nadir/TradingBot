@@ -117,21 +117,197 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Active" xml:space="preserve">
+    <value>Active</value>
+    <comment>Active</comment>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>Add</value>
+    <comment>Add</comment>
+  </data>
+  <data name="AddTradingAccount" xml:space="preserve">
+    <value>Add_TradingAccount</value>
+    <comment>Add_TradingAccount</comment>
+  </data>
+  <data name="AddUser" xml:space="preserve">
+    <value>Add_User</value>
+    <comment>Add_User</comment>
+  </data>
+  <data name="AllTradingAccounts" xml:space="preserve">
+    <value>All_TradingAccounts</value>
+    <comment>All_TradingAccounts</comment>
+  </data>
+  <data name="AllUsers" xml:space="preserve">
+    <value>All_Users</value>
+    <comment>All_Users</comment>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+    <comment>Cancel</comment>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+    <comment>Delete</comment>
+  </data>
+  <data name="Delete_Confirm_Content" xml:space="preserve">
+    <value>Delete_Confirm_Content</value>
+    <comment>Delete_Confirm_Content</comment>
+  </data>
   <data name="DuplicateRecord" xml:space="preserve">
     <value>DuplicateRecord</value>
     <comment>DuplicateRecord</comment>
+  </data>
+  <data name="Home" xml:space="preserve">
+    <value>Home</value>
+    <comment>Home</comment>
+  </data>
+  <data name="Login_Button" xml:space="preserve">
+    <value>Login_Button</value>
+    <comment>Login_Button</comment>
+  </data>
+  <data name="Login_Mail" xml:space="preserve">
+    <value>Login_Mail</value>
+    <comment>Login_Mail</comment>
+  </data>
+  <data name="Login_Password" xml:space="preserve">
+    <value>Login_Password</value>
+    <comment>Login_Password</comment>
+  </data>
+  <data name="Login_Processing" xml:space="preserve">
+    <value>Login_Processing</value>
+    <comment>Login_Processing</comment>
+  </data>
+  <data name="Passive" xml:space="preserve">
+    <value>Passive</value>
+    <comment>Passive</comment>
+  </data>
+  <data name="PleaseCheckForm" xml:space="preserve">
+    <value>PleaseCheckForm</value>
+    <comment>PleaseCheckForm</comment>
+  </data>
+  <data name="Process" xml:space="preserve">
+    <value>Process</value>
+    <comment>Process</comment>
   </data>
   <data name="RoleNotFound" xml:space="preserve">
     <value>RoleNotFound</value>
     <comment>RoleNotFound</comment>
   </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>SaveChanges</value>
+    <comment>SaveChanges</comment>
+  </data>
+  <data name="SaveChangesSuccess" xml:space="preserve">
+    <value>SaveChangesSuccess</value>
+    <comment>SaveChangesSuccess</comment>
+  </data>
   <data name="TableRelated" xml:space="preserve">
     <value>TableRelated</value>
     <comment>TableRelated</comment>
   </data>
+  <data name="TradingAccounts" xml:space="preserve">
+    <value>TradingAccounts</value>
+    <comment>TradingAccounts</comment>
+  </data>
+  <data name="TradingAccounts_IsActive" xml:space="preserve">
+    <value>TradingAccounts_IsActive</value>
+    <comment>TradingAccounts_IsActive</comment>
+  </data>
+  <data name="TradingAccounts_Name" xml:space="preserve">
+    <value>TradingAccounts_Name</value>
+    <comment>TradingAccounts_Name</comment>
+  </data>
+  <data name="TradingAccounts_Platform" xml:space="preserve">
+    <value>TradingAccounts_Platform</value>
+    <comment>TradingAccounts_Platform</comment>
+  </data>
+  <data name="TradingAccounts_User_Mail" xml:space="preserve">
+    <value>TradingAccounts_User_Mail</value>
+    <comment>TradingAccounts_User_Mail</comment>
+  </data>
+  <data name="TradingAccounts_User_NameAndSurname" xml:space="preserve">
+    <value>TradingAccounts_User_NameAndSurname</value>
+    <comment>TradingAccounts_User_NameAndSurname</comment>
+  </data>
+  <data name="TradingAccount_AdjustBalanceError" xml:space="preserve">
+    <value>TradingAccount_AdjustBalanceError</value>
+    <comment>TradingAccount_AdjustBalanceError</comment>
+  </data>
+  <data name="TradingAccount_AdjustBalancePercentage" xml:space="preserve">
+    <value>TradingAccount_AdjustBalancePercentage</value>
+    <comment>TradingAccount_AdjustBalancePercentage</comment>
+  </data>
+  <data name="TradingAccount_AdjustBalanceSettings" xml:space="preserve">
+    <value>TradingAccount_AdjustBalanceSettings</value>
+    <comment>TradingAccount_AdjustBalanceSettings</comment>
+  </data>
+  <data name="TradingAccount_AdjustFrequencyDay" xml:space="preserve">
+    <value>TradingAccount_AdjustFrequencyDay</value>
+    <comment>TradingAccount_AdjustFrequencyDay</comment>
+  </data>
+  <data name="TradingAccount_Api" xml:space="preserve">
+    <value>TradingAccount_Api</value>
+    <comment>TradingAccount_Api</comment>
+  </data>
+  <data name="TradingAccount_CurrentAdjustedBalance" xml:space="preserve">
+    <value>TradingAccount_CurrentAdjustedBalance</value>
+    <comment>TradingAccount_CurrentAdjustedBalance</comment>
+  </data>
+  <data name="TradingAccount_CurrentAdjustedBalanceSettings" xml:space="preserve">
+    <value>TradingAccount_CurrentAdjustedBalanceSettings</value>
+    <comment>TradingAccount_CurrentAdjustedBalanceSettings</comment>
+  </data>
+  <data name="TradingAccount_CurrentBalance" xml:space="preserve">
+    <value>TradingAccount_CurrentBalance</value>
+    <comment>TradingAccount_CurrentBalance</comment>
+  </data>
+  <data name="TradingAccount_IsActive" xml:space="preserve">
+    <value>TradingAccount_IsActive</value>
+    <comment>TradingAccount_IsActive</comment>
+  </data>
+  <data name="TradingAccount_LastAdjust" xml:space="preserve">
+    <value>TradingAccount_LastAdjust</value>
+    <comment>TradingAccount_LastAdjust</comment>
+  </data>
+  <data name="TradingAccount_MinimumBalance" xml:space="preserve">
+    <value>TradingAccount_MinimumBalance</value>
+    <comment>TradingAccount_MinimumBalance</comment>
+  </data>
+  <data name="TradingAccount_Name" xml:space="preserve">
+    <value>TradingAccount_Name</value>
+    <comment>TradingAccount_Name</comment>
+  </data>
+  <data name="TradingAccount_Secret" xml:space="preserve">
+    <value>TradingAccount_Secret</value>
+    <comment>TradingAccount_Secret</comment>
+  </data>
+  <data name="TradingAccount_SelectPlatform" xml:space="preserve">
+    <value>TradingAccount_SelectPlatform</value>
+    <comment>TradingAccount_SelectPlatform</comment>
+  </data>
+  <data name="TradingAccount_TradingPlatformBalanceSettings" xml:space="preserve">
+    <value>TradingAccount_TradingPlatformBalanceSettings</value>
+    <comment>TradingAccount_TradingPlatformBalanceSettings</comment>
+  </data>
+  <data name="TradingAccount_TradingPlatformSettings" xml:space="preserve">
+    <value>TradingAccount_TradingPlatformSettings</value>
+    <comment>TradingAccount_TradingPlatformSettings</comment>
+  </data>
+  <data name="TradingAccount_User" xml:space="preserve">
+    <value>TradingAccount_User</value>
+    <comment>TradingAccount_User</comment>
+  </data>
+  <data name="TradingHistories" xml:space="preserve">
+    <value>TradingHistories</value>
+    <comment>TradingHistories</comment>
+  </data>
   <data name="UserNotFound" xml:space="preserve">
     <value>UserNotFound</value>
     <comment>UserNotFound</comment>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+    <comment>Users</comment>
   </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>WrongPassword</value>

@@ -1,25 +1,31 @@
 ﻿@inherits MainLayoutRazor
 
-	<MudLayout Style="height:100vh; overflow-x:hidden;overflow-y:scroll;">
-		<LoadingPage Visible="@Loading"></LoadingPage>
-		@if (!Loading)
-		{
-			<MudPaper Elevation="0">
-				<Header ProfileMenuOnClick="@ProfileMenuClicked"></Header>
-				<MudMainContent>
-					<MudDrawerContainer Class="drawer-container" Style="height: 100%">
-						<MudDrawer @bind-Open="@ProfileMenuShowing" Variant="DrawerVariant.Responsive" Class="right-menu" Anchor="Anchor.Right">
-							<ProfileMenu />
-						</MudDrawer>
-					</MudDrawerContainer>
-					@Body
-				</MudMainContent>
-			</MudPaper>
-		}
+<MudLayout Style="height:100vh; overflow-x:hidden;overflow-y:scroll;">
+	<LoadingPage Visible="@Loading"></LoadingPage>
+	@if (!Loading)
+	{
+		<MudPaper Elevation="0">
+			<Header ProfileMenuOnClick="@ProfileMenuClicked"></Header>
+			<MudMainContent>
+				<MudDrawerContainer Class="drawer-container" Style="height: 100%">
+					<MudDrawer @bind-Open="@ProfileMenuShowing" Variant="DrawerVariant.Responsive" Class="right-menu" Anchor="Anchor.Right">
+						<ProfileMenu />
+					</MudDrawer>
+				</MudDrawerContainer>
+				<MudPaper Elevation="0" Class="pa-5">
+					<MudOverlay OnClick="() => ProfileMenuShowing=!ProfileMenuShowing" DarkBackground="true" Visible="@ProfileMenuShowing" />
+					<Breadcrumbs></Breadcrumbs>
+					<MudPaper Elevation="0" Class="pa-5 mt-1" >
+						@Body
+					</MudPaper>
+				</MudPaper>
+			</MudMainContent>
+		</MudPaper>
+	}
 
-	</MudLayout>
+</MudLayout>
 
-	
+
 
 
 

@@ -1,5 +1,9 @@
-﻿using CNG.Abstractions.Signatures;
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using CNG.Abstractions.Signatures;
 using CNG.Http.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using TradingBot.Backend.Gateway.API.Helpers;
 using TradingBot.Backend.Gateway.API.Responses;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Token;
 
@@ -10,6 +14,7 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 		where TListDto : IListDto<TKey?>, new()
 		where TKey : IEquatable<TKey?>
 	{
+		private readonly IHttpContextAccessor _httpContextAccessor;
 		private readonly IHttpClientService _client;
 		private readonly string _url;
 		protected ServiceRepository(IHttpClientService client, string url, string clientName, IHttpContextAccessor httpContextAccessor, ITokenService tokenService)
@@ -17,12 +22,24 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 			_client = client;
 			_client.SetClient(clientName);
 			_url = url;
-			//TODO BURASI DEĞİŞECEK HEADERLARI BUGA SOKUYOR
-			//_client.SetHeader(new Dictionary<string, string>()
-			//{
-			//	{"X-User",httpContextAccessor.HttpContext?.Request.HttpContext.User.Claims.FirstOrDefault(x=>x.Type==JwtRegisteredClaimNames.Sub)?.Value??""}
-			//});
+			_httpContextAccessor = httpContextAccessor;
+			LoginUser();
+			_client.SetHeader(new Dictionary<string, string>()
+			{
+				{"X-User",httpContextAccessor.HttpContext?.Request.HttpContext.User.Claims.FirstOrDefault(x=>x.Type==JwtRegisteredClaimNames.Sub)?.Value??""}
+			});
 			_client.SetBearerAuthentication(tokenService.GetClientCredentialToken().Result);
+		}
+
+		private void LoginUser()
+		{
+			if (string.IsNullOrEmpty(_httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString()))
+				return;
+			var identity = new ClaimsIdentity(JwtParser.ParseClaimsFromJwt(_httpContextAccessor.HttpContext?.Request
+				.Headers["Authorization"].ToString()
+				.Replace("bearer ", "") ?? ""), JwtBearerDefaults.AuthenticationScheme);
+			if (_httpContextAccessor.HttpContext != null)
+				_httpContextAccessor.HttpContext.User = new ClaimsPrincipal(identity);
 		}
 		public virtual async Task<Response<List<TListDto>>> GetAllAsync(CancellationToken cancellationToken = default)
 		{

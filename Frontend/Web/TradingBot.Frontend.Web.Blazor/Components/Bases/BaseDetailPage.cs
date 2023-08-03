@@ -1,22 +1,24 @@
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 using TradingBot.Frontend.Libraries.Blazor.Repositories;
+using TradingBot.Frontend.Libraries.Blazor.Services;
 using TradingBot.Frontend.Libraries.Blazor.Signatures;
 
 namespace TradingBot.Frontend.Web.Blazor.Components.Bases;
 
-public class BaseDetailPage<TDto, TListDto, TKey, TService> : BaseComponent
-    where TDto : IDto, new()
+public class BaseDetailPage<TDto, TListDto, TKey, TService, TValidator> : BaseComponent
+    where TDto : class, IDto, new()
     where TListDto : IListDto<TKey>, new()
     where TKey : IEquatable<TKey>
     where TService : IServiceRepository<TKey, TDto, TListDto>
+    where TValidator: ValidatorBase<TDto>
 {
     #region Paramters
 
     [CascadingParameter] public MudDialogInstance? MudDialog { get; set; }
     [Parameter] public TKey? Id { get; set; }
-
+    protected MudForm Form { get; set; } = new();
+    [Inject] protected TValidator Validator { get; set; } = null!;
     #endregion
 
     protected bool IsNew => Id == null || string.IsNullOrEmpty(Id.ToString()) || Id.ToString() == Guid.Empty.ToString();
@@ -48,16 +50,22 @@ public class BaseDetailPage<TDto, TListDto, TKey, TService> : BaseComponent
 
     #region Service Methods
 
-    protected virtual async Task SaveChangesAsync(EditContext context)
+    protected virtual async Task SaveChangesAsync()
     {
-        if (context.Validate())
+        await Form.Validate();
+        if (Form.IsValid)
         {
             Processing = true;
             if (IsNew) await InsertAsync();
             else await UpdateAsync();
             Processing = false;
+            Snackbar.Add(Localizer["SaveChangesSuccess"], Severity.Success);
         }
-    }
+        else
+        {
+	        Snackbar.Add(Localizer["PleaseCheckForm"], Severity.Warning);
+		}
+	}
     protected virtual async Task GetAsync(CancellationToken cancellationToken = default)
     {
         if (!IsNew)

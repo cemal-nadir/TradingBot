@@ -8,245 +8,273 @@ using TradingBot.Backend.Services.Identity.Api.Models;
 
 namespace TradingBot.Backend.Services.Identity.Api.Services;
 
-public class UserService:IUserService
+public class UserService : IUserService
 {
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly RoleManager<IdentityRole> _roleManager;
+	private readonly UserManager<ApplicationUser> _userManager;
+	private readonly RoleManager<IdentityRole> _roleManager;
 
-    public UserService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
-    {
-        _userManager = userManager;
-        _roleManager = roleManager;
-    }
+	public UserService(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+	{
+		_userManager = userManager;
+		_roleManager = roleManager;
+	}
 
-    #region CRUD
+	#region CRUD
 
-    public async Task<string> InsertAsync(UserInsertDto dto)
-    {
-        var user = new ApplicationUser()
-        {
-          
-            UserName = dto.UserName,
-            Email = dto.Email,
-            Gender = dto.Gender,
-            Name = dto.Name,
-            PhoneNumber = dto.PhoneNumber,
-            SurName = dto.SurName,
-           BirthDate = dto.BirthDate,
-           
-        };
-        var result = await _userManager.CreateAsync(user, dto.Password ?? "");
-        if (!result.Succeeded)
-            throw new BadRequestException(string.Join(',', result.Errors.Select(x => x.Description)));
-        if (dto.Roles == null) return user.Id;
+	public async Task<string> InsertAsync(UserInsertDto dto)
+	{
+		var user = new ApplicationUser()
+		{
 
-        foreach (var role in dto.Roles)
-        {
-            var newRole = await _roleManager.FindByNameAsync(role);
-            if (newRole is null)
-            {
-                await DeleteUser(user.Id);
-                throw new NotFoundException(ErrorDefaults.NotFound.Role);
-            }
+			UserName = dto.UserName,
+			Email = dto.Email,
+			Gender = dto.Gender,
+			Name = dto.Name,
+			PhoneNumber = dto.PhoneNumber,
+			SurName = dto.SurName,
+			BirthDate = dto.BirthDate,
 
-            result = await _userManager.AddToRoleAsync(user, newRole.Name ?? "");
-            if (result.Succeeded) continue;
-            await DeleteUser(user.Id);
+		};
+		var result = await _userManager.CreateAsync(user, dto.Password ?? "");
+		if (!result.Succeeded)
+			throw new BadRequestException(string.Join(',', result.Errors.Select(x => x.Description)));
+		if (dto.Roles == null) return user.Id;
 
-            throw new BadRequestException(string.Join(',', result.Errors.Select(x => x.Description)));
-        }
+		foreach (var role in dto.Roles)
+		{
+			var newRole = await _roleManager.FindByNameAsync(role);
+			if (newRole is null)
+			{
+				await DeleteUser(user.Id);
+				throw new NotFoundException(ErrorDefaults.NotFound.Role);
+			}
 
-        return user.Id;
-    }
+			result = await _userManager.AddToRoleAsync(user, newRole.Name ?? "");
+			if (result.Succeeded) continue;
+			await DeleteUser(user.Id);
 
-    public async Task UpdateAsync(UserUpdateDto dto)
-    {
-        var userCache = await _userManager.FindByIdAsync(dto.Id ?? "") ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+			throw new BadRequestException(string.Join(',', result.Errors.Select(x => x.Description)));
+		}
 
-        var rolesCache = await _userManager.GetRolesAsync(userCache) ?? throw new NotFoundException(ErrorDefaults.NotFound.Role);
+		return user.Id;
+	}
 
-        var userCacheDto = new UserUpdateDto()
-        {
-           
-            UserName = userCache.UserName,
-            Email = userCache.Email,
-            Id = userCache.Id,
-            Roles = rolesCache.ToList(),
-          
-            Gender = userCache.Gender,
-            Name = userCache.Name,
-            PhoneNumber = userCache.PhoneNumber,
-            SurName = userCache.SurName,
-            UserBirthDate = userCache.BirthDate
-        };
-        var user = new ApplicationUser()
-        {
-       
-            Email = dto.Email ?? userCache.Email,
-            Gender = dto.Gender ?? userCache.Gender,
-            Name = dto.Name ?? userCache.Name,
-            PhoneNumber = dto.PhoneNumber ?? userCache.PhoneNumber,
-            SurName = dto.SurName ?? userCache.SurName,
-            UserName = dto.UserName ?? userCache.UserName,
-            Id = dto.Id ?? userCache.Id,
-            BirthDate = dto.UserBirthDate??userCache.BirthDate
-        };
-        var response = await _userManager.UpdateAsync(user);
+	public async Task UpdateAsync(UserUpdateDto dto)
+	{
+		var userCache = await _userManager.FindByIdAsync(dto.Id ?? "") ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 
-        if (!response.Succeeded)
-        {
-            await UndoChanges(userCacheDto);
-            throw new BadRequestException(string.Join(',', response.Errors.Select(x => x.Description)));
-        }
+		var rolesCache = await _userManager.GetRolesAsync(userCache) ?? throw new NotFoundException(ErrorDefaults.NotFound.Role);
 
-        user = await _userManager.FindByIdAsync(dto.Id ?? "") ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		var userCacheDto = new UserUpdateDto()
+		{
 
-        if (!string.IsNullOrEmpty(dto.Password))
-        {
-            var passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
-            response = await _userManager.ResetPasswordAsync(user, passwordResetToken, dto.Password);
+			UserName = userCache.UserName,
+			Email = userCache.Email,
+			Id = userCache.Id,
+			Roles = rolesCache.ToList(),
 
-            if (!response.Succeeded)
-            {
-                await UndoChanges(userCacheDto);
-                throw new BadRequestException(string.Join(',', response.Errors.Select(x => x.Description)));
+			Gender = userCache.Gender,
+			Name = userCache.Name,
+			PhoneNumber = userCache.PhoneNumber,
+			SurName = userCache.SurName,
+			UserBirthDate = userCache.BirthDate
+		};
+		var user = new ApplicationUser()
+		{
 
-            }
+			Email = dto.Email ?? userCache.Email,
+			Gender = dto.Gender ?? userCache.Gender,
+			Name = dto.Name ?? userCache.Name,
+			PhoneNumber = dto.PhoneNumber ?? userCache.PhoneNumber,
+			SurName = dto.SurName ?? userCache.SurName,
+			UserName = dto.UserName ?? userCache.UserName,
+			Id = dto.Id ?? userCache.Id,
+			BirthDate = dto.UserBirthDate ?? userCache.BirthDate
+		};
+		var response = await _userManager.UpdateAsync(user);
 
-        }
+		if (!response.Succeeded)
+		{
+			await UndoChanges(userCacheDto);
+			throw new BadRequestException(string.Join(',', response.Errors.Select(x => x.Description)));
+		}
 
-        if (dto.Roles != null) await UpdateUserRoles(userCache.Id, dto.Roles);
+		user = await _userManager.FindByIdAsync(dto.Id ?? "") ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 
-    }
+		if (!string.IsNullOrEmpty(dto.Password))
+		{
+			var passwordResetToken = await _userManager.GeneratePasswordResetTokenAsync(user);
+			response = await _userManager.ResetPasswordAsync(user, passwordResetToken, dto.Password);
 
-    public async Task DeleteAsync(string id)
-    {
-        await DeleteUser(id);
-    }
+			if (!response.Succeeded)
+			{
+				await UndoChanges(userCacheDto);
+				throw new BadRequestException(string.Join(',', response.Errors.Select(x => x.Description)));
 
-    public async Task<UserDto> GetAsync(string id)
-    {
-        return await GetUserById(id);
-    }
+			}
 
-    public async Task<List<UsersDto>> GetAllAsync()
-    {
-        var models = await _userManager.Users.ToListAsync();
-        return models.Select(x => x.MapUsers()).ToList();
-    }
+		}
 
-    #endregion
+		if (dto.Roles != null) await UpdateUserRoles(userCache.Id, dto.Roles);
 
-    #region Roles
+	}
 
-    public async Task<List<SelectList<string>>> GetAllRoles()
-    {
-        var roles =await _roleManager.Roles.ToListAsync();
-        return roles.Select(x => new SelectList<string>(x.Id, x.Name ?? "")).ToList();
-    }
-    public async Task<List<SelectList<string>>> GetUserRolesAsync(string id)
-    {
-        var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+	public async Task DeleteAsync(string id)
+	{
+		await DeleteUser(id);
+	}
 
-        var roles = await _userManager.GetRolesAsync(user);
-        var allRoles = await _roleManager.Roles.ToListAsync();
-        return allRoles.Where(x => roles.Contains(x.Name??"")).Select(x => new SelectList<string>(x.Id, x.Name ?? ""))
-            .ToList();
-    }
+	public async Task<UserDto> GetAsync(string id)
+	{
+		return await GetUserById(id);
+	}
 
-    #endregion
+	public async Task<List<UsersDto>> GetAllAsync()
+	{
+		var models = await _userManager.Users.ToListAsync();
+		return models.Select(x => x.MapUsers()).ToList();
+	}
 
-    #region User Confirmations
+	public async Task<List<UsersDto>> GetAllByNameSurname(string searchText,
+		CancellationToken cancellationToken = default)
+	{
+		var split = searchText.Split(' ').Where(x => x.Length > 1).ToList();
+		if (split.Count == 1)
+		{
+			return (await _userManager.Users
+				.Where(x => x.SurName != null && x.Name != null &&
+							(x.Name.Contains(split[0]) || x.SurName.Contains(split[0]))).ToListAsync(cancellationToken)).Select(x => x.MapUsers()).ToList();
+		}
 
-    public async Task<string> GenerateUserConfirmationToken(string id)
-    {
-        var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 
-        return await _userManager.GenerateEmailConfirmationTokenAsync(user);
-    }
+		return (await _userManager.Users
+			.Where(x => x.SurName != null && x.Name != null &&
+						(x.Name.Contains(string.Join(' ', split.Take(split.Count - 1))) ||
+						 x.SurName.Contains(split.Last()) ||
+						 (x.Name + " " + x.SurName)
+						 .Contains($"{string.Join(' ', split.Take(split.Count - 1))} {split.Last()}"))).ToListAsync(cancellationToken)).Select(x => x.MapUsers()).ToList();
 
-    public async Task ValidateUserConfirmationToken(string id,string token)
-    {
-        var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
-        var result = await _userManager.ConfirmEmailAsync(user, token);
 
-        if (!result.Succeeded)
-            throw new BadRequestException(string.Join(',', result.Errors.Select(x => x.Description)));
-    }
-    #endregion
 
-    #region Password Reset
 
-    public async Task<string> GeneratePasswordResetToken(string id)
-    {
-        var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+	}
+	public async Task<List<UsersDto>> GetUsersByIdsAsync(List<string> listOfId, CancellationToken cancellationToken = default)
+	{
+		var models = await _userManager.Users.Where(x => listOfId.Contains(x.Id)).ToListAsync(cancellationToken);
+		return models.Select(x => x.MapUsers()).ToList();
+	}
+	#endregion
 
-        return await _userManager.GeneratePasswordResetTokenAsync(user);
-    }
+	#region Roles
 
-    public async Task PasswordReset(string id,ResetPasswordDto dto)
-    {
-        var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+	public async Task<List<SelectList<string>>> GetAllRoles()
+	{
+		var roles = await _roleManager.Roles.ToListAsync();
+		return roles.Select(x => new SelectList<string>(x.Id, x.Name ?? "")).ToList();
+	}
+	public async Task<List<SelectList<string>>> GetUserRolesAsync(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 
-        var result = await _userManager.ResetPasswordAsync(user, dto.Token, dto.Password);
-        if (!result.Succeeded)
-        {
-            throw new BadRequestException(string.Join(',', result.Errors.Select(x => x.Description)));
-        }
-    }
+		var roles = await _userManager.GetRolesAsync(user);
+		var allRoles = await _roleManager.Roles.ToListAsync();
+		return allRoles.Where(x => roles.Contains(x.Name ?? "")).Select(x => new SelectList<string>(x.Id, x.Name ?? ""))
+			.ToList();
+	}
 
-    public async Task ChangePassword(string id, ChangePasswordDto dto)
-    {
-        var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+	#endregion
 
-        var result = await _userManager.ChangePasswordAsync(user, dto.OldPassword, dto.NewPassword);
+	#region User Confirmations
 
-        if (!result.Succeeded)
-        {
-            throw new BadRequestException(string.Join(',', result.Errors.Select(x => x.Description)));
-        }
-    }
-    #endregion
+	public async Task<string> GenerateUserConfirmationToken(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 
-    #region Service Helpers
+		return await _userManager.GenerateEmailConfirmationTokenAsync(user);
+	}
 
-    private async Task<UserDto> GetUserById(string id)
-    {
-        var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
-        var roles = await _userManager.GetRolesAsync(user);
+	public async Task ValidateUserConfirmationToken(string id, string token)
+	{
+		var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		var result = await _userManager.ConfirmEmailAsync(user, token);
 
-        return user.MapUser(roles.ToList());
-    }
-    private async Task DeleteUser(string id)
-    {
-        var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
-        await _userManager.DeleteAsync(user);
-    }
+		if (!result.Succeeded)
+			throw new BadRequestException(string.Join(',', result.Errors.Select(x => x.Description)));
+	}
+	#endregion
 
-    private async Task UndoChanges(UserUpdateDto userCache)
-    {
-        var updatedUser = await _userManager.FindByIdAsync(userCache.Id ?? "") ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
-        updatedUser.Email = userCache.Email;
-        updatedUser.UserName = userCache.UserName;
-        updatedUser.Gender = userCache.Gender ?? Gender.Other;
-        updatedUser.Name = userCache.Name;
-        updatedUser.PhoneNumber = userCache.PhoneNumber;
-        updatedUser.SurName = userCache.SurName;
-        updatedUser.BirthDate = userCache.UserBirthDate??DateTime.MinValue;
+	#region Password Reset
 
-        await _userManager.UpdateAsync(updatedUser);
-        if (userCache.Roles != null) await UpdateUserRoles(updatedUser.Id, userCache.Roles);
-    }
+	public async Task<string> GeneratePasswordResetToken(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 
-    private async Task UpdateUserRoles(string userId, List<string> newRoles)
-    {
-        var user = await _userManager.FindByIdAsync(userId) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		return await _userManager.GeneratePasswordResetTokenAsync(user);
+	}
 
-        await _userManager.RemoveFromRolesAsync(user, await _userManager.GetRolesAsync(user));
+	public async Task PasswordReset(string id, ResetPasswordDto dto)
+	{
+		var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 
-        await _userManager.AddToRolesAsync(user, newRoles);
-    }
+		var result = await _userManager.ResetPasswordAsync(user, dto.Token, dto.Password);
+		if (!result.Succeeded)
+		{
+			throw new BadRequestException(string.Join(',', result.Errors.Select(x => x.Description)));
+		}
+	}
 
-    #endregion
+	public async Task ChangePassword(string id, ChangePasswordDto dto)
+	{
+		var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+
+		var result = await _userManager.ChangePasswordAsync(user, dto.OldPassword, dto.NewPassword);
+
+		if (!result.Succeeded)
+		{
+			throw new BadRequestException(string.Join(',', result.Errors.Select(x => x.Description)));
+		}
+	}
+	#endregion
+
+	#region Service Helpers
+
+	private async Task<UserDto> GetUserById(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		var roles = await _userManager.GetRolesAsync(user);
+
+		return user.MapUser(roles.ToList());
+	}
+	private async Task DeleteUser(string id)
+	{
+		var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		await _userManager.DeleteAsync(user);
+	}
+
+	private async Task UndoChanges(UserUpdateDto userCache)
+	{
+		var updatedUser = await _userManager.FindByIdAsync(userCache.Id ?? "") ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		updatedUser.Email = userCache.Email;
+		updatedUser.UserName = userCache.UserName;
+		updatedUser.Gender = userCache.Gender ?? Gender.Other;
+		updatedUser.Name = userCache.Name;
+		updatedUser.PhoneNumber = userCache.PhoneNumber;
+		updatedUser.SurName = userCache.SurName;
+		updatedUser.BirthDate = userCache.UserBirthDate ?? DateTime.MinValue;
+
+		await _userManager.UpdateAsync(updatedUser);
+		if (userCache.Roles != null) await UpdateUserRoles(updatedUser.Id, userCache.Roles);
+	}
+
+	private async Task UpdateUserRoles(string userId, List<string> newRoles)
+	{
+		var user = await _userManager.FindByIdAsync(userId) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+
+		await _userManager.RemoveFromRolesAsync(user, await _userManager.GetRolesAsync(user));
+
+		await _userManager.AddToRolesAsync(user, newRoles);
+	}
+
+	#endregion
 
 }

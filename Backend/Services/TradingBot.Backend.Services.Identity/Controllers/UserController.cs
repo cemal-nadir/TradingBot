@@ -24,9 +24,18 @@ public class UserController : Controller
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet]
-    public async Task<IActionResult> GetAllUsers()
+    public async Task<IActionResult> GetAllUsers([FromQuery] List<string> listOfId,CancellationToken cancellationToken=default)
+	{
+        return Ok(!listOfId.Any() ? await _userService.GetAllAsync() : await _userService.GetUsersByIdsAsync(listOfId, cancellationToken));
+    }
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(StatusCodes.Status403Forbidden)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [HttpGet("Search")]
+    public async Task<IActionResult> GetAllByNameSurname([FromQuery] string searchText,CancellationToken cancellationToken=default)
     {
-        return Ok(await _userService.GetAllAsync());
+	    return Ok(await _userService.GetAllByNameSurname(searchText, cancellationToken));
     }
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]

@@ -1,9 +1,6 @@
-﻿using System.Text;
-using CNG.Core.Exceptions;
+﻿using CNG.Core.Exceptions;
 using CNG.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 using TradingBot.Backend.Gateway.API.Dtos;
 using TradingBot.Backend.Gateway.API.Middlewares;
 

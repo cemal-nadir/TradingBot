@@ -11,5 +11,6 @@ namespace TradingBot.Backend.Gateway.API.Services.Abstract.Api.User
 			CancellationToken cancellationToken = default);
 		Task<Response<TradingAccountsDto>> GetByIndicatorIdAsync(string indicatorId,
 			CancellationToken cancellationToken = default);
+
 	}
 }

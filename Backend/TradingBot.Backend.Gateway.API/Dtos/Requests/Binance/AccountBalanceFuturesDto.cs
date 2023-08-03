@@ -2,7 +2,7 @@
 {
 	public class AccountBalanceFuturesDto
 	{
-		public int MaxWithdrawQuantity { get; set; }
+		public decimal MaxWithdrawQuantity { get; set; }
 		public bool MarginAvailable { get; set; }
 		public string? AccountAlias { get; set; }
 		public string? Asset { get; set; }

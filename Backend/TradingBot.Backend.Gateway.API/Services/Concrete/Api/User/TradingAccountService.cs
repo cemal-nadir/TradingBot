@@ -1,5 +1,4 @@
 ﻿using CNG.Http.Services;
-using TradingBot.Backend.Gateway.API.Defaults;
 using TradingBot.Backend.Gateway.API.Dtos;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Users;
 using TradingBot.Backend.Gateway.API.Repositories;

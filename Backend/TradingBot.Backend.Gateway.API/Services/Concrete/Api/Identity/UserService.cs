@@ -3,6 +3,7 @@ using CNG.Core;
 using TradingBot.Backend.Gateway.API.Defaults;
 using TradingBot.Backend.Gateway.API.Dtos;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Identity;
+using TradingBot.Backend.Gateway.API.Helpers;
 using TradingBot.Backend.Gateway.API.Responses;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Api.Identity;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Token;
@@ -33,8 +34,17 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 			return new SuccessResponse<List<UsersDto>>(response.Data);
 
 		}
-		
-	
+		public async Task<Response<List<UsersDto>>> GetAllByUserIdsAsync(List<string> listOfId, CancellationToken cancellationToken = default)
+		{
+			
+			var response =
+				await _client.GetAsync<List<UsersDto>>(
+					$"{_url}?{listOfId!.ToQueryString(listOfId, nameof(listOfId))}", cancellationToken);
+			return response.Success
+				? new SuccessResponse<List<UsersDto>>(response.Data)
+				: new ErrorResponse<List<UsersDto>>(response.Message, response.StatusCode);
+		}
+
 		public async Task<Response<UserDto>> GetUser(string id,CancellationToken cancellationToken=default)
 		{
 			var response = await _client.GetAsync<UserDto>($"{_url}/{id}", cancellationToken);

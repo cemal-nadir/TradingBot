@@ -5,6 +5,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Hangfire
 {
 	public class HangfireService:IHangfireService
 	{
+		// ReSharper disable once NotAccessedField.Local
 		private readonly ICapPublisher _capPublisher;
 
 		public HangfireService(ICapPublisher capPublisher)
