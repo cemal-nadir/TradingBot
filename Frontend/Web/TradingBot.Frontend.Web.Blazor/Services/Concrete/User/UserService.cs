@@ -10,6 +10,7 @@ namespace TradingBot.Frontend.Web.Blazor.Services.Concrete.User
 {
 	public class UserService:IUserService
 	{
+		//TODO BURADA BEARER TOKEN AUTHORİZE OLUNACAK ÖRNEĞİ SERVİCE REPOSİTORYDE VARDIR VE GATEWAY APİ TARAFINA IDENTİTY SERVERDA YER ALAN EKSİK ENDPOİNTLER EKLENECEK
 		private readonly IHttpClientService _client;
 		private readonly string _url;
 		public UserService(IHttpClientService client, Env env)
