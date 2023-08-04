@@ -1,5 +1,6 @@
 ﻿using TradingBot.Frontend.Libraries.Blazor.Models;
 using TradingBot.Frontend.Web.Blazor.Dtos.Account;
+using TradingBot.Frontend.Web.Blazor.Dtos.Identity;
 using TradingBot.Frontend.Web.Blazor.Dtos.Users;
 
 namespace TradingBot.Frontend.Web.Blazor.Installers.Services
@@ -10,6 +11,7 @@ namespace TradingBot.Frontend.Web.Blazor.Installers.Services
 		{
 			builder.Services.AddSingleton<LoginValidator>();
 			builder.Services.AddSingleton<TradingAccountValidator>();
+			builder.Services.AddSingleton<UserValidator>();
 		}
 	}
 }

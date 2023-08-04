@@ -6,14 +6,14 @@ public interface IUserService
 {
     #region CRUD
 
-    Task<string> InsertAsync(UserInsertDto dto);
-    Task UpdateAsync(UserUpdateDto dto);
+    Task<string> InsertAsync(UserDto dto);
+    Task UpdateAsync(string id,UserDto dto);
     Task DeleteAsync(string id);
     Task<UserDto> GetAsync(string id);
     Task<List<UsersDto>> GetAllAsync();
     Task<List<UsersDto>> GetUsersByIdsAsync(List<string> listOfId, CancellationToken cancellationToken = default);
 
-    Task<List<UsersDto>> GetAllByNameSurname(string searchText,
+    Task<List<UsersDto>> GetAllByNameSurname(string? searchText,
 	    CancellationToken cancellationToken = default);
 	#endregion
 

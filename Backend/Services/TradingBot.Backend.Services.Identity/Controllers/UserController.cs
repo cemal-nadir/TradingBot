@@ -33,7 +33,7 @@ public class UserController : Controller
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpGet("Search")]
-    public async Task<IActionResult> GetAllByNameSurname([FromQuery] string searchText,CancellationToken cancellationToken=default)
+    public async Task<IActionResult> GetAllByNameSurname([FromQuery] string? searchText,CancellationToken cancellationToken=default)
     {
 	    return Ok(await _userService.GetAllByNameSurname(searchText, cancellationToken));
     }
@@ -52,7 +52,7 @@ public class UserController : Controller
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [HttpPost]
-    public async Task<IActionResult> InsertUser(UserInsertDto dto)
+    public async Task<IActionResult> InsertUser(UserDto dto)
     {
         return Ok(await _userService.InsertAsync(dto));
     }
@@ -61,10 +61,10 @@ public class UserController : Controller
     [ProducesResponseType(StatusCodes.Status403Forbidden)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [HttpPut]
-    public async Task<IActionResult> UpdateUser(UserUpdateDto dto)
+    [HttpPut("{id}")]
+    public async Task<IActionResult> UpdateUser([FromRoute]string id,UserDto dto)
     {
-        await _userService.UpdateAsync(dto);
+        await _userService.UpdateAsync(id,dto);
         return CreatedAtAction(null, null);
     }
     [ProducesResponseType(StatusCodes.Status200OK)]

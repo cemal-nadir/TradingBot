@@ -30,6 +30,11 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Gateway
 
 		}
 
+		public async Task<List<UsersDto>?> GetAllByNameSurname(string? searchText, CancellationToken cancellationToken = default)
+		{
+			return (await _userService.GetAllByNameSurname(searchText,cancellationToken)).CheckResponse();
+		}
+
 
 		public async Task<UserDto> GetUser(string id, CancellationToken cancellationToken = default)
 		{
@@ -38,16 +43,16 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Gateway
 		}
 
 
-		public async Task InsertUser(UserInsertDto dto, CancellationToken cancellationToken = default)
+		public async Task InsertUser(UserDto dto, CancellationToken cancellationToken = default)
 		{
 			(await _userService.InsertUser(dto, cancellationToken)).CheckResponse();
 
 		}
 
 
-		public async Task UpdateUser(UserUpdateDto dto, CancellationToken cancellationToken = default)
+		public async Task UpdateUser(string id,UserDto dto, CancellationToken cancellationToken = default)
 		{
-			(await _userService.UpdateUser(dto, cancellationToken)).CheckResponse();
+			(await _userService.UpdateUser(id,dto, cancellationToken)).CheckResponse();
 		}
 
 

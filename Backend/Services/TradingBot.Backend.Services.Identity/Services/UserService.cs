@@ -21,7 +21,7 @@ public class UserService : IUserService
 
 	#region CRUD
 
-	public async Task<string> InsertAsync(UserInsertDto dto)
+	public async Task<string> InsertAsync(UserDto dto)
 	{
 		var user = new ApplicationUser()
 		{
@@ -32,7 +32,7 @@ public class UserService : IUserService
 			Name = dto.Name,
 			PhoneNumber = dto.PhoneNumber,
 			SurName = dto.SurName,
-			BirthDate = dto.BirthDate,
+			BirthDate = dto.BirthDate
 
 		};
 		var result = await _userManager.CreateAsync(user, dto.Password ?? "");
@@ -59,47 +59,45 @@ public class UserService : IUserService
 		return user.Id;
 	}
 
-	public async Task UpdateAsync(UserUpdateDto dto)
+	public async Task UpdateAsync(string id, UserDto dto)
 	{
-		var userCache = await _userManager.FindByIdAsync(dto.Id ?? "") ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		var userCache = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 
 		var rolesCache = await _userManager.GetRolesAsync(userCache) ?? throw new NotFoundException(ErrorDefaults.NotFound.Role);
 
-		var userCacheDto = new UserUpdateDto()
+		var userCacheDto = new UserDto()
 		{
 
 			UserName = userCache.UserName,
 			Email = userCache.Email,
-			Id = userCache.Id,
 			Roles = rolesCache.ToList(),
-
 			Gender = userCache.Gender,
 			Name = userCache.Name,
 			PhoneNumber = userCache.PhoneNumber,
 			SurName = userCache.SurName,
-			UserBirthDate = userCache.BirthDate
+			BirthDate = userCache.BirthDate
 		};
 		var user = new ApplicationUser()
 		{
 
 			Email = dto.Email ?? userCache.Email,
-			Gender = dto.Gender ?? userCache.Gender,
+			Gender = dto.Gender,
 			Name = dto.Name ?? userCache.Name,
 			PhoneNumber = dto.PhoneNumber ?? userCache.PhoneNumber,
 			SurName = dto.SurName ?? userCache.SurName,
 			UserName = dto.UserName ?? userCache.UserName,
-			Id = dto.Id ?? userCache.Id,
-			BirthDate = dto.UserBirthDate ?? userCache.BirthDate
+			Id = id,
+			BirthDate = dto.BirthDate
 		};
 		var response = await _userManager.UpdateAsync(user);
 
 		if (!response.Succeeded)
 		{
-			await UndoChanges(userCacheDto);
+			await UndoChanges(id,userCacheDto);
 			throw new BadRequestException(string.Join(',', response.Errors.Select(x => x.Description)));
 		}
 
-		user = await _userManager.FindByIdAsync(dto.Id ?? "") ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 
 		if (!string.IsNullOrEmpty(dto.Password))
 		{
@@ -108,9 +106,8 @@ public class UserService : IUserService
 
 			if (!response.Succeeded)
 			{
-				await UndoChanges(userCacheDto);
+				await UndoChanges(id,userCacheDto);
 				throw new BadRequestException(string.Join(',', response.Errors.Select(x => x.Description)));
-
 			}
 
 		}
@@ -135,23 +132,26 @@ public class UserService : IUserService
 		return models.Select(x => x.MapUsers()).ToList();
 	}
 
-	public async Task<List<UsersDto>> GetAllByNameSurname(string searchText,
+	public async Task<List<UsersDto>> GetAllByNameSurname(string? searchText,
 		CancellationToken cancellationToken = default)
 	{
+		if (searchText is null)
+			return (await _userManager.Users.ToListAsync(cancellationToken)).Select(x => x.MapUsers()).ToList();
+		searchText = searchText.ToLower();
 		var split = searchText.Split(' ').Where(x => x.Length > 1).ToList();
 		if (split.Count == 1)
 		{
 			return (await _userManager.Users
 				.Where(x => x.SurName != null && x.Name != null &&
-							(x.Name.Contains(split[0]) || x.SurName.Contains(split[0]))).ToListAsync(cancellationToken)).Select(x => x.MapUsers()).ToList();
+							(x.Name.ToLower().Contains(split[0]) || x.SurName.ToLower().Contains(split[0]))).ToListAsync(cancellationToken)).Select(x => x.MapUsers()).ToList();
 		}
 
 
 		return (await _userManager.Users
 			.Where(x => x.SurName != null && x.Name != null &&
-						(x.Name.Contains(string.Join(' ', split.Take(split.Count - 1))) ||
-						 x.SurName.Contains(split.Last()) ||
-						 (x.Name + " " + x.SurName)
+						(x.Name.ToLower().Contains(string.Join(' ', split.Take(split.Count - 1))) ||
+						 x.SurName.ToLower().Contains(split.Last()) ||
+						 (x.Name.ToLower() + " " + x.SurName.ToLower())
 						 .Contains($"{string.Join(' ', split.Take(split.Count - 1))} {split.Last()}"))).ToListAsync(cancellationToken)).Select(x => x.MapUsers()).ToList();
 
 
@@ -251,24 +251,23 @@ public class UserService : IUserService
 		await _userManager.DeleteAsync(user);
 	}
 
-	private async Task UndoChanges(UserUpdateDto userCache)
+	private async Task UndoChanges(string id,UserDto userCache)
 	{
-		var updatedUser = await _userManager.FindByIdAsync(userCache.Id ?? "") ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		var updatedUser = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 		updatedUser.Email = userCache.Email;
 		updatedUser.UserName = userCache.UserName;
-		updatedUser.Gender = userCache.Gender ?? Gender.Other;
+		updatedUser.Gender = userCache.Gender;
 		updatedUser.Name = userCache.Name;
 		updatedUser.PhoneNumber = userCache.PhoneNumber;
 		updatedUser.SurName = userCache.SurName;
-		updatedUser.BirthDate = userCache.UserBirthDate ?? DateTime.MinValue;
-
+		updatedUser.BirthDate = userCache.BirthDate;
 		await _userManager.UpdateAsync(updatedUser);
 		if (userCache.Roles != null) await UpdateUserRoles(updatedUser.Id, userCache.Roles);
 	}
 
-	private async Task UpdateUserRoles(string userId, List<string> newRoles)
+	private async Task UpdateUserRoles(string id, List<string> newRoles)
 	{
-		var user = await _userManager.FindByIdAsync(userId) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
 
 		await _userManager.RemoveFromRolesAsync(user, await _userManager.GetRolesAsync(user));
 

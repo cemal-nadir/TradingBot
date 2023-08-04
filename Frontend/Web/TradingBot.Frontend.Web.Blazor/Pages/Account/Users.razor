@@ -1,0 +1,48 @@
+﻿@page "/Users"
+@using System.Globalization
+@using TradingBot.Frontend.Web.Blazor.Dtos.Identity
+@using TradingBot.Frontend.Web.Blazor.Dtos.Users
+@inherits UsersRazor
+<LoadingPage Visible="@Loading"></LoadingPage>
+<MudStack Row="true" Justify="Justify.FlexEnd">
+	<MudIconButton OnClick="AddNew" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" Color="Color.Primary" />
+</MudStack>
+<MudDataGrid Culture="CultureInfo.CurrentCulture"
+			 Items="@Entities"
+			 ColumnResizeMode="ResizeMode.Column"
+			 Striped="true"
+			 T="UsersDto"
+			 Filterable="true"
+			 FilterMode="DataGridFilterMode.ColumnFilterRow"
+			 SelectedItemsChanged="SelectedItemsChanged">
+	<Columns>
+		<PropertyColumn Property="x => x.Email" Title="@Localizer["Users_Mail"]" />
+		<PropertyColumn Property="x => x.Name" Title="@Localizer["Users_Name"]" />
+		<PropertyColumn Property="x => x.SurName" Title="@Localizer["Users_Surname"]" />
+		<PropertyColumn Property="x => x.PhoneNumber" Title="@Localizer["Users_Phone"]" />
+		<PropertyColumn Property="x => x.Gender" Title="@Localizer["Users_Gender"]" />
+		<PropertyColumn Property="x => x.BirthDate" Title="@Localizer["Users_BirthDate"]" />
+		<PropertyColumn Property="x => x.IsConfirmed" Title="@Localizer["Users_IsConfirmed"]">
+			<CellTemplate>
+
+				@if (context.Item.IsConfirmed)
+				{
+					<MudChip Icon="@Icons.Material.Filled.Check" IconColor="Color.Success">@Localizer["Users_ConfirmedAccount"]</MudChip>
+				}
+				else
+				{
+					<MudChip Icon="@Icons.Material.Filled.Cancel" IconColor="Color.Error">@Localizer["Users_UnConfirmedAccount"]</MudChip>
+				}
+			</CellTemplate>
+		</PropertyColumn>
+		<PropertyColumn Property="x=>x.Id" Title="@Localizer["Process"]">
+			<CellTemplate>
+				<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Success" OnClick="@(async ()=>await EditAsync(context.Item.Id??""))"></MudIconButton>
+				<MudIconButton Icon="@Icons.Material.Filled.RemoveCircle" Color="Color.Error" OnClick="@(async () => await DeleteAsync(context.Item.Id ?? ""))"></MudIconButton>
+			</CellTemplate>
+		</PropertyColumn>
+	</Columns>
+	<PagerContent>
+		<MudDataGridPager T="TradingAccountsDto" />
+	</PagerContent>
+</MudDataGrid>

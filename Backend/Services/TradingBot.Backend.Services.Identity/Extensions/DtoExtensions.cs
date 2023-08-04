@@ -12,7 +12,6 @@ public static class DtoExtensions
           
             Email = user.Email,
             Gender = user.Gender,
-            Id = user.Id,
             IsConfirmed = user.EmailConfirmed,
             Name = user.Name,
             PhoneNumber = user.PhoneNumber,
@@ -33,7 +32,8 @@ public static class DtoExtensions
             Name = user.Name,
             PhoneNumber = user.PhoneNumber,
             SurName = user.SurName,
-            UserName = user.UserName
+            UserName = user.UserName,
+            BirthDate = user.BirthDate
         };
     }
 }

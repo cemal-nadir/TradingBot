@@ -12,12 +12,10 @@ namespace TradingBot.Backend.Gateway.API.Controllers
 	public class UsersController : ControllerBase
 	{
 		private readonly IUserGateway _userGateway;
-		private readonly IHttpContextAccessor _httpContextAccessor;
 
-		public UsersController(IUserGateway userGateway, IHttpContextAccessor httpContextAccessor)
+		public UsersController(IUserGateway userGateway)
 		{
 			_userGateway = userGateway;
-			_httpContextAccessor = httpContextAccessor;
 		}
 
 		#region CRUD
@@ -34,6 +32,15 @@ namespace TradingBot.Backend.Gateway.API.Controllers
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status403Forbidden)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		[HttpGet("Search")]
+		public async Task<IActionResult> GetAllByNameSurname([FromQuery] string? searchText, CancellationToken cancellationToken = default)
+		{
+			return Ok(await _userGateway.GetAllByNameSurname(searchText, cancellationToken));
+		}
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[HttpGet("{id}")]
 		public async Task<IActionResult> GetUser(string id,CancellationToken cancellationToken=default)
@@ -45,7 +52,7 @@ namespace TradingBot.Backend.Gateway.API.Controllers
 		[ProducesResponseType(StatusCodes.Status403Forbidden)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[HttpPost]
-		public async Task<IActionResult> InsertUser(UserInsertDto dto,CancellationToken cancellationToken=default)
+		public async Task<IActionResult> InsertUser(UserDto dto,CancellationToken cancellationToken=default)
 		{
 			await _userGateway.InsertUser(dto,cancellationToken);
 			return CreatedAtAction(null, null);
@@ -55,10 +62,10 @@ namespace TradingBot.Backend.Gateway.API.Controllers
 		[ProducesResponseType(StatusCodes.Status403Forbidden)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[HttpPut]
-		public async Task<IActionResult> UpdateUser(UserUpdateDto dto, CancellationToken cancellationToken = default)
+		[HttpPut("{id}")]
+		public async Task<IActionResult> UpdateUser([FromRoute]string id,UserDto dto, CancellationToken cancellationToken = default)
 		{
-			await _userGateway.UpdateUser(dto,cancellationToken);
+			await _userGateway.UpdateUser(id,dto,cancellationToken);
 			return CreatedAtAction(null, null);
 		}
 		[ProducesResponseType(StatusCodes.Status200OK)]
@@ -215,26 +222,25 @@ namespace TradingBot.Backend.Gateway.API.Controllers
 		#endregion
 
 		#region POST
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		[ProducesResponseType(StatusCodes.Status403Forbidden)]
-		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		[HttpPost("TradingAccount")]
-		public async Task<IActionResult> InsertTradingAccount(TradingAccountDto dto, CancellationToken cancellationToken = default)
-		{
-			dto.UserId = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value ?? "";
-			await _userGateway.InsertTradingAccountAsync(dto, cancellationToken);
-			return CreatedAtAction(null, null);
-		}
+		//[ProducesResponseType(StatusCodes.Status200OK)]
+		//[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		//[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		//[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		//[HttpPost("TradingAccount")]
+		//public async Task<IActionResult> InsertTradingAccount(TradingAccountDto dto, CancellationToken cancellationToken = default)
+		//{
+		//	dto.UserId = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value ?? "";
+		//	await _userGateway.InsertTradingAccountAsync(dto, cancellationToken);
+		//	return CreatedAtAction(null, null);
+		//}
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status403Forbidden)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[HttpPost("{id}/TradingAccount")]
-		public async Task<IActionResult> InsertTradingAccount([FromRoute] string id, TradingAccountDto dto, CancellationToken cancellationToken = default)
+		[HttpPost("TradingAccount")]
+		public async Task<IActionResult> InsertTradingAccount(TradingAccountDto dto, CancellationToken cancellationToken = default)
 		{
-			dto.UserId = id;
 			await _userGateway.InsertTradingAccountAsync(dto, cancellationToken);
 			return CreatedAtAction(null, null);
 		}
@@ -242,27 +248,26 @@ namespace TradingBot.Backend.Gateway.API.Controllers
 		#endregion
 
 		#region PUT
+		//[ProducesResponseType(StatusCodes.Status200OK)]
+		//[ProducesResponseType(StatusCodes.Status401Unauthorized)]
+		//[ProducesResponseType(StatusCodes.Status403Forbidden)]
+		//[ProducesResponseType(StatusCodes.Status400BadRequest)]
+		//[ProducesResponseType(StatusCodes.Status404NotFound)]
+		//[HttpPut("TradingAccount/{tradingAccountId}")]
+		//public async Task<IActionResult> UpdateTradingAccount([FromRoute] string tradingAccountId, TradingAccountDto dto, CancellationToken cancellationToken = default)
+		//{
+		//	dto.UserId = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value ?? "";
+		//	await _userGateway.UpdateTradingAccountAsync(tradingAccountId, dto, cancellationToken);
+		//	return StatusCode(204);
+		//}
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status403Forbidden)]
 		[ProducesResponseType(StatusCodes.Status400BadRequest)]
 		[ProducesResponseType(StatusCodes.Status404NotFound)]
 		[HttpPut("TradingAccount/{tradingAccountId}")]
-		public async Task<IActionResult> UpdateTradingAccount([FromRoute] string tradingAccountId, TradingAccountDto dto, CancellationToken cancellationToken = default)
+		public async Task<IActionResult> UpdateTradingAccountByUserId([FromRoute] string tradingAccountId, TradingAccountDto dto, CancellationToken cancellationToken = default)
 		{
-			dto.UserId = _httpContextAccessor.HttpContext?.User.Claims.FirstOrDefault(x => x.Type == JwtRegisteredClaimNames.Sub)?.Value ?? "";
-			await _userGateway.UpdateTradingAccountAsync(tradingAccountId, dto, cancellationToken);
-			return StatusCode(204);
-		}
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
-		[ProducesResponseType(StatusCodes.Status403Forbidden)]
-		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[HttpPut("{id}/TradingAccount/{tradingAccountId}")]
-		public async Task<IActionResult> UpdateTradingAccountByUserId([FromRoute] string id, [FromRoute] string tradingAccountId, TradingAccountDto dto, CancellationToken cancellationToken = default)
-		{
-			dto.UserId = id;
 			await _userGateway.UpdateTradingAccountAsync(tradingAccountId, dto, cancellationToken);
 			return StatusCode(204);
 		}

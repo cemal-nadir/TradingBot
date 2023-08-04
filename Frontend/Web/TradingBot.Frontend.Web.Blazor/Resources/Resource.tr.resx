@@ -309,6 +309,78 @@
     <value>Kullanıcılar</value>
     <comment>Users</comment>
   </data>
+  <data name="Users_BirthDate" xml:space="preserve">
+    <value>Doğum Tarihi</value>
+    <comment>Users_BirthDate</comment>
+  </data>
+  <data name="Users_ConfirmedAccount" xml:space="preserve">
+    <value>Onaylanmış Hesap</value>
+    <comment>Users_ConfirmedAccount</comment>
+  </data>
+  <data name="Users_Gender" xml:space="preserve">
+    <value>Cinsiyet</value>
+    <comment>Users_Gender</comment>
+  </data>
+  <data name="Users_IsConfirmed" xml:space="preserve">
+    <value>Onay Durumu</value>
+    <comment>Users_IsConfirmed</comment>
+  </data>
+  <data name="Users_Mail" xml:space="preserve">
+    <value>E-Posta</value>
+    <comment>Users_Mail</comment>
+  </data>
+  <data name="Users_Name" xml:space="preserve">
+    <value>İsim</value>
+    <comment>Users_Name</comment>
+  </data>
+  <data name="Users_Phone" xml:space="preserve">
+    <value>Telefon Numarası</value>
+    <comment>Users_Phone</comment>
+  </data>
+  <data name="Users_Surname" xml:space="preserve">
+    <value>Soyisim</value>
+    <comment>Users_Surname</comment>
+  </data>
+  <data name="Users_UnConfirmedAccount" xml:space="preserve">
+    <value>Onaylanmamış Hesap</value>
+    <comment>Users_UnConfirmedAccount</comment>
+  </data>
+  <data name="User_BirthDate" xml:space="preserve">
+    <value>Doğum Tarihi</value>
+    <comment>User_BirthDate</comment>
+  </data>
+  <data name="User_Email" xml:space="preserve">
+    <value>E-Posta</value>
+    <comment>User_Email</comment>
+  </data>
+  <data name="User_IsConfirmed" xml:space="preserve">
+    <value>Onay Durumu</value>
+    <comment>User_IsConfirmed</comment>
+  </data>
+  <data name="User_Name" xml:space="preserve">
+    <value>İsim</value>
+    <comment>User_Name</comment>
+  </data>
+  <data name="User_Password" xml:space="preserve">
+    <value>Şifre</value>
+    <comment>User_Password</comment>
+  </data>
+  <data name="User_Phone" xml:space="preserve">
+    <value>Telefon Numarası</value>
+    <comment>User_Phone</comment>
+  </data>
+  <data name="User_SelectGender" xml:space="preserve">
+    <value>Cinsiyet Seç</value>
+    <comment>User_SelectGender</comment>
+  </data>
+  <data name="User_SelectRole" xml:space="preserve">
+    <value>Rol Seç</value>
+    <comment>User_SelectRole</comment>
+  </data>
+  <data name="User_Surname" xml:space="preserve">
+    <value>Soyisim</value>
+    <comment>User_Surname</comment>
+  </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>E-posta yada Şifre hatalı</value>
     <comment>WrongPassword</comment>

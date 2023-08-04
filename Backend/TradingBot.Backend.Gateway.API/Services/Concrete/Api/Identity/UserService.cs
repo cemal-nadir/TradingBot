@@ -34,6 +34,15 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 			return new SuccessResponse<List<UsersDto>>(response.Data);
 
 		}
+
+		public async Task<Response<List<UsersDto>>> GetAllByNameSurname(string? searchText, CancellationToken cancellationToken = default)
+		{
+			var response = await _client.GetAsync<List<UsersDto>>($"{_url}/Search?{nameof(searchText)}={searchText}", cancellationToken);
+			if (!response.Success) return new ErrorResponse<List<UsersDto>>(response.Message, response.StatusCode);
+
+			return new SuccessResponse<List<UsersDto>>(response.Data);
+		}
+
 		public async Task<Response<List<UsersDto>>> GetAllByUserIdsAsync(List<string> listOfId, CancellationToken cancellationToken = default)
 		{
 			
@@ -54,7 +63,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 		}
 		
 		
-		public async Task<Response> InsertUser(UserInsertDto dto,CancellationToken cancellationToken=default)
+		public async Task<Response> InsertUser(UserDto dto,CancellationToken cancellationToken=default)
 		{
 			var response = await _client.PostAsync($"{_url}", dto,cancellationToken);
 			if (!response.Success) return new ErrorResponse(response.Message, response.StatusCode);
@@ -63,9 +72,9 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 		}
 		
 		
-		public async Task<Response> UpdateUser(UserUpdateDto dto,CancellationToken cancellationToken=default)
+		public async Task<Response> UpdateUser(string id,UserDto dto,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.HttpPutAsync($"{_url}", dto, cancellationToken);
+			var response = await _client.HttpPutAsync($"{_url}/{id}", dto, cancellationToken);
 			if (!response.Success) return new ErrorResponse(response.Message, response.StatusCode);
 
 			return new SuccessResponse();

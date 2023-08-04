@@ -475,6 +475,87 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         }
         
         /// <summary>
+        ///   BirthDate benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string User_BirthDate {
+            get {
+                return ResourceManager.GetString("User_BirthDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   E-Mail benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string User_Email {
+            get {
+                return ResourceManager.GetString("User_Email", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Confirmed Status benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string User_IsConfirmed {
+            get {
+                return ResourceManager.GetString("User_IsConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Name benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string User_Name {
+            get {
+                return ResourceManager.GetString("User_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Password benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string User_Password {
+            get {
+                return ResourceManager.GetString("User_Password", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Phone Number benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string User_Phone {
+            get {
+                return ResourceManager.GetString("User_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select Gender benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string User_SelectGender {
+            get {
+                return ResourceManager.GetString("User_SelectGender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Select Role benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string User_SelectRole {
+            get {
+                return ResourceManager.GetString("User_SelectRole", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Surname benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string User_Surname {
+            get {
+                return ResourceManager.GetString("User_Surname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   User not found benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string UserNotFound {
@@ -489,6 +570,87 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         public static string Users {
             get {
                 return ResourceManager.GetString("Users", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   BirthDate benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Users_BirthDate {
+            get {
+                return ResourceManager.GetString("Users_BirthDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Confirmed benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Users_ConfirmedAccount {
+            get {
+                return ResourceManager.GetString("Users_ConfirmedAccount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Gender benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Users_Gender {
+            get {
+                return ResourceManager.GetString("Users_Gender", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Confirmed Status benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Users_IsConfirmed {
+            get {
+                return ResourceManager.GetString("Users_IsConfirmed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   E-Mail benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Users_Mail {
+            get {
+                return ResourceManager.GetString("Users_Mail", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Name benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Users_Name {
+            get {
+                return ResourceManager.GetString("Users_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Phone Number benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Users_Phone {
+            get {
+                return ResourceManager.GetString("Users_Phone", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Surname benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Users_Surname {
+            get {
+                return ResourceManager.GetString("Users_Surname", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Unconfirmed benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Users_UnConfirmedAccount {
+            get {
+                return ResourceManager.GetString("Users_UnConfirmedAccount", resourceCulture);
             }
         }
         

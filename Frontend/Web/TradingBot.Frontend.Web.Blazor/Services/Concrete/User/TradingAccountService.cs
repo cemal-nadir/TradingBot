@@ -7,13 +7,13 @@ using TradingBot.Frontend.Libraries.Blazor.Responses;
 using TradingBot.Frontend.Web.Blazor.Dtos.Users;
 using TradingBot.Frontend.Web.Blazor.Services.Abstract.User;
 
-namespace TradingBot.Frontend.Web.Blazor.Services.Concrete.User
-{
+namespace TradingBot.Frontend.Web.Blazor.Services.Concrete.User;
+
 	public class TradingAccountService:ServiceRepository<string,TradingAccountDto,TradingAccountsDto>,ITradingAccountService
 	{
 		private readonly IHttpClientService _httpClientService;
 		private readonly Env _env;
-		public TradingAccountService(IHttpClientService client, Env env,ProtectedLocalStorage localStorage, IHttpClientService httpClientService) : base(client, $"{env.GatewayUrl}{ServiceDefaults.User.UserService}/TradingAccount",localStorage)
+		public TradingAccountService(IHttpClientService client, Env env,ProtectedLocalStorage localStorage, IHttpClientService httpClientService) : base(client, $"{env.GatewayUrl}{ServiceDefaults.User.UserService}",$"TradingAccount",localStorage)
 		{
 			_env = env;
 			_httpClientService = httpClientService;
@@ -23,10 +23,11 @@ namespace TradingBot.Frontend.Web.Blazor.Services.Concrete.User
 		{
 			_httpClientService.SetBearerAuthentication(await GetAccessToken());
 			var response=await _httpClientService.GetAsync<List<TradingAccountsDto>>(
-				$"{_env.GatewayUrl}{ServiceDefaults.User.UserService}/{userId}/TradingAccount", cancellationToken);
+				$"{BaseUrl}/{userId}/{ServiceUrl}", cancellationToken);
 			return response.Success
 				? new SuccessResponse<List<TradingAccountsDto>>(response.Data)
 				: new ErrorResponse<List<TradingAccountsDto>>(response.Message, response.StatusCode);
 		}
+
 	}
-}
+

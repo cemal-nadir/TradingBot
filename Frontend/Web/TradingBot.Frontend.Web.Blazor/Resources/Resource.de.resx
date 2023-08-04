@@ -309,6 +309,78 @@
     <value>Users</value>
     <comment>Users</comment>
   </data>
+  <data name="Users_BirthDate" xml:space="preserve">
+    <value>Users_BirthDate</value>
+    <comment>Users_BirthDate</comment>
+  </data>
+  <data name="Users_ConfirmedAccount" xml:space="preserve">
+    <value>Users_ConfirmedAccount</value>
+    <comment>Users_ConfirmedAccount</comment>
+  </data>
+  <data name="Users_Gender" xml:space="preserve">
+    <value>Users_Gender</value>
+    <comment>Users_Gender</comment>
+  </data>
+  <data name="Users_IsConfirmed" xml:space="preserve">
+    <value>Users_IsConfirmed</value>
+    <comment>Users_IsConfirmed</comment>
+  </data>
+  <data name="Users_Mail" xml:space="preserve">
+    <value>Users_Mail</value>
+    <comment>Users_Mail</comment>
+  </data>
+  <data name="Users_Name" xml:space="preserve">
+    <value>Users_Name</value>
+    <comment>Users_Name</comment>
+  </data>
+  <data name="Users_Phone" xml:space="preserve">
+    <value>Users_Phone</value>
+    <comment>Users_Phone</comment>
+  </data>
+  <data name="Users_Surname" xml:space="preserve">
+    <value>Users_Surname</value>
+    <comment>Users_Surname</comment>
+  </data>
+  <data name="Users_UnConfirmedAccount" xml:space="preserve">
+    <value>Users_UnConfirmedAccount</value>
+    <comment>Users_UnConfirmedAccount</comment>
+  </data>
+  <data name="User_BirthDate" xml:space="preserve">
+    <value>User_BirthDate</value>
+    <comment>User_BirthDate</comment>
+  </data>
+  <data name="User_Email" xml:space="preserve">
+    <value>User_Email</value>
+    <comment>User_Email</comment>
+  </data>
+  <data name="User_IsConfirmed" xml:space="preserve">
+    <value>User_IsConfirmed</value>
+    <comment>User_IsConfirmed</comment>
+  </data>
+  <data name="User_Name" xml:space="preserve">
+    <value>User_Name</value>
+    <comment>User_Name</comment>
+  </data>
+  <data name="User_Password" xml:space="preserve">
+    <value>User_Password</value>
+    <comment>User_Password</comment>
+  </data>
+  <data name="User_Phone" xml:space="preserve">
+    <value>User_Phone</value>
+    <comment>User_Phone</comment>
+  </data>
+  <data name="User_SelectGender" xml:space="preserve">
+    <value>User_SelectGender</value>
+    <comment>User_SelectGender</comment>
+  </data>
+  <data name="User_SelectRole" xml:space="preserve">
+    <value>User_SelectRole</value>
+    <comment>User_SelectRole</comment>
+  </data>
+  <data name="User_Surname" xml:space="preserve">
+    <value>User_Surname</value>
+    <comment>User_Surname</comment>
+  </data>
   <data name="WrongPassword" xml:space="preserve">
     <value>WrongPassword</value>
     <comment>WrongPassword</comment>

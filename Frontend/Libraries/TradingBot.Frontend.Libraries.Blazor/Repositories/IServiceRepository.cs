@@ -38,14 +38,13 @@ public interface IServiceRepository<in TKey, TDto, TListDto>
     /// <param name="cancellationToken"></param>
     /// <returns></returns>
     Task<Response> UpdateAsync(TKey id, TDto dto,CancellationToken cancellationToken = default);
-
     /// <summary>
-    /// Delete Entity by Id
-    /// </summary>
-    /// <param name="id"></param>
-    /// <param name="cancellationToken"></param>
-    /// <returns></returns>
-    Task<Response> DeleteAsync(TKey id,CancellationToken cancellationToken = default);
+	/// Delete Entity by Id
+	/// </summary>
+	/// <param name="id"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	Task<Response> DeleteAsync(TKey id,CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Delete Range

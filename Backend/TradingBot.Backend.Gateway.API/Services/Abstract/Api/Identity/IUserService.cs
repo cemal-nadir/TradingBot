@@ -9,11 +9,13 @@ namespace TradingBot.Backend.Gateway.API.Services.Abstract.Api.Identity
 		#region CRUD
 		Task<Response<List<UsersDto>>> GetAllUsers(CancellationToken cancellationToken = default);
 
+		Task<Response<List<UsersDto>>> GetAllByNameSurname(string? searchText,
+			CancellationToken cancellationToken = default);
 		Task<Response<List<UsersDto>>> GetAllByUserIdsAsync(List<string> listOfId,
 			CancellationToken cancellationToken = default);
 		Task<Response<UserDto>> GetUser(string id, CancellationToken cancellationToken = default);
-		Task<Response> InsertUser(UserInsertDto dto, CancellationToken cancellationToken = default);
-		Task<Response> UpdateUser(UserUpdateDto dto, CancellationToken cancellationToken = default);
+		Task<Response> InsertUser(UserDto dto, CancellationToken cancellationToken = default);
+		Task<Response> UpdateUser(string id,UserDto dto, CancellationToken cancellationToken = default);
 		Task<Response> DeleteUser(string id, CancellationToken cancellationToken = default);
 		Task<Response<UserDto>> GetCurrentUser(CancellationToken cancellationToken = default);
 		#endregion

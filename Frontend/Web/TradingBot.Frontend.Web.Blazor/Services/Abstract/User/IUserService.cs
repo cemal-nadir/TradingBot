@@ -1,18 +1,16 @@
 ﻿using CNG.Core;
+using TradingBot.Frontend.Libraries.Blazor.Repositories;
 using TradingBot.Frontend.Libraries.Blazor.Responses;
 using TradingBot.Frontend.Web.Blazor.Dtos.Identity;
 
 namespace TradingBot.Frontend.Web.Blazor.Services.Abstract.User
 {
-	public interface IUserService
+	public interface IUserService:IServiceRepository<string,UserDto,UsersDto>
 	{
 		#region CRUD
 
-		Task<Response<List<UsersDto>>> GetAllUsers(CancellationToken cancellationToken = default);
-		Task<Response<UserDto>> GetUser(string id, CancellationToken cancellationToken = default);
-		Task<Response> InsertUser(UserInsertDto dto, CancellationToken cancellationToken = default);
-		Task<Response> UpdateUser(UserUpdateDto dto, CancellationToken cancellationToken = default);
-		Task<Response> DeleteUser(string id, CancellationToken cancellationToken = default);
+		
+		
 		Task<Response<UserDto>> GetCurrentUser(CancellationToken cancellationToken = default);
 
 		Task<Response<List<UsersDto>>> GetAllByNameSurname(string? searchText,

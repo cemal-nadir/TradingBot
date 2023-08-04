@@ -10,7 +10,7 @@ namespace TradingBot.Frontend.Web.Blazor.Services.Concrete.User
 {
 	public class TradingHistoryService: ServiceRepository<string, TradingHistoryDto, TradingHistoriesDto>, ITradingHistoryService
 	{
-		public TradingHistoryService(IHttpClientService client, Env env, ProtectedLocalStorage localStorage) : base(client, $"{env.GatewayUrl}{ServiceDefaults.User.UserService}/TradingHistory",localStorage)
+		public TradingHistoryService(IHttpClientService client, Env env, ProtectedLocalStorage localStorage) : base(client, $"{env.GatewayUrl}{ServiceDefaults.User.UserService}",$"TradingHistory",localStorage)
 		{
 		}
 	}

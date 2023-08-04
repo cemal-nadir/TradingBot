@@ -11,9 +11,10 @@ namespace TradingBot.Backend.Gateway.API.Services.Abstract.Gateway
 		#region CRUD
 
 		Task<List<UsersDto>?> GetAllUsers(CancellationToken cancellationToken = default);
+		Task<List<UsersDto>?> GetAllByNameSurname(string? searchText,CancellationToken cancellationToken = default);
 		Task<UserDto> GetUser(string id, CancellationToken cancellationToken = default);
-		Task InsertUser(UserInsertDto dto, CancellationToken cancellationToken = default);
-		Task UpdateUser(UserUpdateDto dto, CancellationToken cancellationToken = default);
+		Task InsertUser(UserDto dto, CancellationToken cancellationToken = default);
+		Task UpdateUser(string id,UserDto dto, CancellationToken cancellationToken = default);
 		Task DeleteUser(string id, CancellationToken cancellationToken = default);
 		Task<UserDto> GetCurrentUser(CancellationToken cancellationToken = default);
 		#endregion
