@@ -161,6 +161,38 @@
     <value>Home</value>
     <comment>Home</comment>
   </data>
+  <data name="Indicators" xml:space="preserve">
+    <value>Indicators</value>
+    <comment>Indicators</comment>
+  </data>
+  <data name="Indicators_Description" xml:space="preserve">
+    <value>Indicators_Description</value>
+    <comment>Indicators_Description</comment>
+  </data>
+  <data name="Indicators_HookUrlCopied" xml:space="preserve">
+    <value>Indicators_HookUrlCopied</value>
+    <comment>Indicators_HookUrlCopied</comment>
+  </data>
+  <data name="Indicators_IsActive" xml:space="preserve">
+    <value>Indicators_IsActive</value>
+    <comment>Indicators_IsActive</comment>
+  </data>
+  <data name="Indicators_Name" xml:space="preserve">
+    <value>Indicators_Name</value>
+    <comment>Indicators_Name</comment>
+  </data>
+  <data name="Indicator_Description" xml:space="preserve">
+    <value>Indicator_Description</value>
+    <comment>Indicator_Description</comment>
+  </data>
+  <data name="Indicator_IsActive" xml:space="preserve">
+    <value>Indicator_IsActive</value>
+    <comment>Indicator_IsActive</comment>
+  </data>
+  <data name="Indicator_Name" xml:space="preserve">
+    <value>Indicator_Name</value>
+    <comment>Indicator_Name</comment>
+  </data>
   <data name="Login_Button" xml:space="preserve">
     <value>Login_Button</value>
     <comment>Login_Button</comment>
@@ -208,6 +240,10 @@
   <data name="TradingAccounts" xml:space="preserve">
     <value>TradingAccounts</value>
     <comment>TradingAccounts</comment>
+  </data>
+  <data name="TradingAccounts_IndicatorCount" xml:space="preserve">
+    <value>TradingAccounts_IndicatorCount</value>
+    <comment>TradingAccounts_IndicatorCount</comment>
   </data>
   <data name="TradingAccounts_IsActive" xml:space="preserve">
     <value>TradingAccounts_IsActive</value>

@@ -35,7 +35,7 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.TradingAccounts
 			}
 			else
 			{
-				if (authState.User.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject)?.Value != UserId)
+				if (authState.User.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject)?.Value != UserId&&!authState.User.IsInRole("admin"))
 					Navigation.NavigateTo("/TradingAccounts", true);
 
 				var user = await UserService.GetAsync(UserId, cancellationToken);

@@ -60,6 +60,7 @@ public class BreadcrumbsRazor : ComponentBase
 		{"Home", Icons.Material.Filled.Home },
 		{"Users", Icons.Material.Filled.Groups },
 		{"TradingAccounts",Icons.Material.Filled.CurrencyExchange},
-		{"Add",Icons.Material.Filled.Add}
+		{"Add",Icons.Material.Filled.Add},
+		{"Indicators",Icons.Material.Filled.Webhook}
 	};
 }

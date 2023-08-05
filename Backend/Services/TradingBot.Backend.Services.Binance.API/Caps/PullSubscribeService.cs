@@ -24,7 +24,8 @@ public class PullSubscribeService : ICapSubscribe
 		if (model.Account is null || model.IndicatorHook?.Order?.Symbol is null|| model.IndicatorHook?.Order?.OrderType is null||model.IndicatorHook?.Order?.Side is null) return;
 
 		_binanceMainClient.SetClient(model.Account.ApiKey ?? "", model.Account.SecretKey ?? "");
-		TradingHistoryDto responseDto;
+		TradingHistoryDto? responseDto=default;
+		decimal currentBalance;
 		switch (model.IndicatorHook.Order.OrderType)
 		{
 			case OrderType.Spot:
@@ -37,11 +38,11 @@ public class PullSubscribeService : ICapSubscribe
 					model.Account.BalanceSettings?.CurrentAdjustedBalance,
 					OrderType.Spot, cancellationToken: cancellationToken);
 				await Task.WhenAll(closeOrders, balanceAndQuantity);
-
+				currentBalance = balanceAndQuantity.Result.Item1.TotalBalance;
 				if (balanceAndQuantity.Result.Item1.TotalBalance < model.Account?.BalanceSettings?.MinimumBalance ||
 				    balanceAndQuantity.Result.Item1.AvailableFuturesBalance <
 				    model.Account?.BalanceSettings?.CurrentAdjustedBalance || balanceAndQuantity.Result.Item2 is 0)
-					return;
+					break;
 
 				_ = model.IndicatorHook?.Order?.Side is Side.Short
 					? await _binanceMainClient.BinanceOrderService.SpotShort(
@@ -72,8 +73,7 @@ public class PullSubscribeService : ICapSubscribe
 				await _binanceMainClient.BinanceOrderService.CloseFuturesOrdersAndPositionsAsync(model.IndicatorHook?.Order?
 					.Symbol ?? "", cancellationToken);
 
-				if (model.IndicatorHook?.Order?.ClosePosition != null &&
-				    model.IndicatorHook.Order.ClosePosition.Value) return;
+				
 
 				var balanceAndQuantity = await GetCurrentBalanceAndQuantityAndMarkPrice(
 					model.IndicatorHook?.Order?.Symbol ?? "",
@@ -81,11 +81,13 @@ public class PullSubscribeService : ICapSubscribe
 					OrderType.Futures,
 					model.IndicatorHook?.Order?.Leverage ?? 1,
 					cancellationToken);
-
-				if (balanceAndQuantity.Item1.TotalBalance < model.Account?.BalanceSettings?.MinimumBalance ||
+				currentBalance = balanceAndQuantity.Item1.TotalBalance;
+				if (model.IndicatorHook?.Order?.ClosePosition != null &&
+				    model.IndicatorHook.Order.ClosePosition.Value) break;
+					if (balanceAndQuantity.Item1.TotalBalance < model.Account?.BalanceSettings?.MinimumBalance ||
 				    balanceAndQuantity.Item1.AvailableFuturesBalance <
 				    model.Account?.BalanceSettings?.CurrentAdjustedBalance || balanceAndQuantity.Item2 is 0)
-					return;
+					break;
 
 
 				_ = model.IndicatorHook?.Order?.Side is Side.Long
@@ -120,7 +122,8 @@ public class PullSubscribeService : ICapSubscribe
 		await _capPublisher.PublishAsync(Cap.HookResponse, new HookResponseModel()
 		{
 			CloseTradingHistoryId = model.TradingHistory?.Id,
-			TradingHistory = responseDto
+			TradingHistory = responseDto,
+			CurrentBalance = currentBalance
 		}, cancellationToken: cancellationToken);
 	}
 

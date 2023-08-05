@@ -59,7 +59,6 @@ public class BaseDetailPage<TDto, TListDto, TKey, TService, TValidator> : BaseCo
             if (IsNew) await InsertAsync();
             else await UpdateAsync();
             Processing = false;
-            Snackbar.Add(Localizer["SaveChangesSuccess"], Severity.Success);
         }
         else
         {
@@ -86,7 +85,11 @@ public class BaseDetailPage<TDto, TListDto, TKey, TService, TValidator> : BaseCo
         Processing = true;
         var response = await Service.InsertAsync(Entity, cancellationToken);
         Processing = false;
-        if (response.Success) MudDialog?.Close();
+        if (response.Success)
+        {
+	        Snackbar.Add(Localizer["SaveChangesSuccess"], Severity.Success);
+			MudDialog?.Close();
+        }
         else Snackbar.Add(response.Message, Severity.Error);
     }
 
@@ -97,7 +100,11 @@ public class BaseDetailPage<TDto, TListDto, TKey, TService, TValidator> : BaseCo
             Processing = true;
             var response = await Service.UpdateAsync(Id, Entity, cancellationToken);
             Processing = false;
-            if (response.Success) MudDialog?.Close();
+            if (response.Success)
+            {
+	            Snackbar.Add(Localizer["SaveChangesSuccess"], Severity.Success);
+				MudDialog?.Close();
+            }
             else Snackbar.Add(response.Message, Severity.Error);
         }
         else

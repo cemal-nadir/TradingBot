@@ -3,6 +3,7 @@
 @using TradingBot.Frontend.Web.Blazor.Dtos.Identity
 @using TradingBot.Frontend.Web.Blazor.Dtos.Users
 @inherits UsersRazor
+@attribute [Authorize(Roles = "admin")]
 <LoadingPage Visible="@Loading"></LoadingPage>
 <MudStack Row="true" Justify="Justify.FlexEnd">
 	<MudIconButton OnClick="AddNew" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" Color="Color.Primary" />
@@ -35,9 +36,11 @@
 				}
 			</CellTemplate>
 		</PropertyColumn>
-		<PropertyColumn Property="x=>x.Id" Title="@Localizer["Process"]">
+		<PropertyColumn Property="x=>x.Id" Title="@Localizer["Process"]" T="UsersDto" TProperty="string">
 			<CellTemplate>
-				<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Success" OnClick="@(async ()=>await EditAsync(context.Item.Id??""))"></MudIconButton>
+				<MudIconButton Icon="@Icons.Material.Filled.CurrencyExchange" Color="Color.Primary" Href="@($"/Users/{context.Item.Id}/TradingAccounts")" ></MudIconButton>
+				<MudIconButton Icon="@Icons.Material.Filled.AddBusiness" Color="Color.Primary" Href="@($"/Users/{context.Item.Id}/TradingAccounts/Add")" ></MudIconButton>
+				<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Success" OnClick="@(async () => await EditAsync(context.Item.Id ?? ""))"></MudIconButton>
 				<MudIconButton Icon="@Icons.Material.Filled.RemoveCircle" Color="Color.Error" OnClick="@(async () => await DeleteAsync(context.Item.Id ?? ""))"></MudIconButton>
 			</CellTemplate>
 		</PropertyColumn>

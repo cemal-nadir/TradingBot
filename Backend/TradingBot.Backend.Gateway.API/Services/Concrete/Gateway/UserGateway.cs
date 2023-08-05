@@ -46,7 +46,6 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Gateway
 		public async Task InsertUser(UserDto dto, CancellationToken cancellationToken = default)
 		{
 			(await _userService.InsertUser(dto, cancellationToken)).CheckResponse();
-
 		}
 
 

@@ -2,5 +2,6 @@
 {
 	public interface IHangfireService
 	{
+		Task AdjustAllBalances(CancellationToken cancellationToken=default);
 	}
 }

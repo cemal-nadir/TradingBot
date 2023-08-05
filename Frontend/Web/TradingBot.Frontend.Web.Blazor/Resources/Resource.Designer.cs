@@ -160,6 +160,78 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Indicator Description benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Indicator_Description {
+            get {
+                return ResourceManager.GetString("Indicator_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Active Status benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Indicator_IsActive {
+            get {
+                return ResourceManager.GetString("Indicator_IsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Indicator Name benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Indicator_Name {
+            get {
+                return ResourceManager.GetString("Indicator_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Indicators benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Indicators {
+            get {
+                return ResourceManager.GetString("Indicators", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Indicator Description benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Indicators_Description {
+            get {
+                return ResourceManager.GetString("Indicators_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Hook Url Copied benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Indicators_HookUrlCopied {
+            get {
+                return ResourceManager.GetString("Indicators_HookUrlCopied", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Active Status benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Indicators_IsActive {
+            get {
+                return ResourceManager.GetString("Indicators_IsActive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Indicator Name benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Indicators_Name {
+            get {
+                return ResourceManager.GetString("Indicators_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sign In benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Login_Button {
@@ -417,6 +489,15 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         public static string TradingAccounts {
             get {
                 return ResourceManager.GetString("TradingAccounts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Indicator Count benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string TradingAccounts_IndicatorCount {
+            get {
+                return ResourceManager.GetString("TradingAccounts_IndicatorCount", resourceCulture);
             }
         }
         

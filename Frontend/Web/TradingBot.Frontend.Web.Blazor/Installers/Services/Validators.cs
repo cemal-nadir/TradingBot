@@ -12,6 +12,7 @@ namespace TradingBot.Frontend.Web.Blazor.Installers.Services
 			builder.Services.AddSingleton<LoginValidator>();
 			builder.Services.AddSingleton<TradingAccountValidator>();
 			builder.Services.AddSingleton<UserValidator>();
+			builder.Services.AddSingleton<IndicatorValidator>();
 		}
 	}
 }

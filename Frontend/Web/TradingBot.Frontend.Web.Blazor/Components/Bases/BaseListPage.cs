@@ -27,26 +27,7 @@ public class BaseListPage<TDto, TListDto, TKey, TService, TDetailPage, TValidato
 	{
 		await GetAllAsync();
 	}
-	protected virtual async Task NavMenuOnClickAsync(NavMenuOnClickResult result)
-	{
-		switch (result.Command)
-		{
-			case "Create":
-				await CreateAsync();
-				break;
-			case "Refresh":
-			case "RemoveCache":
-				await RemoveCacheAsync();
-				await GetAllAsync();
-				break;
-			case "Delete":
-				await DeleteAsync(result.Id.ChangeType<TKey>());
-				break;
-			case "Edit":
-				await EditAsync(result.Id.ChangeType<TKey>());
-				break;
-		}
-	}
+	
 	protected void SelectedItemsChanged(HashSet<TListDto> items)
 	{
 		SelectedEntities = items.ToList();

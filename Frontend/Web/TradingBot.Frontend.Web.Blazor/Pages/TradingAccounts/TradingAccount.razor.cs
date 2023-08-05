@@ -15,11 +15,14 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.TradingAccounts
 		[Inject] private IUserService UserService { get; set; } = null!;
 		[Inject] private ITradingPlatformService TradingPlatformService { get; set; } = null!;
 		[CascadingParameter] public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
+		[Parameter]public string? UserId { get; set; }
 		protected AuthenticationState? AuthState { get; set; }
 
 		private List<UsersDto>? AllUsers { get; set; }
+
 		protected override async Task OnInitializedAsync()
 		{
+			if (Id is "Add") Id = null;
 			Loading = true;
 			StateHasChanged();
 			AuthState = await AuthStateTask;
@@ -29,14 +32,15 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.TradingAccounts
 			if (AuthState.User.IsInRole("admin"))
 			{
 				await SearchUsers(null);
-				if (!IsNew)
-				{
-					SelectedUser =
-						$"({AllUsers?.FirstOrDefault(x=>x.Id==Entity.UserId)?.Email}) - {AllUsers?.FirstOrDefault(x=>x.Id==Entity.UserId)?.Name} {AllUsers?.FirstOrDefault(x => x.Id == Entity.UserId)?.SurName}";
-				}
+				SelectedUser = !IsNew
+					? $"({AllUsers?.FirstOrDefault(x => x.Id == Entity.UserId)?.Email}) - {AllUsers?.FirstOrDefault(x => x.Id == Entity.UserId)?.Name} {AllUsers?.FirstOrDefault(x => x.Id == Entity.UserId)?.SurName}"
+					: $"({AllUsers?.FirstOrDefault(x => x.Id == UserId)?.Email??AllUsers?.FirstOrDefault(x=>x.Id== AuthState.User.Claims.FirstOrDefault(y => y.Type == JwtClaimTypes.Subject)?.Value)?.Email}) - {AllUsers?.FirstOrDefault(x => x.Id == UserId)?.Name ?? AllUsers?.FirstOrDefault(x => x.Id == AuthState.User.Claims.FirstOrDefault(y => y.Type == JwtClaimTypes.Subject)?.Value)?.Name} {AllUsers?.FirstOrDefault(x => x.Id == UserId)?.SurName ?? AllUsers?.FirstOrDefault(x => x.Id == AuthState.User.Claims.FirstOrDefault(y => y.Type == JwtClaimTypes.Subject)?.Value)?.SurName}";
 			}
 			else
 			{
+				if(UserId!=null&&UserId != AuthState.User.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject)?.Value)
+					Navigation.NavigateTo("/TradingAccounts",true);
+					
 				AllUsers = new List<UsersDto>()
 				{
 					new()

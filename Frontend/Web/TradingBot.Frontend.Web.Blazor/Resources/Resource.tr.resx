@@ -161,6 +161,38 @@
     <value>Anasayfa</value>
     <comment>Home</comment>
   </data>
+  <data name="Indicators" xml:space="preserve">
+    <value>İndikatörler</value>
+    <comment>Indicators</comment>
+  </data>
+  <data name="Indicators_Description" xml:space="preserve">
+    <value>İndikatör Detayı</value>
+    <comment>Indicators_Description</comment>
+  </data>
+  <data name="Indicators_HookUrlCopied" xml:space="preserve">
+    <value>Hook Linki Kopyalandı</value>
+    <comment>Indicators_HookUrlCopied</comment>
+  </data>
+  <data name="Indicators_IsActive" xml:space="preserve">
+    <value>Aktiflik Durumu</value>
+    <comment>Indicators_IsActive</comment>
+  </data>
+  <data name="Indicators_Name" xml:space="preserve">
+    <value>İndikatör Adı</value>
+    <comment>Indicators_Name</comment>
+  </data>
+  <data name="Indicator_Description" xml:space="preserve">
+    <value>İndikatör Detayı (Açıklama)</value>
+    <comment>Indicator_Description</comment>
+  </data>
+  <data name="Indicator_IsActive" xml:space="preserve">
+    <value>Aktiflik Durumu</value>
+    <comment>Indicator_IsActive</comment>
+  </data>
+  <data name="Indicator_Name" xml:space="preserve">
+    <value>İndikatör Adı</value>
+    <comment>Indicator_Name</comment>
+  </data>
   <data name="Login_Button" xml:space="preserve">
     <value>Giriş Yap</value>
     <comment>Login_Button</comment>
@@ -208,6 +240,10 @@
   <data name="TradingAccounts" xml:space="preserve">
     <value>Ticaret Hesapları</value>
     <comment>TradingAccounts</comment>
+  </data>
+  <data name="TradingAccounts_IndicatorCount" xml:space="preserve">
+    <value>İndikatör Sayısı</value>
+    <comment>TradingAccounts_IndicatorCount</comment>
   </data>
   <data name="TradingAccounts_IsActive" xml:space="preserve">
     <value>Aktiflik Durumu</value>

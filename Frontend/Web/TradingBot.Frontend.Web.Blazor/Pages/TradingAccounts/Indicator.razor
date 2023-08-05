@@ -1,0 +1,60 @@
+﻿@inherits IndicatorRazor
+@page "/Users/TradingAccounts/{TradingAccountId}/Indicators/{Id}"
+@page "/Users/TradingAccounts/{TradingAccountId}/Indicators/Add"
+
+<LoadingPage Visible="Loading" InComponent="true"></LoadingPage>
+
+<MudPaper Elevation="25" Class="pa-5" Square="true">
+
+	<MudCard Elevation="0">
+		<MudForm Model="@Entity" @ref="@Form" Validation="@Validator.ValidateValue" ValidationDelay="1">
+			<MudCardContent>
+				<MudGrid>
+					<MudItem xs="12">
+						<MudTextField @bind-Value="Entity.Name"
+									  For="@(() => Entity.Name)"
+									  UserAttributes="@( new(){{"autocomplete","mud-disabled-"+Guid.NewGuid()
+							                              }})"
+									  InputType="InputType.Text"
+									  AdornmentIcon="@Icons.Material.Filled.Badge"
+									  Adornment="Adornment.End"
+									  Immediate="true"
+									  Label="@Localizer["Indicator_Name"]" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudTextField @bind-Value="Entity.Description"
+									  For="@(() => Entity.Description)"
+									  InputType="InputType.Text"
+									  UserAttributes="@( new(){{"autocomplete","mud-disabled-"+Guid.NewGuid()
+									                  }})"
+									  AdornmentIcon="@Icons.Material.Filled.Description"
+									  Lines="3"
+									  Adornment="Adornment.End"
+									  Immediate="true"
+									  Label="@Localizer["Indicator_Description"]" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudSwitch @bind-Checked="Entity.IsActive"
+								   For="@(() => Entity.IsActive)"
+								   Label="@Localizer["Indicator_IsActive"]"
+								   Color="@(Entity.IsActive ? Color.Success:Color.Error)"
+								   />
+					</MudItem>
+
+
+				</MudGrid>
+
+				<MudStack Row="false" AlignItems="AlignItems.Center">
+
+					<MudSpacer />
+					<MudButton OnClick="SaveChangesAsync" FullWidth="true" Color="Color.Success" Variant="Variant.Outlined" Size="Size.Large" EndIcon="@Icons.Material.Filled.DoneAll">@Localizer["SaveChanges"]</MudButton>
+
+				</MudStack>
+			</MudCardContent>
+
+		</MudForm>
+	</MudCard>
+
+
+
+</MudPaper>

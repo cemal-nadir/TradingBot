@@ -15,4 +15,6 @@ public class BaseComponent : ComponentBase
 	[Inject] protected IDialogService DialogService { get; set; } = null!;
 	protected bool Loading { get; set; }
 	protected bool DialogShowing { get; set; }
+
+
 }

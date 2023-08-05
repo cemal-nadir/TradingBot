@@ -32,7 +32,10 @@ public class UserService : IUserService
 			Name = dto.Name,
 			PhoneNumber = dto.PhoneNumber,
 			SurName = dto.SurName,
-			BirthDate = dto.BirthDate
+			BirthDate =DateTime.SpecifyKind(dto.BirthDate,DateTimeKind.Utc),
+			EmailConfirmed = dto.IsConfirmed,
+			IsBanned = false,
+			
 
 		};
 		var result = await _userManager.CreateAsync(user, dto.Password ?? "");
@@ -61,34 +64,33 @@ public class UserService : IUserService
 
 	public async Task UpdateAsync(string id, UserDto dto)
 	{
-		var userCache = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
-
-		var rolesCache = await _userManager.GetRolesAsync(userCache) ?? throw new NotFoundException(ErrorDefaults.NotFound.Role);
+		var user = await _userManager.FindByIdAsync(id) ?? throw new NotFoundException(ErrorDefaults.NotFound.User);
+		
+		var rolesCache = await _userManager.GetRolesAsync(user) ?? throw new NotFoundException(ErrorDefaults.NotFound.Role);
 
 		var userCacheDto = new UserDto()
 		{
 
-			UserName = userCache.UserName,
-			Email = userCache.Email,
+			UserName = user.UserName,
+			Email = user.Email,
 			Roles = rolesCache.ToList(),
-			Gender = userCache.Gender,
-			Name = userCache.Name,
-			PhoneNumber = userCache.PhoneNumber,
-			SurName = userCache.SurName,
-			BirthDate = userCache.BirthDate
+			Gender = user.Gender,
+			Name = user.Name,
+			PhoneNumber = user.PhoneNumber,
+			SurName = user.SurName,
+			BirthDate = user.BirthDate,
+			IsConfirmed = user.EmailConfirmed
 		};
-		var user = new ApplicationUser()
-		{
 
-			Email = dto.Email ?? userCache.Email,
-			Gender = dto.Gender,
-			Name = dto.Name ?? userCache.Name,
-			PhoneNumber = dto.PhoneNumber ?? userCache.PhoneNumber,
-			SurName = dto.SurName ?? userCache.SurName,
-			UserName = dto.UserName ?? userCache.UserName,
-			Id = id,
-			BirthDate = dto.BirthDate
-		};
+		user.Email=dto.Email;
+		user.Gender = dto.Gender;
+		user.Name = dto.Name;
+		user.PhoneNumber=dto.PhoneNumber;
+		user.SurName=dto.SurName;
+		user.UserName = dto.UserName;
+		user.BirthDate=DateTime.SpecifyKind(dto.BirthDate,DateTimeKind.Utc);
+		user.EmailConfirmed = dto.IsConfirmed;
+
 		var response = await _userManager.UpdateAsync(user);
 
 		if (!response.Succeeded)
@@ -112,7 +114,7 @@ public class UserService : IUserService
 
 		}
 
-		if (dto.Roles != null) await UpdateUserRoles(userCache.Id, dto.Roles);
+		if (dto.Roles != null) await UpdateUserRoles(user.Id, dto.Roles);
 
 	}
 

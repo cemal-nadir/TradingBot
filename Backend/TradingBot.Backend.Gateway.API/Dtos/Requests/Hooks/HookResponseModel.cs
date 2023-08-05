@@ -6,5 +6,6 @@ namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
 	{
 		public string? CloseTradingHistoryId { get; set; }
 		public TradingHistoryDto? TradingHistory { get; set; }
+		public decimal CurrentBalance { get; set; }
 	}
 }

@@ -22,7 +22,8 @@ public static class InstallerExtension
 
         services.AddDbContext<AspNetIdentityDbContext>(options =>
             options.UseNpgsql(
-                $"Server={Environment.GetEnvironmentVariable(variable: "DATABASE_HOST")};Port={Environment.GetEnvironmentVariable(variable: "DATABASE_PORT")};Database={Environment.GetEnvironmentVariable(variable: "DATABASE_NAME")};User Id={Environment.GetEnvironmentVariable(variable: "DATABASE_USER_NAME")};Password={Environment.GetEnvironmentVariable(variable: "DATABASE_PASSWORD")};"));
+                $"Server={Environment.GetEnvironmentVariable(variable: "DATABASE_HOST")};Port={Environment.GetEnvironmentVariable(variable: "DATABASE_PORT")};Database={Environment.GetEnvironmentVariable(variable: "DATABASE_NAME")};User Id={Environment.GetEnvironmentVariable(variable: "DATABASE_USER_NAME")};Password={Environment.GetEnvironmentVariable(variable: "DATABASE_PASSWORD")};")
+	            );
         services.AddIdentity<ApplicationUser, IdentityRole>(opt =>
             {
                 opt.User.RequireUniqueEmail = true;
@@ -70,12 +71,7 @@ public static class InstallerExtension
         // not recommended for production - you need to store your key material somewhere secure
         builder.AddDeveloperSigningCredential();
         services.AddAuthentication();
-  //      services.AddAuthentication().AddOpenIdConnect("oidc", options =>
-  //      {
-	 //       options.Scope.Add("roles");
-	 //       options.ClaimActions.MapJsonKey(JwtClaimTypes.Role, JwtClaimTypes.Role, JwtClaimTypes.Role);
-	 //       options.TokenValidationParameters.RoleClaimType = JwtClaimTypes.Role;
-		//});
+ 
 
         services.Configure<DataProtectionTokenProviderOptions>(opt =>
             opt.TokenLifespan = TimeSpan.FromHours(2));

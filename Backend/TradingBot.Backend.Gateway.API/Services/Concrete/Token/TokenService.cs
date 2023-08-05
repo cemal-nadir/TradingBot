@@ -48,6 +48,8 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Token
 			return string.Empty;
 		}
 
+		public async Task<string> GetFullAccessClientCredentialToken(CancellationToken cancellationToken = default) => await GetToken(AuthType.FullClient, cancellationToken);
+
 		public string GetResourceOwnerPasswordToken(CancellationToken cancellationToken = default) =>
 			_httpContextAccessor.HttpContext?.Request.Headers["Authorization"].ToString().Replace("bearer ", "") ?? "";
 

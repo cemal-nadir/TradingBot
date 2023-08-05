@@ -1,6 +1,7 @@
 ﻿@using TradingBot.Frontend.Web.Blazor.Dtos.Enums
 @page "/Users/{Id}"
 @inherits UserRazor
+@attribute [Authorize(Roles = "admin")]
 
 <LoadingPage Visible="Processing" InComponent="true"></LoadingPage>
 
@@ -23,17 +24,22 @@
 						</MudItem>
 						<MudItem xs="6">
 							<MudTextField @bind-Value="Entity.Name"
-									  For="@(() => Entity.Name)"
+							              For="@(() => Entity.Name)"
+							              UserAttributes="@( new(){{"autocomplete","mud-disabled-"+Guid.NewGuid()
+							                              }})"
 									  InputType="InputType.Text"
 									  AdornmentIcon="@Icons.Material.Filled.Badge"
 									  Adornment="Adornment.End"
 									  Immediate="true"
-									  Label="@Localizer["User_Name"]" />
+							              Label="@Localizer["User_Name"]"
+							              />
 						</MudItem>
 						<MudItem xs="6">
 							<MudTextField @bind-Value="Entity.SurName"
 									  For="@(() => Entity.SurName)"
 									  InputType="InputType.Text"
+									  UserAttributes="@( new(){{"autocomplete","mud-disabled-"+Guid.NewGuid()
+									                  }})"
 									  AdornmentIcon="@Icons.Material.Filled.Badge"
 									  Adornment="Adornment.End"
 									  Immediate="true"
@@ -44,6 +50,8 @@
 									  For="@(() => Entity.Email)"
 									  InputType="InputType.Text"
 									  AdornmentIcon="@Icons.Material.Filled.Email"
+									  UserAttributes="@( new(){{"autocomplete","mud-disabled-"+Guid.NewGuid()
+									                  }})"
 									  Adornment="Adornment.End"
 									  Immediate="true"
 									  Label="@Localizer["User_Email"]" />
@@ -52,14 +60,19 @@
 							<MudTextField @bind-Value="Entity.PhoneNumber"
 									  For="@(() => Entity.PhoneNumber)"
 									  InputType="InputType.Telephone"
+									  UserAttributes="@( new(){{"autocomplete","mud-disabled-"+Guid.NewGuid()
+									                  }})"
 									  AdornmentIcon="@Icons.Material.Filled.Phone"
 									  Adornment="Adornment.End"
-									  Immediate="true"
+									  Immediate="false"
 									  Label="@Localizer["User_Phone"]" />
 						</MudItem>
 						<MudItem xs="12">
 							<MudTextField @bind-Value="Entity.Password"
-									  For="@(() => Entity.Password)"
+							              For="@(() => Entity.Password)"
+							              UserAttributes="@( new(){{"autocomplete","mud-disabled-"+Guid.NewGuid()
+							                              }})"
+										  
 									  InputType="ShowPassword ? InputType.Text : InputType.Password"
 									  AdornmentIcon="@(ShowPassword ? Icons.Material.Filled.VisibilityOff : Icons.Material.Filled.Visibility)"
 									  Adornment="Adornment.End"
@@ -83,9 +96,12 @@
 							</MudSelect>
 						</MudItem>
 						<MudItem xs="12">
-							<MudSwitch @bind-Value="Entity.IsConfirmed"
+							<MudSwitch @bind-Checked="Entity.IsConfirmed"
+							        
+
 								   For="@(() => Entity.IsConfirmed)"
-								   Label="@Localizer["User_IsConfirmed"]" />
+								   Label="@Localizer["User_IsConfirmed"]" 
+								   Color="@(Entity.IsConfirmed ? Color.Success:Color.Error)"/>
 						</MudItem>
 
 

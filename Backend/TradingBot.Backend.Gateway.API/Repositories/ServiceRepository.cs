@@ -16,6 +16,7 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 	{
 		private readonly IHttpContextAccessor _httpContextAccessor;
 		private readonly IHttpClientService _client;
+		private readonly ITokenService _tokenService;
 		private readonly string _url;
 		protected ServiceRepository(IHttpClientService client, string url, string clientName, IHttpContextAccessor httpContextAccessor, ITokenService tokenService)
 		{
@@ -23,11 +24,14 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 			_client.SetClient(clientName);
 			_url = url;
 			_httpContextAccessor = httpContextAccessor;
+			_tokenService = tokenService;
+
 			LoginUser();
 			_client.SetHeader(new Dictionary<string, string>()
 			{
 				{"X-User",httpContextAccessor.HttpContext?.Request.HttpContext.User.Claims.FirstOrDefault(x=>x.Type==JwtRegisteredClaimNames.Sub)?.Value??""}
 			});
+
 			_client.SetBearerAuthentication(tokenService.GetClientCredentialToken().Result);
 		}
 
@@ -41,6 +45,12 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 			if (_httpContextAccessor.HttpContext != null)
 				_httpContextAccessor.HttpContext.User = new ClaimsPrincipal(identity);
 		}
+
+		public async Task AuthorizeFullAccess(CancellationToken cancellationToken = default)
+		{
+			_client.SetBearerAuthentication(await _tokenService.GetFullAccessClientCredentialToken(cancellationToken));
+		}
+
 		public virtual async Task<Response<List<TListDto>>> GetAllAsync(CancellationToken cancellationToken = default)
 		{
 			var response = await _client.GetAsync<List<TListDto>>(_url, cancellationToken);

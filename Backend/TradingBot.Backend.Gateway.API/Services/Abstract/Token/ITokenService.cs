@@ -4,5 +4,7 @@
 	{
 		Task<string> GetClientCredentialToken(CancellationToken cancellationToken=default);
 		string GetResourceOwnerPasswordToken(CancellationToken cancellationToken = default);
+
+		Task<string> GetFullAccessClientCredentialToken(CancellationToken cancellationToken = default);
 	}
 }

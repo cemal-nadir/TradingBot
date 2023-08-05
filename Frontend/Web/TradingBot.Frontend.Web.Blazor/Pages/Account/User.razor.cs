@@ -1,8 +1,5 @@
 ﻿using CNG.Core;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
-using TradingBot.Frontend.Libraries.Blazor.Signatures;
 using TradingBot.Frontend.Web.Blazor.Components.Bases;
 using TradingBot.Frontend.Web.Blazor.Dtos.Identity;
 using TradingBot.Frontend.Web.Blazor.Services.Abstract.User;
@@ -24,7 +21,7 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.Account
 				return;
 			}
 
-			Entity.Roles ??= new()
+			Entity.Roles = new()
 			{
 				SelectedRole
 			};
@@ -33,12 +30,10 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.Account
 		}
 		protected override async Task OnInitializedAsync()
 		{
-
+			if (Id is "Add") Id = null;
 			await GetAsync();
 			await GetAllRoles();
 			StateHasChanged();
-
-
 		}
 		protected override async Task GetAsync(CancellationToken cancellationToken = default)
 		{

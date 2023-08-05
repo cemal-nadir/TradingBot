@@ -24,9 +24,14 @@
 							              AdornmentIcon="@Icons.Material.Filled.Email"
 							              Adornment="Adornment.End"
 							              Immediate="true"
-							              Label="@Localizer["Login_Mail"]" />
-
+							              Label="@Localizer["Login_Mail"]" 
+							              UserAttributes="@( new(){{"autocomplete","mud-disabled-"+Guid.NewGuid()
+							                              }})"
+							/>
+										  
 							<MudTextField @bind-Value="LoginDto.Password"
+							              UserAttributes="@( new(){{"autocomplete","mud-disabled-"+Guid.NewGuid()
+							                              }})"
 							              For="@(() => LoginDto.Password)" Label="@Localizer["Login_Password"]" InputType="ShowPassword ? InputType.Text : InputType.Password" Adornment="Adornment.End" AdornmentIcon="@(ShowPassword ? Icons.Material.Filled.VisibilityOff : Icons.Material.Filled.Visibility)" OnAdornmentClick="() => ShowPassword = !ShowPassword" />
 
 						</MudCardContent>

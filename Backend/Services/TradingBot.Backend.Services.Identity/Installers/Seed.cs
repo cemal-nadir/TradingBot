@@ -110,33 +110,6 @@ public static class Seed
 
 		#endregion
 
-		#region Member
-
-		var memberAccount = userManager.FindByNameAsync("membertest").Result;
-
-		if (memberAccount is null) { }
-		userManager.CreateAsync(new ApplicationUser
-		{
-			UserName = "membertest",
-			Email = "membertest@gmail.com",
-
-			Gender = Gender.Male,
-			Name = "Cemal Nadir",
-			PhoneNumber = "+905397207091",
-			SurName = "Gorgorgil",
-			BirthDate = new DateTime(1999, 8, 23, 9, 49, 0, DateTimeKind.Utc),
-			EmailConfirmed = true
-		}, "cMYZ9ATA7P__").Wait();
-
-		if (!userManager.IsInRoleAsync(userManager.FindByNameAsync("membertest").Result!,
-				roleManager.FindByNameAsync("member").Result?.Name ?? "").Result)
-			userManager.AddToRoleAsync(userManager.FindByNameAsync("membertest").Result!,
-				roleManager.FindByNameAsync("member").Result?.Name ?? "").Wait();
-
-		#endregion
-
-
-
 		#endregion
 	}
 

@@ -8,6 +8,10 @@ namespace TradingBot.Backend.Gateway.API.Repositories
         where TListDto : IListDto<TKey?>, new()
         where TKey : IEquatable<TKey?>
     {
+
+	    Task AuthorizeFullAccess(CancellationToken cancellationToken = default);
+
+
         /// <summary>
         /// Get All Entities
         /// </summary>
