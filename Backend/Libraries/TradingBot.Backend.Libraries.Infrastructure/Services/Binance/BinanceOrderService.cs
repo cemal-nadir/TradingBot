@@ -138,26 +138,20 @@ namespace TradingBot.Backend.Libraries.Infrastructure.Services.Binance
 				default:
 					if (stopPrice != null)
 					{
-						var result = await _binanceRestClient.UsdFuturesApi.Trading.PlaceOrderAsync(symbol,
+						await _binanceRestClient.UsdFuturesApi.Trading.PlaceOrderAsync(symbol,
 							side is Side.Long ? OrderSide.Buy : OrderSide.Sell, FuturesOrderType.StopMarket,
 							quantity: quantity, closePosition: true, stopPrice:stopPrice , ct: cancellationToken);
-						if (result.Success)
-						{
-
-						}
+						
 					}
 
 					if (takeProfitPrice != null)
 					{
 						
-						var result = await _binanceRestClient.UsdFuturesApi.Trading.PlaceOrderAsync(symbol,
+						await _binanceRestClient.UsdFuturesApi.Trading.PlaceOrderAsync(symbol,
 							side is Side.Long ? OrderSide.Buy : OrderSide.Sell, FuturesOrderType.TakeProfitMarket,
 							quantity: quantity, closePosition: true, stopPrice:takeProfitPrice ,
 							ct: cancellationToken);
-						if (result.Success)
-						{
-
-						}
+				
 					}
 						
 					break;
