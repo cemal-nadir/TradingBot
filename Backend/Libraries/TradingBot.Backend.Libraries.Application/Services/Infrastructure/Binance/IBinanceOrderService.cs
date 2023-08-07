@@ -1,9 +1,12 @@
-﻿using TradingBot.Backend.Libraries.Domain.Enums;
+﻿using Binance.Net.Objects.Models.Futures;
+using TradingBot.Backend.Libraries.Domain.Enums;
 
 namespace TradingBot.Backend.Libraries.Application.Services.Infrastructure.Binance
 {
 	public interface IBinanceOrderService
 	{
+		Task<BinanceFuturesUsdtSymbol?> GetExchangeInfoFutures(string symbol,
+			CancellationToken cancellationToken = default);
 		Task<(decimal, decimal)> CalculateQuantityAndMarketPriceFutures(string symbol, decimal usdtAmount, int leverage = 1,
 			CancellationToken cancellationToken = default);
 

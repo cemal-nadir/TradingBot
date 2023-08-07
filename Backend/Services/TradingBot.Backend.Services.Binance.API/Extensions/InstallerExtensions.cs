@@ -3,6 +3,7 @@ using CNG.Extensions;
 using TradingBot.Backend.Libraries.ApiCore.Installers;
 using TradingBot.Backend.Libraries.ApiCore.Middlewares;
 using TradingBot.Backend.Libraries.Application;
+using TradingBot.Backend.Services.Binance.API.Caps;
 
 namespace TradingBot.Backend.Services.Binance.API.Extensions
 {
@@ -17,7 +18,7 @@ namespace TradingBot.Backend.Services.Binance.API.Extensions
 			var env = new EnvironmentModel
 			{
 
-				
+
 				MongoDb = new MongoDbModel(
 					host: Environment.GetEnvironmentVariable(variable: "MONGODB_HOST") ?? "",
 					userName: Environment.GetEnvironmentVariable(variable: "MONGODB_USER_NAME") ?? "",
@@ -51,6 +52,7 @@ namespace TradingBot.Backend.Services.Binance.API.Extensions
 				.Select(selector: Activator.CreateInstance)
 				.Cast<IServiceInstaller>().ToList());
 			installers.ForEach(action: x => x.InstallServices(services: services, env: env));
+			services.AddScoped<PullSubscribeService>();
 
 
 			ServiceTool.Create(services);

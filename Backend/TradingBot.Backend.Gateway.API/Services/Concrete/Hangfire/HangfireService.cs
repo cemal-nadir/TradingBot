@@ -1,8 +1,6 @@
-﻿using DotNetCore.CAP;
-using TradingBot.Backend.Gateway.API.Services.Abstract.Api.Binance;
+﻿using TradingBot.Backend.Gateway.API.Services.Abstract.Api.Binance;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Api.User;
 using TradingBot.Backend.Gateway.API.Services.Abstract.Hangfire;
-using TradingBot.Backend.Gateway.API.Services.Concrete.Token;
 
 namespace TradingBot.Backend.Gateway.API.Services.Concrete.Hangfire
 {

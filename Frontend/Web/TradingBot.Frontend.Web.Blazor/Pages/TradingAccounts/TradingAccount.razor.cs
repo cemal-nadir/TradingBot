@@ -45,7 +45,7 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.TradingAccounts
 				{
 					new()
 					{
-						Id = AuthState.User.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject)?.Value,
+						Id = AuthState.User.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Subject)?.Value ?? string.Empty,
 						Email = AuthState.User.Claims.FirstOrDefault(x => x.Type == JwtClaimTypes.Email)?.Value,
 					}
 				};

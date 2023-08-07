@@ -1,14 +1,11 @@
-using System.Security.Claims;
 using IdentityModel;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
-using TradingBot.Frontend.Libraries.Blazor;
 using TradingBot.Frontend.Libraries.Blazor.Models;
 using TradingBot.Frontend.Libraries.Blazor.Services;
-using TradingBot.Frontend.Web.Blazor.Handlers;
 
 namespace TradingBot.Frontend.Web.Blazor.Installers.Services;
 

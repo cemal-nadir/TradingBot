@@ -1,9 +1,9 @@
-﻿namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
+﻿namespace TradingBot.Backend.Libraries.Application.Dtos.Cap
 {
-	public class HookModel
+	public class HookDto
 	{
-		public string? TradingHistoryId { get; set; }
 		public string? TradingAccountId { get; set; }
+		public string? TradingHistoryId { get; set; }
 		public decimal? TradingHistoryQuantity { get; set; }
 		public decimal CurrentAdjustedBalance { get; set; }
 		public decimal MinimumBalance { get; set; }

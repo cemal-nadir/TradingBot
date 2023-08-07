@@ -12,11 +12,9 @@ namespace TradingBot.Backend.Gateway.API.Extensions.Services
 		{
 
 			#region Gateway
-
 			services.AddScoped<IIndicatorHookGateway, IndicatorHookGateway>();
 			services.AddScoped<IUserGateway, UserGateway>();
 			services.AddScoped<IPlatformGateway, PlatformGateway>();
-
 			#endregion
 
 			#region Token

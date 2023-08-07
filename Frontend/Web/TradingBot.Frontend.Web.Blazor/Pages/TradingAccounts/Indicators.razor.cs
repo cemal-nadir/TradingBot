@@ -1,12 +1,9 @@
-﻿using Autofac.Core;
-using IdentityModel;
+﻿using IdentityModel;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.JSInterop;
 using MudBlazor;
 using TradingBot.Frontend.Libraries.Blazor.Models;
-using TradingBot.Frontend.Libraries.Blazor.Signatures;
 using TradingBot.Frontend.Web.Blazor.Components.Bases;
 using TradingBot.Frontend.Web.Blazor.Dtos.Users;
 using TradingBot.Frontend.Web.Blazor.Services.Abstract.User;

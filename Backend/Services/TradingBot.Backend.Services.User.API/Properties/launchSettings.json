@@ -6,6 +6,10 @@
             "launchBrowser": false,
             "applicationUrl": "http://localhost:2001",
             "environmentVariables": {
+                "RABBITMQ_HOST": "localhost",
+                "RABBITMQ_USER_NAME": "guest",
+                "RABBITMQ_PASSWORD": "guest",
+                "RABBITMQ_PORT": "1004",
                 "MONGODB_HOST": "localhost",
                 "MONGODB_USER_NAME": "",
                 "MONGODB_PASSWORD": "",

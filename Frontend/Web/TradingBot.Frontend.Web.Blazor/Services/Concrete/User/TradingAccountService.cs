@@ -12,10 +12,8 @@ namespace TradingBot.Frontend.Web.Blazor.Services.Concrete.User;
 	public class TradingAccountService:ServiceRepository<string,TradingAccountDto,TradingAccountsDto>,ITradingAccountService
 	{
 		private readonly IHttpClientService _httpClientService;
-		private readonly Env _env;
 		public TradingAccountService(IHttpClientService client, Env env,ProtectedLocalStorage localStorage, IHttpClientService httpClientService) : base(client, $"{env.GatewayUrl}{ServiceDefaults.User.UserService}",$"TradingAccount",localStorage)
 		{
-			_env = env;
 			_httpClientService = httpClientService;
 		}
 

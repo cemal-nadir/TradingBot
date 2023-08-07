@@ -1,130 +1,130 @@
 ﻿using CNG.Core.Exceptions;
 using DotNetCore.CAP;
-using TradingBot.Backend.Libraries.Application.Dtos.User;
+using TradingBot.Backend.Libraries.Application.Dtos.Cap;
 using TradingBot.Backend.Libraries.Application.Services.Infrastructure.Binance;
 using TradingBot.Backend.Libraries.Domain.Defaults;
 using TradingBot.Backend.Libraries.Domain.Enums;
-using TradingBot.Backend.Services.Binance.API.Models;
 
 namespace TradingBot.Backend.Services.Binance.API.Caps;
 
 public class PullSubscribeService : ICapSubscribe
 {
 	private readonly IBinanceMainClient _binanceMainClient;
-	private readonly ICapPublisher _capPublisher;
-	public PullSubscribeService(IBinanceMainClient binanceMainClient, ICapPublisher capPublisher)
+	public PullSubscribeService(IBinanceMainClient binanceMainClient)
 	{
 		_binanceMainClient = binanceMainClient;
-		_capPublisher = capPublisher;
 	}
 
 	[CapSubscribe(Cap.BinanceHook)]
-	public async Task HookAsync(HookModel model, CancellationToken cancellationToken = default)
+	public async Task<HookResponseDto?> BinanceHook(HookDto model, CancellationToken cancellationToken = default)
 	{
-		if (model.Account is null || model.IndicatorHook?.Order?.Symbol is null|| model.IndicatorHook?.Order?.OrderType is null||model.IndicatorHook?.Order?.Side is null) return;
+		if (model.IndicatorHook?.Order?.Symbol is null) return null;
+		if (!Enum.TryParse(model.IndicatorHook.Order?.OrderType, out OrderType orderType) ||
+			!Enum.TryParse(model.IndicatorHook.Order?.Side, out Side side)) return null;
+		_binanceMainClient.SetClient(model.ApiKey ?? "", model.SecretKey ?? "");
 
-		_binanceMainClient.SetClient(model.Account.ApiKey ?? "", model.Account.SecretKey ?? "");
-		TradingHistoryDto? responseDto=default;
+
+		HookResponseTradingHistory? responseDto = default;
 		decimal currentBalance;
-		switch (model.IndicatorHook.Order.OrderType)
+		switch (orderType)
 		{
 			case OrderType.Spot:
-			{
-				var closeOrders = _binanceMainClient.BinanceOrderService.CloseSpotOrdersAsync(
-					model.IndicatorHook.Order.Symbol,
-					cancellationToken);
-				var balanceAndQuantity = GetCurrentBalanceAndQuantityAndMarkPrice(
-					model.IndicatorHook?.Order?.Symbol ?? "",
-					model.Account.BalanceSettings?.CurrentAdjustedBalance,
-					OrderType.Spot, cancellationToken: cancellationToken);
-				await Task.WhenAll(closeOrders, balanceAndQuantity);
-				currentBalance = balanceAndQuantity.Result.Item1.TotalBalance;
-				if (balanceAndQuantity.Result.Item1.TotalBalance < model.Account?.BalanceSettings?.MinimumBalance ||
-				    balanceAndQuantity.Result.Item1.AvailableFuturesBalance <
-				    model.Account?.BalanceSettings?.CurrentAdjustedBalance || balanceAndQuantity.Result.Item2 is 0)
-					break;
-
-				_ = model.IndicatorHook?.Order?.Side is Side.Short
-					? await _binanceMainClient.BinanceOrderService.SpotShort(
-						model.IndicatorHook?.Order?.Symbol ?? "", model.TradingHistory?.Quantity ?? 0, cancellationToken)
-					: await _binanceMainClient.BinanceOrderService.SpotLong(
-						model.IndicatorHook?.Order?.Symbol ?? "", balanceAndQuantity.Result.Item2, cancellationToken);
-
-
-				await SetSlAndTpAndTsl(model.IndicatorHook!.Order!.Symbol, model.IndicatorHook.Order.Side!.Value,
-					model.IndicatorHook.Order.OrderType, balanceAndQuantity.Result.Item3, balanceAndQuantity.Result.Item2,
-					model.IndicatorHook?.TakeProfitPercentage, model.IndicatorHook?.StopLossPercentage,
-					cancellationToken: cancellationToken);
-				responseDto = new()
 				{
-					Side = model.IndicatorHook!.Order.Side.Value,
-					Symbol = model.IndicatorHook.Order.Symbol,
-					OrderType = model.IndicatorHook.Order.OrderType,
-					EntryPrice = balanceAndQuantity.Result.Item3,
-					TradingAccountId = model.Account?.Id,
-					IsClosed = false,
-					Quantity = balanceAndQuantity.Result.Item2,
-				};
-				break;
-			}
+					await _binanceMainClient.BinanceOrderService.CloseSpotOrdersAsync(
+						model.IndicatorHook.Order.Symbol,
+						cancellationToken);
+					var balanceAndQuantity =await GetCurrentBalanceAndQuantityAndMarkPrice(
+						model.IndicatorHook?.Order?.Symbol ?? "",
+						model.CurrentAdjustedBalance,
+						OrderType.Spot, cancellationToken: cancellationToken);
+					
+					currentBalance = balanceAndQuantity.Item1.TotalBalance;
+					if (balanceAndQuantity.Item1.TotalBalance < model.MinimumBalance ||
+						balanceAndQuantity.Item1.AvailableFuturesBalance <
+						model.CurrentAdjustedBalance || balanceAndQuantity.Item2 is 0 || model.CurrentAdjustedBalance < model.MinimumBalance)
+						break;
+
+					_ = side is Side.Short
+						? await _binanceMainClient.BinanceOrderService.SpotShort(
+							model.IndicatorHook?.Order?.Symbol ?? "", model.TradingHistoryQuantity ?? 0, cancellationToken)
+						: await _binanceMainClient.BinanceOrderService.SpotLong(
+							model.IndicatorHook?.Order?.Symbol ?? "", balanceAndQuantity.Item2, cancellationToken);
+
+
+					await SetSlAndTpAndTsl(model.IndicatorHook?.Order?.Symbol!, side,
+						OrderType.Spot, balanceAndQuantity.Item3, balanceAndQuantity.Item2,
+						model.IndicatorHook?.TakeProfitPercentage, model.IndicatorHook?.StopLossPercentage,
+						cancellationToken: cancellationToken);
+
+					responseDto = new()
+					{
+						Side = model.IndicatorHook!.Order!.Side,
+						Symbol = model.IndicatorHook.Order.Symbol,
+						OrderType = model.IndicatorHook.Order.OrderType,
+						EntryPrice = balanceAndQuantity.Item3,
+						Quantity = balanceAndQuantity.Item2,
+					};
+					break;
+				}
 			case OrderType.Futures:
 			default:
-			{
-				await _binanceMainClient.BinanceOrderService.CloseFuturesOrdersAndPositionsAsync(model.IndicatorHook?.Order?
-					.Symbol ?? "", cancellationToken);
-
-				
-
-				var balanceAndQuantity = await GetCurrentBalanceAndQuantityAndMarkPrice(
-					model.IndicatorHook?.Order?.Symbol ?? "",
-					model.Account.BalanceSettings?.CurrentAdjustedBalance,
-					OrderType.Futures,
-					model.IndicatorHook?.Order?.Leverage ?? 1,
-					cancellationToken);
-				currentBalance = balanceAndQuantity.Item1.TotalBalance;
-				if (model.IndicatorHook?.Order?.ClosePosition != null &&
-				    model.IndicatorHook.Order.ClosePosition.Value) break;
-					if (balanceAndQuantity.Item1.TotalBalance < model.Account?.BalanceSettings?.MinimumBalance ||
-				    balanceAndQuantity.Item1.AvailableFuturesBalance <
-				    model.Account?.BalanceSettings?.CurrentAdjustedBalance || balanceAndQuantity.Item2 is 0)
-					break;
-
-
-				_ = model.IndicatorHook?.Order?.Side is Side.Long
-					? await _binanceMainClient.BinanceOrderService.FuturesLong(model.IndicatorHook.Order.Symbol,
-						balanceAndQuantity.Item2, model.IndicatorHook?.Order?.Leverage ?? 1,
-						model.IndicatorHook?.Order?.MarginType ?? MarginType.Isolated, cancellationToken)
-					: await _binanceMainClient.BinanceOrderService.FuturesShort(
-						model.IndicatorHook?.Order?.Symbol ?? "", balanceAndQuantity.Item2,
-						model.IndicatorHook?.Order?.Leverage ?? 1,
-						model.IndicatorHook?.Order?.MarginType ?? MarginType.Isolated, cancellationToken);
-
-				await SetSlAndTpAndTsl(model.IndicatorHook!.Order!.Symbol, model.IndicatorHook.Order.Side!.Value,
-					model.IndicatorHook.Order.OrderType, balanceAndQuantity.Item3, balanceAndQuantity.Item2,
-					model.IndicatorHook?.TakeProfitPercentage, model.IndicatorHook?.StopLossPercentage,
-					model.IndicatorHook?.TrailingStopLoss?.CallBackPercentage,
-					model.IndicatorHook?.TrailingStopLoss?.ActivationPercentage, cancellationToken);
-
-				responseDto = new()
 				{
-					Side = model.IndicatorHook!.Order.Side.Value,
-					Symbol = model.IndicatorHook.Order.Symbol,
-					OrderType = model.IndicatorHook.Order.OrderType,
-					EntryPrice = balanceAndQuantity.Item3,
-					TradingAccountId = model.Account?.Id,
-					IsClosed = false,
-					Quantity = balanceAndQuantity.Item2
-				};
+					await _binanceMainClient.BinanceOrderService.CloseFuturesOrdersAndPositionsAsync(model.IndicatorHook?.Order?
+						.Symbol ?? "", cancellationToken);
+					var assetInfo =
+						await _binanceMainClient.BinanceOrderService.GetExchangeInfoFutures(model.IndicatorHook?.Order?
+							.Symbol??"", cancellationToken);
+					var balanceAndQuantity = await GetCurrentBalanceAndQuantityAndMarkPrice(
+						model.IndicatorHook?.Order?.Symbol ?? "",
+						model.CurrentAdjustedBalance,
+						OrderType.Futures,
+						model.IndicatorHook?.Order?.Leverage ?? 1,
+						cancellationToken);
+
+					currentBalance = balanceAndQuantity.Item1.TotalBalance;
+					if (model.IndicatorHook?.Order?.ClosePosition != null &&
+						model.IndicatorHook.Order.ClosePosition.Value) break;
+					if (balanceAndQuantity.Item1.TotalBalance < model.MinimumBalance ||
+					balanceAndQuantity.Item1.AvailableFuturesBalance <
+					model.CurrentAdjustedBalance || balanceAndQuantity.Item2 is 0 || model.CurrentAdjustedBalance < model.MinimumBalance)
+						break;
+
+					if (!Enum.TryParse(model.IndicatorHook?.Order?.MarginType, out MarginType marginType)) return null;
+
+					_ = side is Side.Long
+						? await _binanceMainClient.BinanceOrderService.FuturesLong(model.IndicatorHook?.Order?.Symbol!,
+							 Math.Round(balanceAndQuantity.Item2,assetInfo?.QuantityPrecision ?? 3) , model.IndicatorHook?.Order?.Leverage ?? 1,
+							marginType, cancellationToken)
+						: await _binanceMainClient.BinanceOrderService.FuturesShort(
+							model.IndicatorHook?.Order?.Symbol ?? "", Math.Round(balanceAndQuantity.Item2, assetInfo?.QuantityPrecision ?? 3),
+							model.IndicatorHook?.Order?.Leverage ?? 1,
+							marginType, cancellationToken);
+
+					await SetSlAndTpAndTsl(model.IndicatorHook!.Order!.Symbol, side,
+						OrderType.Futures, balanceAndQuantity.Item3, balanceAndQuantity.Item2,
+						model.IndicatorHook?.TakeProfitPercentage, model.IndicatorHook?.StopLossPercentage,
+						model.IndicatorHook?.TrailingStopLoss?.CallBackPercentage,
+						model.IndicatorHook?.TrailingStopLoss?.ActivationPercentage,assetInfo?.QuantityPrecision,assetInfo?.PricePrecision,cancellationToken);
+
+					responseDto = new()
+					{
+						Side = model.IndicatorHook!.Order.Side,
+						Symbol = model.IndicatorHook.Order.Symbol,
+						OrderType = model.IndicatorHook.Order.OrderType,
+						EntryPrice = balanceAndQuantity.Item3,
+						Quantity = balanceAndQuantity.Item2,
+					};
 					break;
-			}
+				}
 		}
 
-		await _capPublisher.PublishAsync(Cap.HookResponse, new HookResponseModel()
+		return new HookResponseDto()
 		{
-			CloseTradingHistoryId = model.TradingHistory?.Id,
+			CloseTradingHistoryId = model.TradingHistoryId,
 			TradingHistory = responseDto,
-			CurrentBalance = currentBalance
-		}, cancellationToken: cancellationToken);
+			CurrentBalance = currentBalance,
+			TradingAccountId = model.TradingAccountId
+		};
 	}
 
 	/// <summary>
@@ -139,146 +139,82 @@ public class PullSubscribeService : ICapSubscribe
 	/// <param name="stopLossPercentage">Stop Loss Percentage</param>
 	/// <param name="trailingStopLossCallBackPercentage">Trailing Stop Loss Percentage</param>
 	/// <param name="trailingStopLossActivationPercentage">Trailing Stop Loss Activation Percentage</param>
+	/// <param name="pricePrecision"></param>
 	/// <param name="cancellationToken"></param>
+	/// <param name="quantityPrecision"></param>
 	/// <returns></returns>
-	private async Task SetSlAndTpAndTsl(string symbol,Side side, OrderType orderType,decimal markPrice,decimal quantity, decimal? takeProfitPercentage=null,decimal?stopLossPercentage=null,decimal?trailingStopLossCallBackPercentage=null,decimal?trailingStopLossActivationPercentage=null, CancellationToken cancellationToken = default)
+	private async Task SetSlAndTpAndTsl(string symbol, Side side, OrderType orderType, decimal markPrice, decimal quantity, decimal? takeProfitPercentage = null, decimal? stopLossPercentage = null, decimal? trailingStopLossCallBackPercentage = null, decimal? trailingStopLossActivationPercentage = null,int? quantityPrecision=3,int?pricePrecision=2, CancellationToken cancellationToken = default)
 	{
 		if (takeProfitPercentage is null && stopLossPercentage is null && trailingStopLossCallBackPercentage is null)
 			return;
 
-		if (trailingStopLossCallBackPercentage != null && (takeProfitPercentage != null || stopLossPercentage != null))
-		{
-			var stopLossTakeProfit = _binanceMainClient.BinanceOrderService.StopLossAndTakeProfitAsync(
-				symbol,
-				orderType,
-				side is Side.Long ? Side.Short:Side.Long, quantity,
-				stopPrice: stopLossPercentage is null ? null : side is Side.Long
-					? (markPrice - (markPrice *
-						stopLossPercentage / 100))
-					: (markPrice + (markPrice *
-						stopLossPercentage / 100)),
-				takeProfitPrice: takeProfitPercentage is null ? null : side is Side.Long
-					? (markPrice + (markPrice *
-						takeProfitPercentage / 100))
-					: (markPrice - (markPrice *
-						takeProfitPercentage / 100)), cancellationToken: cancellationToken);
-			var trailingStopLoss = _binanceMainClient.BinanceOrderService.TrailingStopLossFuture(
+		if (trailingStopLossCallBackPercentage != null)
+			await _binanceMainClient.BinanceOrderService.TrailingStopLossFuture(
 				symbol,
 				side is Side.Long ? Side.Short : Side.Long,
-				quantity, trailingStopLossCallBackPercentage.Value,
-				trailingStopLossActivationPercentage??0, cancellationToken);
-			await Task.WhenAll(stopLossTakeProfit, trailingStopLoss);
-		}
-		else
-		{
+				Math.Round(quantity,quantityPrecision!.Value) , trailingStopLossCallBackPercentage.Value,
+				trailingStopLossActivationPercentage is null or 0 or < 0 ? 0 : side is Side.Long ? Math.Round(markPrice + markPrice * trailingStopLossActivationPercentage!.Value / 100, pricePrecision!.Value) :Math.Round(markPrice - markPrice * trailingStopLossActivationPercentage!.Value / 100, pricePrecision!.Value) , cancellationToken);
+
+
+
+		if (takeProfitPercentage != null || stopLossPercentage != null)
 			await _binanceMainClient.BinanceOrderService.StopLossAndTakeProfitAsync(
 				symbol,
 				orderType,
-				side is Side.Long ? Side.Short : Side.Long, quantity,
+				side is Side.Long ? Side.Short : Side.Long, Math.Round(quantity,quantityPrecision!.Value),
 				stopPrice: stopLossPercentage is null ? null : side is Side.Long
-					? (markPrice - (markPrice *
-						stopLossPercentage / 100))
-					: (markPrice + (markPrice *
-						stopLossPercentage / 100)),
+					? Math.Round((markPrice - (markPrice *
+						stopLossPercentage.Value / 100)),pricePrecision!.Value) 
+					: Math.Round((markPrice + (markPrice *
+						stopLossPercentage.Value / 100)),pricePrecision!.Value),
 				takeProfitPrice: takeProfitPercentage is null ? null : side is Side.Long
-					? (markPrice + (markPrice *
-						takeProfitPercentage / 100))
-					: (markPrice - (markPrice *
-						takeProfitPercentage / 100)), cancellationToken: cancellationToken);
-		}
+					? Math.Round((markPrice + (markPrice *
+						takeProfitPercentage.Value / 100)),pricePrecision!.Value)
+					: Math.Round((markPrice - (markPrice *
+						takeProfitPercentage.Value / 100)),pricePrecision!.Value), cancellationToken: cancellationToken);
+
 	}
-	private async Task<(Balance, decimal,decimal)> GetCurrentBalanceAndQuantityAndMarkPrice(string symbol, decimal? currentAdjustedBalance,OrderType orderType, int leverage = 1, CancellationToken cancellationToken = default)
+	private async Task<(Balance, decimal, decimal)> GetCurrentBalanceAndQuantityAndMarkPrice(string symbol, decimal? currentAdjustedBalance, OrderType orderType, int leverage = 1, CancellationToken cancellationToken = default)
 	{
-		Balance balance;
+		var futuresBalances = await
+			_binanceMainClient.BinanceAccountService.GetAccountBalanceFutures(cancellationToken);
 
-		decimal quantity;
-		decimal markPrice;
-		if (currentAdjustedBalance is null or 0)
+		var spotBalances = await
+			_binanceMainClient.BinanceAccountService.GetAccountBalanceSpot(cancellationToken);
+
+		var balance = new Balance
 		{
-			var futuresBalances =
-				_binanceMainClient.BinanceAccountService.GetAccountBalanceFutures(cancellationToken);
+			AvailableFuturesBalance = futuresBalances
+				                          .FirstOrDefault(x =>
+					                          x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
+				                          ?.AvailableBalance ??
+			                          throw new NotFoundException("Balance not found"),
+			AvailableSpotBalance = spotBalances
+				                       .FirstOrDefault(x =>
+					                       x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
+				                       ?.Available ??
+			                       throw new NotFoundException("Balance not found"),
+			FuturesBalance = futuresBalances
+				                 .FirstOrDefault(x =>
+					                 x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
+				                 ?.WalletBalance ??
+			                 throw new NotFoundException("Balance not found"),
+			SpotBalance = spotBalances
+				              .FirstOrDefault(x =>
+					              x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)?.Total ??
+			              throw new NotFoundException("Balance not found")
+		};
 
-			var spotBalances =
-				_binanceMainClient.BinanceAccountService.GetAccountBalanceSpot(cancellationToken);
-				             
-			await Task.WhenAll(futuresBalances, spotBalances);
-			balance = new()
-			{
-				AvailableFuturesBalance = futuresBalances.Result
-					                          .FirstOrDefault(x =>
-						                          x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
-					                          ?.AvailableBalance ??
-				                          throw new NotFoundException("Balance not found"),
-				AvailableSpotBalance = spotBalances.Result
-					                       .FirstOrDefault(x =>
-						                       x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
-					                       ?.Available ??
-				                       throw new NotFoundException("Balance not found"),
-				FuturesBalance = futuresBalances.Result
-					                 .FirstOrDefault(x =>
-						                 x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
-					                 ?.WalletBalance ??
-				                 throw new NotFoundException("Balance not found"),
-				SpotBalance = spotBalances.Result
-					              .FirstOrDefault(x =>
-						              x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)?.Total ??
-				              throw new NotFoundException("Balance not found")
-			};
-			
+			var quantityResponse = orderType is OrderType.Futures
+				? await
+					_binanceMainClient.BinanceOrderService.CalculateQuantityAndMarketPriceFutures(symbol,
+						currentAdjustedBalance is null or 0 ? balance.AvailableFuturesBalance:currentAdjustedBalance.Value, leverage,
+						cancellationToken)
+				: await _binanceMainClient.BinanceOrderService.CalculateQuantityAndMarketPriceSpot(symbol,
+					currentAdjustedBalance is null or 0 ? balance.AvailableSpotBalance: currentAdjustedBalance.Value,
+					cancellationToken);
 
-			var quantityResponse =orderType is OrderType.Futures ? await
-				_binanceMainClient.BinanceOrderService.CalculateQuantityAndMarketPriceFutures(symbol, balance.AvailableFuturesBalance, leverage,
-					cancellationToken) :await _binanceMainClient.BinanceOrderService.CalculateQuantityAndMarketPriceSpot(symbol, balance.AvailableSpotBalance,
-				cancellationToken);
-				
-			quantity = quantityResponse.Item1;
-			markPrice= quantityResponse.Item2;
-		}
-		else
-		{
-			var futuresBalances =
-				_binanceMainClient.BinanceAccountService.GetAccountBalanceFutures(cancellationToken);
-
-			var spotBalances =
-				_binanceMainClient.BinanceAccountService.GetAccountBalanceSpot(cancellationToken);
-			var quantityResponse = orderType is OrderType.Futures ? _binanceMainClient.BinanceOrderService.CalculateQuantityAndMarketPriceFutures(symbol,
-				currentAdjustedBalance.Value, leverage,
-				cancellationToken): _binanceMainClient.BinanceOrderService.CalculateQuantityAndMarketPriceSpot(symbol,
-				currentAdjustedBalance.Value,
-				cancellationToken);
-			await Task.WhenAll(futuresBalances, spotBalances,quantityResponse);
-			balance = new()
-			{
-				AvailableFuturesBalance = futuresBalances.Result
-					                          .FirstOrDefault(x =>
-						                          x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
-					                          ?.AvailableBalance ??
-				                          throw new NotFoundException("Balance not found"),
-				AvailableSpotBalance = spotBalances.Result
-					                       .FirstOrDefault(x =>
-						                       x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
-					                       ?.Available ??
-				                       throw new NotFoundException("Balance not found"),
-				FuturesBalance = futuresBalances.Result
-					                 .FirstOrDefault(x =>
-						                 x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
-					                 ?.WalletBalance ??
-				                 throw new NotFoundException("Balance not found"),
-				SpotBalance = spotBalances.Result
-					              .FirstOrDefault(x =>
-						              x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)?.Total ??
-				              throw new NotFoundException("Balance not found")
-			};
-
-
-
-
-
-			quantity = quantityResponse.Result.Item1;
-			markPrice= quantityResponse.Result.Item2;
-		}
-
-		return (balance,quantity,markPrice);
+		return (balance, quantityResponse.Item1, quantityResponse.Item2);
 
 	}
 	private class Balance

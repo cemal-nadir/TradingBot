@@ -3,6 +3,7 @@ using CNG.Extensions;
 using TradingBot.Backend.Libraries.ApiCore.Installers;
 using TradingBot.Backend.Libraries.ApiCore.Middlewares;
 using TradingBot.Backend.Libraries.Application;
+using TradingBot.Backend.Services.User.API.Caps;
 
 namespace TradingBot.Backend.Services.User.API.Extensions
 {
@@ -54,8 +55,7 @@ namespace TradingBot.Backend.Services.User.API.Extensions
 				.Select(selector: Activator.CreateInstance)
 				.Cast<IServiceInstaller>().ToList());
 			installers.ForEach(action: x => x.InstallServices(services: services, env: env));
-
-
+			services.AddScoped<PullSubscribeService>();
 			ServiceTool.Create(services);
 		}
 

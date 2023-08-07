@@ -1,6 +1,4 @@
-﻿using TradingBot.Backend.Gateway.API.Dtos.Enums;
-
-namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
+﻿namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
 {
 	public class IndicatorHookDto
 	{
@@ -19,11 +17,10 @@ namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
 	public class Order
 	{
 		public string? Symbol { get; set; }
-		public Side? Side { get; set; }
-		public OrderType OrderType { get; set; }
-		public MarginType MarginType { get; set; }
+		public string? Side { get; set; }
+		public string? OrderType { get; set; }
+		public string? MarginType { get; set; }
 		public int Leverage { get; set; }
 		public bool? ClosePosition { get; set; }
-
 	}
 }

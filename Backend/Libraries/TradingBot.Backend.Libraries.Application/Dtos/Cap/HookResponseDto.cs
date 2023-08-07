@@ -1,7 +1,7 @@
 ﻿
-namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
+namespace TradingBot.Backend.Libraries.Application.Dtos.Cap
 {
-	public class HookResponseModel
+	public class HookResponseDto
 	{
 		public string? CloseTradingHistoryId { get; set; }
 		public HookResponseTradingHistory? TradingHistory { get; set; }

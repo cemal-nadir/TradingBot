@@ -1,13 +1,9 @@
-using CNG.Extensions;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
-using TradingBot.Frontend.Libraries.Blazor.Models;
 using TradingBot.Frontend.Libraries.Blazor.Repositories;
 using TradingBot.Frontend.Libraries.Blazor.Services;
 using TradingBot.Frontend.Libraries.Blazor.Signatures;
 using TradingBot.Frontend.Web.Blazor.Theme.Components;
-using static IdentityModel.OidcConstants;
-using static MudBlazor.CategoryTypes;
 
 namespace TradingBot.Frontend.Web.Blazor.Components.Bases;
 public class BaseListPage<TDto, TListDto, TKey, TService, TDetailPage, TValidator> : BaseComponent

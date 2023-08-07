@@ -1,4 +1,3 @@
-using Binance.Net.Clients;
 using Binance.Net.Interfaces.Clients;
 using CNG.Http.Extensions;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,10 +14,8 @@ public class Infrastructure: IServiceInstaller
     {
         services.AddHttpClientService();
         services.AddHttpClient(Client.DefaultClient);
-        services.AddSingleton<IBinanceRestClient, BinanceRestClient>();
+        services.AddSingleton<IBinanceRestClient, BinanceTestClient>();
         services.AddScoped<IBinanceMainClient, BinanceMainClient>();
-
-
     }
 
 }

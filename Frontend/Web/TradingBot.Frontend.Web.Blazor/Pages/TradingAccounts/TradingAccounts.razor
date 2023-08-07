@@ -49,9 +49,9 @@
 
 		<PropertyColumn Property="x=>x.Id" Title="@Localizer["Process"]" T="TradingAccountsDto" TProperty="string">
 			<CellTemplate>
-				<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Success" OnClick="@(async () => await EditAsync(context.Item.Id ?? ""))"></MudIconButton>
+				<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Success" OnClick="@(async () => await EditAsync(context.Item.Id))"></MudIconButton>
 				<MudIconButton Icon="@Icons.Material.Filled.Webhook" Color="Color.Primary" Href="@($"/Users/TradingAccounts/{context.Item.Id}/Indicators")"></MudIconButton>
-				<MudIconButton Icon="@Icons.Material.Filled.RemoveCircle" Color="Color.Error" OnClick="@(async () => await DeleteAsync(context.Item.Id ?? ""))"></MudIconButton>
+				<MudIconButton Icon="@Icons.Material.Filled.RemoveCircle" Color="Color.Error" OnClick="@(async () => await DeleteAsync(context.Item.Id))"></MudIconButton>
 			</CellTemplate>
 		</PropertyColumn>
 	</Columns>

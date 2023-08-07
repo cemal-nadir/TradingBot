@@ -1,5 +1,4 @@
-﻿using System.IdentityModel.Tokens.Jwt;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Identity;
 using TradingBot.Backend.Gateway.API.Dtos.Requests.Users;
