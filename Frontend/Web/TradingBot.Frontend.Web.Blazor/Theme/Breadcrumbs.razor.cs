@@ -32,11 +32,11 @@ public class BreadcrumbsRazor : ComponentBase
 		NavigationManager.LocationChanged += NavigationManager_LocationChanged;
 	}
 
-	private string CurrentLink;
+	private string? _currentLink;
 	private void NavigationManager_LocationChanged(object? sender, Microsoft.AspNetCore.Components.Routing.LocationChangedEventArgs e)
 	{
-		if (e.Location == CurrentLink) return;
-		CurrentLink = e.Location;
+		if (e.Location == _currentLink) return;
+		_currentLink = e.Location;
 		OnParametersSet();
 		StateHasChanged();
 	}

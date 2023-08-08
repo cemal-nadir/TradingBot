@@ -124,6 +124,15 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Change My Password benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string ChangeMyPassword {
+            get {
+                return ResourceManager.GetString("ChangeMyPassword", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Delete benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Delete {
@@ -232,6 +241,15 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Languages benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Languages {
+            get {
+                return ResourceManager.GetString("Languages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sign In benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Login_Button {
@@ -268,6 +286,33 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Logout benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Logout {
+            get {
+                return ResourceManager.GetString("Logout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   My Profile benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MyProfile {
+            get {
+                return ResourceManager.GetString("MyProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   My Settings benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string MySettings {
+            get {
+                return ResourceManager.GetString("MySettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Passive benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Passive {
@@ -291,6 +336,15 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         public static string Process {
             get {
                 return ResourceManager.GetString("Process", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Required benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Required {
+            get {
+                return ResourceManager.GetString("Required", resourceCulture);
             }
         }
         

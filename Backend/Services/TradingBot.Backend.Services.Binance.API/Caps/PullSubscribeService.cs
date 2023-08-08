@@ -152,8 +152,16 @@ public class PullSubscribeService : ICapSubscribe
 			await _binanceMainClient.BinanceOrderService.TrailingStopLossFuture(
 				symbol,
 				side is Side.Long ? Side.Short : Side.Long,
-				Math.Round(quantity,quantityPrecision!.Value) , trailingStopLossCallBackPercentage.Value,
-				trailingStopLossActivationPercentage is null or 0 or < 0 ? 0 : side is Side.Long ? Math.Round(markPrice + markPrice * trailingStopLossActivationPercentage!.Value / 100, pricePrecision!.Value) :Math.Round(markPrice - markPrice * trailingStopLossActivationPercentage!.Value / 100, pricePrecision!.Value) , cancellationToken);
+				Math.Round(quantity, quantityPrecision!.Value), trailingStopLossCallBackPercentage.Value,
+				trailingStopLossActivationPercentage is null or 0 or < 0
+					? 0
+					:
+					side is Side.Long
+						?
+						Math.Round(markPrice + markPrice * trailingStopLossActivationPercentage.Value / 100,
+							pricePrecision!.Value)
+						: Math.Round(markPrice - markPrice * trailingStopLossActivationPercentage.Value / 100,
+							pricePrecision!.Value), cancellationToken);
 
 
 

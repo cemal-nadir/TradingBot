@@ -71,3 +71,22 @@ a, .btn-link {
     box-shadow: inset 17px 20px 20px 13px rgb(0 0 0 / 8%);
     overflow-y: auto;
 }
+.rainbow {
+    animation-play-state: running;
+    animation: color-changes 15s infinite;
+}
+
+@keyframes color-changes {
+    0% {
+        color: #0063db;
+    }
+
+    50% {
+        color: #f40606;
+    }
+
+    100% {
+        color: #0063db;
+    }
+}
+

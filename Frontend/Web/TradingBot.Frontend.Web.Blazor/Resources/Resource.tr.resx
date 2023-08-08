@@ -145,6 +145,10 @@
     <value>İptal</value>
     <comment>Cancel</comment>
   </data>
+  <data name="ChangeMyPassword" xml:space="preserve">
+    <value>Şifremi Sıfırla</value>
+    <comment>ChangeMyPassword</comment>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Sil</value>
     <comment>Delete</comment>
@@ -193,6 +197,10 @@
     <value>İndikatör Adı</value>
     <comment>Indicator_Name</comment>
   </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Dil Seçenekleri</value>
+    <comment>Languages</comment>
+  </data>
   <data name="Login_Button" xml:space="preserve">
     <value>Giriş Yap</value>
     <comment>Login_Button</comment>
@@ -209,6 +217,18 @@
     <value>Giriş Yapılıyor.. Lüften Bekleyin</value>
     <comment>Login_Processing</comment>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Çıkış Yap</value>
+    <comment>Logout</comment>
+  </data>
+  <data name="MyProfile" xml:space="preserve">
+    <value>Profilim</value>
+    <comment>MyProfile</comment>
+  </data>
+  <data name="MySettings" xml:space="preserve">
+    <value>Ayarlarım</value>
+    <comment>MySettings</comment>
+  </data>
   <data name="Passive" xml:space="preserve">
     <value>Pasif</value>
     <comment>Passive</comment>
@@ -220,6 +240,10 @@
   <data name="Process" xml:space="preserve">
     <value>İşlem</value>
     <comment>Process</comment>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Zorunlu</value>
+    <comment>Required</comment>
   </data>
   <data name="RoleNotFound" xml:space="preserve">
     <value>Yetki bulunamadı</value>

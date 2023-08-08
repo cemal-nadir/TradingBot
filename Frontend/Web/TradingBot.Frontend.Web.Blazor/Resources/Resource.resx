@@ -144,6 +144,10 @@
     <value>Cancel</value>
     <comment>Cancel</comment>
   </data>
+  <data name="ChangeMyPassword" xml:space="preserve">
+    <value>Change My Password</value>
+    <comment>ChangeMyPassword</comment>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
     <comment>Delete</comment>
@@ -192,6 +196,10 @@
     <value>Indicator Name</value>
     <comment>Indicator_Name</comment>
   </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Languages</value>
+    <comment>Languages</comment>
+  </data>
   <data name="Login_Button" xml:space="preserve">
     <value>Sign In</value>
     <comment>Login_Button</comment>
@@ -208,6 +216,18 @@
     <value>Login Processing.. Please Wait</value>
     <comment>Login_Processing</comment>
   </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+    <comment>Logout</comment>
+  </data>
+  <data name="MyProfile" xml:space="preserve">
+    <value>My Profile</value>
+    <comment>MyProfile</comment>
+  </data>
+  <data name="MySettings" xml:space="preserve">
+    <value>My Settings</value>
+    <comment>MySettings</comment>
+  </data>
   <data name="Passive" xml:space="preserve">
     <value>Passive</value>
   </data>
@@ -218,6 +238,10 @@
   <data name="Process" xml:space="preserve">
     <value>Process</value>
     <comment>Process</comment>
+  </data>
+  <data name="Required" xml:space="preserve">
+    <value>Required</value>
+    <comment>Required</comment>
   </data>
   <data name="RoleNotFound" xml:space="preserve">
     <value>Role not found</value>

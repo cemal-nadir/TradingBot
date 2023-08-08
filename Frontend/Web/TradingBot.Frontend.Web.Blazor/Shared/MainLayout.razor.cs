@@ -40,12 +40,13 @@ namespace TradingBot.Frontend.Web.Blazor.Shared
 			StateHasChanged();
 		}
 	
-		protected override async Task OnAfterRenderAsync(bool firstRender)
+		protected override Task OnAfterRenderAsync(bool firstRender)
 		{
 			if (firstRender)
 			{
 				GlobalRenderService.ExceptionRender+=HandleError;
 			}
+			return Task.CompletedTask;
 
 		}
 

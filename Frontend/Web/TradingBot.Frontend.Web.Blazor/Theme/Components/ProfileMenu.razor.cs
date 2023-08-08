@@ -22,7 +22,7 @@ namespace TradingBot.Frontend.Web.Blazor.Theme.Components
 		protected void ChangeCulture(CultureInfo cultureInfo)
 		{
 			if (Equals(CultureInfo.CurrentCulture, cultureInfo)) return;
-			if (Navigation?.Uri == null) return;
+
 			var uri = new Uri(Navigation.Uri)
 				.GetComponents(UriComponents.PathAndQuery, UriFormat.Unescaped);
 			var culture = Uri.EscapeDataString(cultureInfo.Name);
@@ -33,7 +33,7 @@ namespace TradingBot.Frontend.Web.Blazor.Theme.Components
 		protected async Task Logout()
 		{
 			await IdentityService.SignOut();
-			Navigation?.NavigateTo("/login", forceLoad: true);
+			Navigation.NavigateTo("/login", forceLoad: true);
 		}
 
 		protected override async Task OnAfterRenderAsync(bool firstRender)
