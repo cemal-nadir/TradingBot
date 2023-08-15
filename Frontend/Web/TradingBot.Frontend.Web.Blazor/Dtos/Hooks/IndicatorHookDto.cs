@@ -1,4 +1,4 @@
-﻿namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
+﻿namespace TradingBot.Frontend.Web.Blazor.Dtos.Hooks
 {
 	public class IndicatorHookDto
 	{

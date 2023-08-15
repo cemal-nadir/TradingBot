@@ -5,7 +5,6 @@ using CNG.Core.Exceptions;
 using CNG.Http.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.AspNetCore.Components.Server;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using Newtonsoft.Json;
 using TradingBot.Frontend.Libraries.Blazor.Defaults;
@@ -15,7 +14,7 @@ using TradingBot.Frontend.Libraries.Blazor.Responses;
 
 namespace TradingBot.Frontend.Libraries.Blazor.Services
 {
-	public class IdentityService : ServerAuthenticationStateProvider, IIdentityService
+	public class IdentityService : AuthenticationStateProvider, IIdentityService
 	{
 		private readonly IIdentityServerService _identityServerService;
 		private readonly ProtectedLocalStorage _localStorageService;
@@ -98,8 +97,18 @@ namespace TradingBot.Frontend.Libraries.Blazor.Services
 		}
 		public override async Task<AuthenticationState> GetAuthenticationStateAsync()
 		{
-
-			var token = (await _localStorageService.GetAsync<AuthenticationTokenWithClaims>(nameof(AuthenticationTokenWithClaims))).Value;
+			AuthenticationTokenWithClaims? token;
+			try
+			{
+				token = (await _localStorageService.GetAsync<AuthenticationTokenWithClaims>(nameof(AuthenticationTokenWithClaims))).Value;
+			}
+			catch(System.Security.Cryptography.CryptographicException ex)
+			{
+				await _localStorageService.DeleteAsync(nameof(AuthenticationTokenWithClaims));
+				NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(new CustomPrincipal(new ClaimsIdentity()))));
+				return new AuthenticationState(new CustomPrincipal(new ClaimsIdentity()));
+			}
+			 
 
 			if (token?.AccessToken == null || string.IsNullOrEmpty(token.AccessToken))
 			{

@@ -30,9 +30,13 @@
 				}
 			</CellTemplate>
 		</PropertyColumn>
+		<PropertyColumn T="IndicatorDto" TProperty="string" Title="@Localizer["Indicators_HookUrl"]">
+			<CellTemplate>
+				<MudTextField Value="@($"{Navigation.BaseUri}api/v1/hook/{context.Item.Id}")" Lines="2" Variant="Variant.Text" ReadOnly="true"></MudTextField>
+			</CellTemplate>
+		</PropertyColumn>
 		<PropertyColumn Property="x=>x.Id" Title="@Localizer["Process"]">
 			<CellTemplate>
-				<MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Color="Color.Primary" OnClick="@(async () => await CopyHookUrl(context.Item.Id ?? ""))"></MudIconButton>
 				<MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Success" OnClick="@(async () => await EditAsync(context.Item.Id ?? ""))"></MudIconButton>
 				<MudIconButton Icon="@Icons.Material.Filled.RemoveCircle" Color="Color.Error" OnClick="@(async () => await DeleteAsync(context.Item.Id ?? ""))"></MudIconButton>
 			</CellTemplate>

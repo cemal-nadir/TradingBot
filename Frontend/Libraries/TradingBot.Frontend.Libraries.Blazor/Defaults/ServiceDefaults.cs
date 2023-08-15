@@ -9,6 +9,10 @@
 		public static class TradingPlatform
 		{
 			public const string TradingPlatformService = "Platforms";
+		}
+		public static class IndicatorHook
+		{
+			public const string IndicatorHookService = "IndicatorHooks";
 
 		}
 	}

@@ -1,26 +1,28 @@
-﻿{
-    "profiles": {
-        "TradingBot.Backend.Services.User.API": {
-            "commandName": "Project",
-            "dotnetRunMessages": false,
-            "launchBrowser": false,
-            "applicationUrl": "http://localhost:2001",
-            "environmentVariables": {
-                "RABBITMQ_HOST": "localhost",
-                "RABBITMQ_USER_NAME": "guest",
-                "RABBITMQ_PASSWORD": "guest",
-                "RABBITMQ_PORT": "1004",
-                "MONGODB_HOST": "localhost",
-                "MONGODB_USER_NAME": "",
-                "MONGODB_PASSWORD": "",
-                "MONGODB_PORT": "1001",
-                "PROJECT_NAME": "User",
-                "GROUP_NAME": "TradingBot",
-                "IDENTITY_URL": "http://localhost:1999",
-                "IDENTITY_RESOURCE_NAME": "TradingBotUserApi"
-            }
-
-        }
-
+{
+  "profiles": {
+    "TradingBot.Backend.Services.User.API": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "RABBITMQ_HOST": "localhost",
+        "RABBITMQ_USER_NAME": "guest",
+        "RABBITMQ_PASSWORD": "guest",
+        "RABBITMQ_PORT": "1004",
+        "MONGODB_HOST": "localhost",
+        "MONGODB_USER_NAME": "",
+        "MONGODB_PASSWORD": "",
+        "MONGODB_PORT": "1001",
+        "PROJECT_NAME": "User",
+        "GROUP_NAME": "TradingBot",
+        "IDENTITY_URL": "http://localhost:1999",
+        "IDENTITY_RESOURCE_NAME": "TradingBotUserApi"
+      },
+      "dotnetRunMessages": false,
+      "applicationUrl": "http://localhost:2001"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true
     }
+  }
 }

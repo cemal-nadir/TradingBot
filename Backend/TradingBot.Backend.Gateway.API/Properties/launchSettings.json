@@ -1,31 +1,33 @@
-﻿{
-    "profiles": {
-        "TradingBot.Backend.Services.Gateway.Api": {
-            "commandName": "Project",
-            "dotnetRunMessages": false,
-            "launchBrowser": false,
-            "applicationUrl": "http://localhost:1990",
-            "environmentVariables": {
-                "API_CLIENTS_FULL_ID": "TradingBotApiFullClient",
-                "API_CLIENTS_FULL_SECRET": "cv7VzznOzv8RrqLaaSJA4jZ5GeB3TvM8",
-                "API_CLIENTS_MEMBER_ID": "TradingBotApiMemberClient",
-                "API_CLIENTS_MEMBER_SECRET": "q9bLfoMsKLsH8v7c234lugrn9l0LQFYV",
-                "SERVICE_USER": "http://localhost:2001/api/",
-                "SERVICE_BINANCE": "http://localhost:2000/api/",
-                "SERVICE_IDENTITY": "http://localhost:1999",
-                "RABBITMQ_HOST": "localhost",
-                "RABBITMQ_USER_NAME": "guest",
-                "RABBITMQ_PASSWORD": "guest",
-                "RABBITMQ_PORT": "1004",
-                "MONGODB_HOST": "localhost",
-                "MONGODB_USER_NAME": "",
-                "MONGODB_PASSWORD": "",
-                "MONGODB_PORT": "1001",
-                "PROJECT_NAME": "Gateway",
-                "GROUP_NAME": "TradingBot"
-            }
-
-        }
-
+{
+  "profiles": {
+    "TradingBot.Backend.Services.Gateway.Api": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "API_CLIENTS_FULL_ID": "TradingBotApiFullClient",
+        "API_CLIENTS_FULL_SECRET": "cv7VzznOzv8RrqLaaSJA4jZ5GeB3TvM8",
+        "API_CLIENTS_MEMBER_ID": "TradingBotApiMemberClient",
+        "API_CLIENTS_MEMBER_SECRET": "q9bLfoMsKLsH8v7c234lugrn9l0LQFYV",
+        "SERVICE_USER": "http://localhost:2001/api/",
+        "SERVICE_BINANCE": "http://localhost:2000/api/",
+        "SERVICE_IDENTITY": "http://localhost:1999",
+        "RABBITMQ_HOST": "localhost",
+        "RABBITMQ_USER_NAME": "guest",
+        "RABBITMQ_PASSWORD": "guest",
+        "RABBITMQ_PORT": "1004",
+        "MONGODB_HOST": "localhost",
+        "MONGODB_USER_NAME": "",
+        "MONGODB_PASSWORD": "",
+        "MONGODB_PORT": "1001",
+        "PROJECT_NAME": "Gateway",
+        "GROUP_NAME": "TradingBot"
+      },
+      "dotnetRunMessages": false,
+      "applicationUrl": "http://localhost:1990"
+    },
+    "Docker": {
+      "commandName": "Docker",
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "publishAllPorts": true
     }
+  }
 }

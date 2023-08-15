@@ -46,20 +46,15 @@
 			<a href="" class="reload">Reload</a>
 			<a class="dismiss">X</a>
 		</div>
-		@* ReSharper disable once Html.PathError *@
-
-		<script src="_framework/blazor.server.js"></script>
-		@* ReSharper disable once Html.PathError *@
+		<div id="reconnect-modal" style="display: none;"></div>
+		<script src="_framework/blazor.server.js" autostart="false"></script>
+		<script src="js/boot.js"></script>
 		<script src="_content/MudBlazor/MudBlazor.min.js"></script>
-		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 		<script src="js/app.js"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 	}
 
-	<script>
-		Blazor.defaultReconnectionHandler._reconnectCallback = function (d) {
-			document.location.reload();
-		}
-	</script>
+	
 
 </body>
 </html>

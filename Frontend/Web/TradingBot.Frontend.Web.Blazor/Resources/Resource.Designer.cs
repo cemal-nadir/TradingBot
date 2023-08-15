@@ -214,6 +214,15 @@ namespace TradingBot.Frontend.Web.Blazor.Resources {
         }
         
         /// <summary>
+        ///   Hook Url benzeri yerelleştirilmiş bir dize arar.
+        /// </summary>
+        public static string Indicators_HookUrl {
+            get {
+                return ResourceManager.GetString("Indicators_HookUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Hook Url Copied benzeri yerelleştirilmiş bir dize arar.
         /// </summary>
         public static string Indicators_HookUrlCopied {

@@ -6,6 +6,7 @@ using Microsoft.JSInterop;
 using MudBlazor;
 using TradingBot.Frontend.Libraries.Blazor.Services;
 using TradingBot.Frontend.Web.Blazor.Resources;
+using TradingBot.Frontend.Web.Blazor.Services;
 
 namespace TradingBot.Frontend.Web.Blazor.Shared
 {
@@ -18,6 +19,7 @@ namespace TradingBot.Frontend.Web.Blazor.Shared
 		[Inject] protected IDialogService DialogService { get; set; } = null!;
 		[Inject] protected IJSRuntime JsRuntime { get; set; } = null!;
 		[Inject] private GlobalRenderService GlobalRenderService { get; set; } = null!;
+		[Inject] private BrowserService BrowserService { get; set; } = null!;
 
 		protected bool Loading { get; set; }
 		protected bool ProfileMenuShowing { get; set; }
@@ -42,12 +44,11 @@ namespace TradingBot.Frontend.Web.Blazor.Shared
 	
 		protected override Task OnAfterRenderAsync(bool firstRender)
 		{
-			if (firstRender)
-			{
-				GlobalRenderService.ExceptionRender+=HandleError;
-			}
-			return Task.CompletedTask;
+			if (!firstRender) return Task.CompletedTask;
 
+			BrowserService.Init(JsRuntime,this);
+			GlobalRenderService.ExceptionRender+=HandleError;
+			return Task.CompletedTask;
 		}
 
 	}

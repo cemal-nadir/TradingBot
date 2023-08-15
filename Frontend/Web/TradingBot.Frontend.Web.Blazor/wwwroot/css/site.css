@@ -89,4 +89,7 @@ a, .btn-link {
         color: #0063db;
     }
 }
+#components-reconnect-modal{
+    display:none!important;
+}
 

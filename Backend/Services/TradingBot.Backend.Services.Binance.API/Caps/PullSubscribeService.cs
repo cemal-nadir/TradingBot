@@ -1,5 +1,4 @@
-﻿using CNG.Core.Exceptions;
-using DotNetCore.CAP;
+﻿using DotNetCore.CAP;
 using TradingBot.Backend.Libraries.Application.Dtos.Cap;
 using TradingBot.Backend.Libraries.Application.Services.Infrastructure.Binance;
 using TradingBot.Backend.Libraries.Domain.Defaults;
@@ -19,8 +18,7 @@ public class PullSubscribeService : ICapSubscribe
 	public async Task<HookResponseDto?> BinanceHook(HookDto model, CancellationToken cancellationToken = default)
 	{
 		if (model.IndicatorHook?.Order?.Symbol is null) return null;
-		if (!Enum.TryParse(model.IndicatorHook.Order?.OrderType, out OrderType orderType) ||
-			!Enum.TryParse(model.IndicatorHook.Order?.Side, out Side side)) return null;
+		if (!Enum.TryParse(model.IndicatorHook.Order?.OrderType, out OrderType orderType)) return null;
 		_binanceMainClient.SetClient(model.ApiKey ?? "", model.SecretKey ?? "");
 
 
@@ -43,7 +41,7 @@ public class PullSubscribeService : ICapSubscribe
 						balanceAndQuantity.Item1.AvailableFuturesBalance <
 						model.CurrentAdjustedBalance || balanceAndQuantity.Item2 is 0 || model.CurrentAdjustedBalance < model.MinimumBalance)
 						break;
-
+					if (!Enum.TryParse(model.IndicatorHook?.Order?.Side, out Side side)) return null;
 					_ = side is Side.Short
 						? await _binanceMainClient.BinanceOrderService.SpotShort(
 							model.IndicatorHook?.Order?.Symbol ?? "", model.TradingHistoryQuantity ?? 0, cancellationToken)
@@ -71,6 +69,7 @@ public class PullSubscribeService : ICapSubscribe
 				{
 					await _binanceMainClient.BinanceOrderService.CloseFuturesOrdersAndPositionsAsync(model.IndicatorHook?.Order?
 						.Symbol ?? "", cancellationToken);
+				
 					var assetInfo =
 						await _binanceMainClient.BinanceOrderService.GetExchangeInfoFutures(model.IndicatorHook?.Order?
 							.Symbol??"", cancellationToken);
@@ -88,7 +87,7 @@ public class PullSubscribeService : ICapSubscribe
 					balanceAndQuantity.Item1.AvailableFuturesBalance <
 					model.CurrentAdjustedBalance || balanceAndQuantity.Item2 is 0 || model.CurrentAdjustedBalance < model.MinimumBalance)
 						break;
-
+					if (!Enum.TryParse(model.IndicatorHook?.Order?.Side, out Side side)) return null;
 					if (!Enum.TryParse(model.IndicatorHook?.Order?.MarginType, out MarginType marginType)) return null;
 
 					_ = side is Side.Long
@@ -196,21 +195,21 @@ public class PullSubscribeService : ICapSubscribe
 				                          .FirstOrDefault(x =>
 					                          x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
 				                          ?.AvailableBalance ??
-			                          throw new NotFoundException("Balance not found"),
+			                         0,
 			AvailableSpotBalance = spotBalances
 				                       .FirstOrDefault(x =>
 					                       x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
 				                       ?.Available ??
-			                       throw new NotFoundException("Balance not found"),
+			                       0,
 			FuturesBalance = futuresBalances
 				                 .FirstOrDefault(x =>
 					                 x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)
 				                 ?.WalletBalance ??
-			                 throw new NotFoundException("Balance not found"),
+			                 0,
 			SpotBalance = spotBalances
 				              .FirstOrDefault(x =>
 					              x.Asset == Libraries.Domain.Defaults.TradingPlatform.DefaultAsset)?.Total ??
-			              throw new NotFoundException("Balance not found")
+			              0
 		};
 
 			var quantityResponse = orderType is OrderType.Futures

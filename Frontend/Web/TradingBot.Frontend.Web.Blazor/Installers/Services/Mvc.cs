@@ -1,6 +1,8 @@
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
+using Microsoft.JSInterop;
 using TradingBot.Frontend.Libraries.Blazor.Models;
+using TradingBot.Frontend.Web.Blazor.Services;
 
 namespace TradingBot.Frontend.Web.Blazor.Installers.Services;
 
@@ -9,7 +11,7 @@ public class Mvc : IServiceInstaller, IConfigureInstaller
         
     public void InstallServices(WebApplicationBuilder builder,Env environments)
     {
-        builder.Services.AddBlazoredLocalStorage();
+		builder.Services.AddBlazoredLocalStorage();
         builder.Services.AddRazorPages();
         builder.Services.AddServerSideBlazor(config =>
         {
@@ -18,7 +20,7 @@ public class Mvc : IServiceInstaller, IConfigureInstaller
         builder.Services.AddTransient<ProtectedSessionStorage>();
         builder.WebHost.UseWebRoot("wwwroot");
         builder.WebHost.UseStaticWebAssets();
-       
+        builder.Services.AddScoped<BrowserService>();
     }
 
     public void InstallConfigures(WebApplication app)

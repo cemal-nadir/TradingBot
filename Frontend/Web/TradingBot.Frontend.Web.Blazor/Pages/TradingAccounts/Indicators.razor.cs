@@ -13,8 +13,8 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.TradingAccounts
 {
 	public class IndicatorsRazor:BaseComponent
 	{
+		
 		[Inject] private ITradingAccountService TradingAccountService { get; set; } = null!;
-		[Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 		[Inject] private Env Env { get; set; } = null!;
 		[Parameter] public string? TradingAccountId { get; set; }
 		[CascadingParameter] public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
@@ -29,7 +29,6 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.TradingAccounts
 		{
 			await GetAllAsync();
 		}
-
 		protected async Task DeleteAsync(string id)
 		{
 			var dialog = await DialogService.ShowAsync<ConfirmationDialog>(
@@ -117,11 +116,6 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.TradingAccounts
 			if (dialog?.Result != null && !(await dialog.Result).Canceled) await GetAllAsync();
 		}
 
-		protected async Task CopyHookUrl(string id)
-		{
-			await JsRuntime.InvokeVoidAsync("navigator.clipboard.writeText", $"{Env.GatewayUrl}IndicatorHooks/{id}");
-			Snackbar.Add($"{Localizer["Indicators_HookUrlCopied"]} - {Env.GatewayUrl}IndicatorHooks/{id}", Severity.Info);
-		}
 		private async Task GetAllAsync(CancellationToken cancellationToken=default)
 		{
 			Loading = true;

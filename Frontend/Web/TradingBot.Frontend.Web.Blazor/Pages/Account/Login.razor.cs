@@ -52,10 +52,6 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.Account
 			await base.OnParametersSetAsync();
 		}
 
-		
-		
-		
-		
 		private string ReturnUrl()
 		{
 			var absoluteUri = new Uri(Navigation.Uri);

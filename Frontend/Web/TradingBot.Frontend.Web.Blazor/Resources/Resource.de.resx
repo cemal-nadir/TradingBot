@@ -173,6 +173,10 @@
     <value>Indicators_Description</value>
     <comment>Indicators_Description</comment>
   </data>
+  <data name="Indicators_HookUrl" xml:space="preserve">
+    <value>Indicators_HookUrl</value>
+    <comment>Indicators_HookUrl</comment>
+  </data>
   <data name="Indicators_HookUrlCopied" xml:space="preserve">
     <value>Indicators_HookUrlCopied</value>
     <comment>Indicators_HookUrlCopied</comment>

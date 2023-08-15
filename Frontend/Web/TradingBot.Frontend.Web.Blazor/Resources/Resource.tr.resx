@@ -173,6 +173,10 @@
     <value>İndikatör Detayı</value>
     <comment>Indicators_Description</comment>
   </data>
+  <data name="Indicators_HookUrl" xml:space="preserve">
+    <value>Hook Linki</value>
+    <comment>Indicators_HookUrl</comment>
+  </data>
   <data name="Indicators_HookUrlCopied" xml:space="preserve">
     <value>Hook Linki Kopyalandı</value>
     <comment>Indicators_HookUrlCopied</comment>

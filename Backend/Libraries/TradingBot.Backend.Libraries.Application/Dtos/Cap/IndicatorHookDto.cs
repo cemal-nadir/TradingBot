@@ -19,6 +19,6 @@ public class Order
 	public string? Side { get; set; }
 	public string? OrderType { get; set; }
 	public string? MarginType { get; set; }
-	public int Leverage { get; set; }
+	public int? Leverage { get; set; }
 	public bool? ClosePosition { get; set; }
 }

@@ -17,7 +17,7 @@ public class RedirectLoginRazor:ComponentBase
             if (authState.User.Identity is null || !authState.User.Identity.IsAuthenticated)
             {
                 var returnUrl = NavigationManager?.ToBaseRelativePath(NavigationManager.Uri);
-                NavigationManager?.NavigateTo(string.IsNullOrEmpty(returnUrl) ? "login" : $"login?returnUrl={returnUrl}");
+                NavigationManager?.NavigateTo(string.IsNullOrEmpty(returnUrl) ? "login" : $"login?returnUrl={returnUrl}",true);
             }
         }
     }

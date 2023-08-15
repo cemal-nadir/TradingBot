@@ -4,13 +4,19 @@ using System.Globalization;
 using TradingBot.Frontend.Web.Blazor.Components.Bases;
 using TradingBot.Frontend.Libraries.Blazor.Models;
 using TradingBot.Frontend.Libraries.Blazor.Services;
+using Microsoft.AspNetCore.Components.Authorization;
+using Blazored.LocalStorage;
+using Newtonsoft.Json.Linq;
+using System.Security.Claims;
+using TradingBot.Frontend.Libraries.Blazor;
 
 namespace TradingBot.Frontend.Web.Blazor.Theme.Components
 {
-	public class ProfileMenuRazor:BaseComponent
+	public class ProfileMenuRazor : BaseComponent
 	{
 		[Inject] public ProtectedLocalStorage ProtectedLocalStorage { get; set; } = null!;
 		[Inject] public IIdentityService IdentityService { get; set; } = null!;
+
 
 		protected AuthenticationClaims? Claims { get; set; }
 		protected readonly List<CultureInfo> SupportedCultures = new()
@@ -40,10 +46,17 @@ namespace TradingBot.Frontend.Web.Blazor.Theme.Components
 		{
 			if (firstRender)
 			{
-				Claims = (await ProtectedLocalStorage.GetAsync<AuthenticationTokenWithClaims>(nameof(AuthenticationTokenWithClaims))).Value?.Claims;
+				try
+				{
+					Claims = (await ProtectedLocalStorage.GetAsync<AuthenticationTokenWithClaims>(nameof(AuthenticationTokenWithClaims))).Value?.Claims;
+				}
+				catch (System.Security.Cryptography.CryptographicException ex)
+				{
+					Navigation.NavigateTo("/login", forceLoad: true);
+				}
 				StateHasChanged();
 			}
-			
+
 		}
 	}
 }
