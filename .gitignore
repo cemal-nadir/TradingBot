@@ -361,3 +361,7 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Backend/TradingBot.Backend.Gateway.API/Properties/launchSettings.json
+/Backend/Services/TradingBot.Backend.Services.Binance.API/Properties/launchSettings.json
+/Backend/Services/TradingBot.Backend.Services.Identity/Properties/launchSettings.json
+/Backend/Services/TradingBot.Backend.Services.User.API/Properties/launchSettings.json
