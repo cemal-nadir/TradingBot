@@ -53,7 +53,7 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 
 		public virtual async Task<Response<List<TListDto>>> GetAllAsync(CancellationToken cancellationToken = default)
 		{
-			var response = await _client.GetAsync<List<TListDto>>(_url, cancellationToken);
+			var response = await _client.GetAsync<List<TListDto>>(_url,cancellationToken: cancellationToken);
 			return response.Success
 				? new SuccessResponse<List<TListDto>>(response.Data)
 				: new ErrorResponse<List<TListDto>>(response.Message, response.StatusCode);
@@ -61,7 +61,7 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 
 		public virtual async Task<Response<TDto>> GetAsync(TKey id, CancellationToken cancellationToken = default)
 		{
-			var response = await _client.GetAsync<TDto>($"{_url}/{id}", cancellationToken);
+			var response = await _client.GetAsync<TDto>($"{_url}/{id}",cancellationToken: cancellationToken);
 			return response.Success
 				? new SuccessResponse<TDto>(response.Data)
 				: new ErrorResponse<TDto>(response.Message, response.StatusCode);
@@ -69,7 +69,7 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 
 		public virtual async Task<Response> InsertAsync(TDto dto, CancellationToken cancellationToken = default)
 		{
-			var response = await _client.PostAsync($"{_url}", dto, cancellationToken);
+			var response = await _client.PostAsync($"{_url}", dto, cancellationToken: cancellationToken);
 			return response.Success
 				? new SuccessResponse()
 				: new ErrorResponse(response.Message, response.StatusCode);
@@ -77,7 +77,7 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 
 		public virtual async Task<Response> UpdateAsync(TKey id, TDto dto, CancellationToken cancellationToken = default)
 		{
-			var response = await _client.HttpPutAsync($"{_url}/{id}", dto, cancellationToken);
+			var response = await _client.HttpPutAsync($"{_url}/{id}", dto,cancellationToken: cancellationToken);
 			return response.Success
 				? new SuccessResponse()
 				: new ErrorResponse(response.Message, response.StatusCode);
@@ -85,7 +85,7 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 
 		public virtual async Task<Response> DeleteAsync(TKey id, CancellationToken cancellationToken = default)
 		{
-			var response = await _client.DeleteAsync($"{_url}/{id}", cancellationToken);
+			var response = await _client.DeleteAsync($"{_url}/{id}",cancellationToken: cancellationToken);
 			return response.Success
 				? new SuccessResponse()
 				: new ErrorResponse(response.Message, response.StatusCode);
@@ -94,7 +94,7 @@ namespace TradingBot.Backend.Gateway.API.Repositories
 		public virtual async Task<Response> DeleteRangeAsync(IEnumerable<TKey> listOfId, CancellationToken cancellationToken = default)
 		{
 			var query = listOfId.Aggregate("", (current, id) => current + $"{(string.IsNullOrEmpty(current) ? "" : "&")}listOfId={id}");
-			var response = await _client.DeleteAsync($"{_url}?{query}", cancellationToken);
+			var response = await _client.DeleteAsync($"{_url}?{query}",cancellationToken: cancellationToken);
 			return response.Success
 				? new SuccessResponse()
 				: new ErrorResponse(response.Message, response.StatusCode);

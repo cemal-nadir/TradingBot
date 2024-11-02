@@ -20,32 +20,32 @@
 		public string? GroupName { get; set; }
 
 	}
-	public class MongoDbModel
-	{
-		public MongoDbModel(string host, string userName, string password, int port)
-		{
-			Host = host;
-			UserName = userName;
-			Password = password;
-			Port = port;
-			ConnectionString = string.Empty;
-		}
+    public class MongoDbModel
+    {
+        public MongoDbModel(string host, string userName, string password, int port)
+        {
+            Host = host;
+            UserName = userName;
+            Password = password;
+            Port = port;
+            ConnectionString = string.Empty;
+        }
 
-		public MongoDbModel(string connectionString)
-		{
-			ConnectionString = connectionString;
-			Host = string.Empty;
-			UserName = string.Empty;
-			Password = string.Empty;
-		}
+        public MongoDbModel(string connectionString)
+        {
+            ConnectionString = connectionString;
+            Host = string.Empty;
+            UserName = string.Empty;
+            Password = string.Empty;
+        }
 
-		public string Host { get; }
-		public string UserName { get; }
-		public string Password { get; }
-		public int Port { get; }
-		public string ConnectionString { get; }
-	}
-	public class RabbitMqModel
+        public string Host { get; }
+        public string UserName { get; }
+        public string Password { get; }
+        public int Port { get; }
+        public string ConnectionString { get; }
+    }
+    public class RabbitMqModel
 	{
 		public RabbitMqModel(string host, string userName, string password, int port)
 		{

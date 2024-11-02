@@ -9,15 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CNG.Abstractions" Version="1.0.2" />
+    <PackageReference Include="CNG.Abstractions" Version="1.0.5" />
     <!-- ReSharper disable once VulnerablePackage -->
-    <PackageReference Include="CNG.Cap" Version="1.0.1" />
-    <PackageReference Include="CNG.Core" Version="1.0.1" />
-    <PackageReference Include="CNG.Extensions" Version="1.0.1" />
-    <PackageReference Include="CNG.Http" Version="2.0.1" />
-    <PackageReference Include="CNG.MongoDB" Version="1.0.1" />
-    <PackageReference Include="Hangfire" Version="1.8.3" />
-    <PackageReference Include="Hangfire.InMemory" Version="0.5.1" />
+    <PackageReference Include="CNG.Cap" Version="1.0.4" />
+    <PackageReference Include="CNG.Core" Version="1.0.2" />
+    <PackageReference Include="CNG.Extensions" Version="1.0.7" />
+    <PackageReference Include="CNG.Http" Version="4.0.4" />
+    <PackageReference Include="CNG.MongoDB" Version="1.0.2" />
+    <PackageReference Include="Hangfire" Version="1.8.14" />
+    <PackageReference Include="Hangfire.Mongo" Version="1.10.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="7.0.9" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.17.2" />
   </ItemGroup>

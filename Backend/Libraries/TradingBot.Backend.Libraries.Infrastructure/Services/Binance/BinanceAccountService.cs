@@ -18,7 +18,7 @@ namespace TradingBot.Backend.Libraries.Infrastructure.Services.Binance
 
 		public async Task<BinanceAccountInfo> GetAccountInfoSpot(
 			CancellationToken cancellationToken = default) =>
-			(await _binanceRestClient.SpotApi.Account.GetAccountInfoAsync(null, cancellationToken)).CheckError();
+			(await _binanceRestClient.SpotApi.Account.GetAccountInfoAsync(ct: cancellationToken)).CheckError();
 
 		public async Task<List<BinanceUserBalance>> GetAccountBalanceSpot(CancellationToken cancellationToken = default)
 		{

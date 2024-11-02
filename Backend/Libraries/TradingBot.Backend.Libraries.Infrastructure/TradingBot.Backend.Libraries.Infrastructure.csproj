@@ -7,9 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CNG.Core" Version="1.0.1" />
-    <PackageReference Include="CNG.Extensions" Version="1.0.1" />
-    <PackageReference Include="CNG.Http" Version="1.0.1" />
+    <PackageReference Include="CNG.Core" Version="1.0.2" />
+    <PackageReference Include="CNG.Extensions" Version="1.0.7" />
+    <PackageReference Include="CNG.Http" Version="4.0.4" />
   </ItemGroup>
 
   <ItemGroup>

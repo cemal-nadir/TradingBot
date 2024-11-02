@@ -40,9 +40,9 @@ namespace TradingBot.Backend.Libraries.Persistence.Services
 
 
 			if (entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt)) != null)
-				entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt))?.SetValue(entity, DateTime.UtcNow);
+				entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt))?.SetValue(entity, DateTimeOffset.UtcNow);
 			if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt)) != null)
-				entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt))?.SetValue(entity, DateTime.UtcNow);
+				entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt))?.SetValue(entity, DateTimeOffset.UtcNow);
 			if (entity.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId)) != null)
 				entity.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId))?.SetValue(entity, UserId);
 			if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedUserId)) != null)
@@ -58,9 +58,9 @@ namespace TradingBot.Backend.Libraries.Persistence.Services
 			entities.ForEach(entity =>
 			{
 				if (entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt)) != null)
-					entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt))?.SetValue(entity, DateTime.UtcNow);
+					entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt))?.SetValue(entity, DateTimeOffset.UtcNow);
 				if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt)) != null)
-					entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt))?.SetValue(entity, DateTime.UtcNow);
+					entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt))?.SetValue(entity, DateTimeOffset.UtcNow);
 				if (entity.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId)) != null)
 					entity.GetType().GetProperty(nameof(UpdatedBase.CreatedUserId))?.SetValue(entity, UserId);
 				if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedUserId)) != null)
@@ -78,7 +78,7 @@ namespace TradingBot.Backend.Libraries.Persistence.Services
 			entity.Id = id;
 
 			if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt)) != null)
-				entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt))?.SetValue(entity, DateTime.UtcNow);
+				entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedAt))?.SetValue(entity, DateTimeOffset.UtcNow);
 			if (entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt)) != null)
 				entity.GetType().GetProperty(nameof(UpdatedBase.CreatedAt))?.SetValue(entity, current.GetType().GetProperty(nameof(UpdatedBase.CreatedAt))?.GetValue(current, null));
 			if (entity.GetType().GetProperty(nameof(UpdatedBase.UpdatedUserId)) != null)

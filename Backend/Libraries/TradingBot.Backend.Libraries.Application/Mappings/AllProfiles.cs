@@ -13,8 +13,12 @@ namespace TradingBot.Backend.Libraries.Application.Mappings
 			CreateMap<TradingAccount, TradingAccountsDto>();
 			CreateMap<TradingHistory, TradingHistoryDto>().ReverseMap();
 			CreateMap<TradingHistory, TradingHistoriesDto>();
-			CreateMap<Indicator, IndicatorDto>().ReverseMap();
-			CreateMap<BalanceSettings, BalanceSettingsDto>().ReverseMap();
-		}
-	}
+			CreateMap<TradingAccount.Indicator, TradingAccountDto.IndicatorDto>().ReverseMap();
+			CreateMap<TradingAccount.BalanceDetail, TradingAccountDto.BalanceDetailDto>().ReverseMap();
+            CreateMap<TradingAccount.BalanceDetail.BudgetPlan, TradingAccountDto.BalanceDetailDto.BudgetPlanDto>().ReverseMap();
+            CreateMap<TradingAccount.BalanceDetail.BudgetPlan.LossBasedPlan, TradingAccountDto.BalanceDetailDto.BudgetPlanDto.LossBasedPlanDto>().ReverseMap();
+
+
+        }
+    }
 }

@@ -12,7 +12,8 @@ namespace TradingBot.Backend.Libraries.Persistence.Services.User
 	{
 		private readonly ITradingAccountRepository _repository;
 		private readonly IMapper _mapper;
-		public TradingAccountService(ITradingAccountRepository repository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(repository, mapper, httpContextAccessor)
+
+        public TradingAccountService(ITradingAccountRepository repository, IMapper mapper, IHttpContextAccessor httpContextAccessor) : base(repository, mapper, httpContextAccessor)
 		{
 			_repository = repository;
 			_mapper = mapper;
@@ -21,7 +22,7 @@ namespace TradingBot.Backend.Libraries.Persistence.Services.User
 		public async Task<TradingAccountsDto> GetByIndicatorId(string indicatorId,CancellationToken cancellationToken = default)
 		{
 			return _mapper.Map<TradingAccountsDto>(await _repository.GetByIndicatorId(indicatorId, cancellationToken) ??
-			                                       throw new NotFoundException($"{nameof(Indicator)} not found"));
+			                                       throw new NotFoundException($"{nameof(TradingAccount.Indicator)} not found"));
 		}
 
 		public async Task<List<TradingAccountsDto>> GetAllAsync(CancellationToken cancellationToken = default)
@@ -32,5 +33,10 @@ namespace TradingBot.Backend.Libraries.Persistence.Services.User
 		{
 			return _mapper.Map<List<TradingAccountsDto>>(await _repository.GetAllAsync(x=>x.UserId==userId, cancellationToken));
 		}
-	}
+
+        public async Task UpdateAdjustedBalance(CancellationToken cancellationToken = default)
+        {
+            await _repository.UpdateAdjustedBalances(cancellationToken);
+        }
+    }
 }

@@ -9,15 +9,21 @@
 	<MudDrawerHeader>
 		<MudText Typo="Typo.h6">Trading Bot</MudText>
 	</MudDrawerHeader>
-	<MudNavMenu Margin="Margin.Dense" Rounded="true" Bordered="true" Color="Color.Warning">
-		<MudNavGroup Icon="@Icons.Material.Filled.Groups" IconColor="Color.Inherit" Title="@Localizer["Users"]" Expanded="true">
-			<MudNavLink Href="/Users" Match="NavLinkMatch.All">@Localizer["AllUsers"]</MudNavLink>
-			<MudNavLink Href="/Users/Add" Match="NavLinkMatch.All">@Localizer["AddUser"]</MudNavLink>
-		</MudNavGroup>
-		<MudNavGroup Icon="@Icons.Material.Filled.AccountBalance" IconColor="Color.Inherit" Title="@Localizer["TradingAccounts"]" Expanded="true">
-			<MudNavLink Href="/Users/TradingAccounts" Match="NavLinkMatch.All">@Localizer["AllTradingAccounts"]</MudNavLink>
-			<MudNavLink Href="/Users/TradingAccounts/Add" Match="NavLinkMatch.All">@Localizer["AddTradingAccount"]</MudNavLink>
-		</MudNavGroup>
-	</MudNavMenu>
-	<MudNavLink Href="/Users/TradingAccounts/TradingHistories" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WorkHistory" IconColor="Color.Inherit">@Localizer["TradingHistories"]</MudNavLink>
+    <MudNavMenu Margin="Margin.Dense" Rounded="true" Bordered="true" Color="Color.Warning">
+        @if (UserRoles.Any(x=>x.ToLower()=="admin"))
+        {
+            <MudNavGroup Icon="@Icons.Material.Filled.Groups" IconColor="Color.Inherit" Title="@Localizer["Users"]" Expanded="true">
+                <MudNavLink Href="/Users" Match="NavLinkMatch.All">@Localizer["AllUsers"]</MudNavLink>
+                <MudNavLink Href="/Users/Add" Match="NavLinkMatch.All">@Localizer["AddUser"]</MudNavLink>
+            </MudNavGroup>
+        }
+        @if (UserRoles.Any(x => x.ToLower() == "admin" || x.ToLower() == "member"))
+        {
+            <MudNavGroup Icon="@Icons.Material.Filled.AccountBalance" IconColor="Color.Inherit" Title="@Localizer["TradingAccounts"]" Expanded="true">
+                <MudNavLink Href="/Users/TradingAccounts" Match="NavLinkMatch.All">@Localizer["AllTradingAccounts"]</MudNavLink>
+                <MudNavLink Href="/Users/TradingAccounts/Add" Match="NavLinkMatch.All">@Localizer["AddTradingAccount"]</MudNavLink>
+            </MudNavGroup>
+        }
+    </MudNavMenu>
+@* 	<MudNavLink Href="/Users/TradingAccounts/TradingHistories" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.WorkHistory" IconColor="Color.Inherit">@Localizer["TradingHistories"]</MudNavLink> *@
 </MudDrawer>

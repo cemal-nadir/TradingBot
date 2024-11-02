@@ -16,13 +16,9 @@ namespace TradingBot.Backend.Gateway.API.Extensions
 			services.AddHttpContextAccessor();
 			var env = new EnvironmentModel
 			{
-				MongoDb = new MongoDbModel(
-					host: Environment.GetEnvironmentVariable(variable: "MONGODB_HOST") ?? "",
-					userName: Environment.GetEnvironmentVariable(variable: "MONGODB_USER_NAME") ?? "",
-					password: Environment.GetEnvironmentVariable(variable: "MONGODB_PASSWORD") ?? "",
-					port: Environment.GetEnvironmentVariable(variable: "MONGODB_PORT").ToInt()
-				),
-				RabbitMq = new RabbitMqModel(
+                MongoDb = new MongoDbModel(Environment.GetEnvironmentVariable("MONGODB_CONNECTION") ?? ""
+                ),
+                RabbitMq = new RabbitMqModel(
 					host: Environment.GetEnvironmentVariable(variable: "RABBITMQ_HOST") ?? "",
 					userName: Environment.GetEnvironmentVariable(variable: "RABBITMQ_USER_NAME") ?? "",
 					password: Environment.GetEnvironmentVariable(variable: "RABBITMQ_PASSWORD") ?? "",
@@ -59,7 +55,7 @@ namespace TradingBot.Backend.Gateway.API.Extensions
 			};
 
 			services.AddSingleton(env);
-			services.AddSwaggerService(env.Project?.ProjectName ?? throw new NotFoundException("Project name not found"));
+			services.AddSwaggerServiceWithBearer(env.Project?.ProjectName ?? throw new NotFoundException("Project name not found"));
 			services.AddMemoryCache();
 
 			var installers = typeof(IServiceInstaller).Assembly.ExportedTypes

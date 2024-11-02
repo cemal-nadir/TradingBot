@@ -28,7 +28,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 		
 		public async Task<Response<List<UsersDto>>> GetAllUsers(CancellationToken cancellationToken=default)
 		{
-			var response=await _client.GetAsync<List<UsersDto>>($"{_url}", cancellationToken);
+			var response=await _client.GetAsync<List<UsersDto>>($"{_url}", cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse<List<UsersDto>>(response.Message, response.StatusCode);
 
 			return new SuccessResponse<List<UsersDto>>(response.Data);
@@ -37,7 +37,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 
 		public async Task<Response<List<UsersDto>>> GetAllByNameSurname(string? searchText, CancellationToken cancellationToken = default)
 		{
-			var response = await _client.GetAsync<List<UsersDto>>($"{_url}/Search?{nameof(searchText)}={searchText}", cancellationToken);
+			var response = await _client.GetAsync<List<UsersDto>>($"{_url}/Search?{nameof(searchText)}={searchText}",cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse<List<UsersDto>>(response.Message, response.StatusCode);
 
 			return new SuccessResponse<List<UsersDto>>(response.Data);
@@ -48,7 +48,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 			
 			var response =
 				await _client.GetAsync<List<UsersDto>>(
-					$"{_url}?{listOfId!.ToQueryString(listOfId, nameof(listOfId))}", cancellationToken);
+					$"{_url}?{listOfId!.ToQueryString(listOfId, nameof(listOfId))}", cancellationToken: cancellationToken);
 			return response.Success
 				? new SuccessResponse<List<UsersDto>>(response.Data)
 				: new ErrorResponse<List<UsersDto>>(response.Message, response.StatusCode);
@@ -56,7 +56,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 
 		public async Task<Response<UserDto>> GetUser(string id,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.GetAsync<UserDto>($"{_url}/{id}", cancellationToken);
+			var response = await _client.GetAsync<UserDto>($"{_url}/{id}",cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse<UserDto>(response.Message, response.StatusCode);
 
 			return new SuccessResponse<UserDto>(response.Data);
@@ -65,7 +65,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 		
 		public async Task<Response> InsertUser(UserDto dto,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.PostAsync($"{_url}", dto,cancellationToken);
+			var response = await _client.PostAsync($"{_url}", dto,cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse(response.Message, response.StatusCode);
 
 			return new SuccessResponse();
@@ -74,7 +74,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 		
 		public async Task<Response> UpdateUser(string id,UserDto dto,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.HttpPutAsync($"{_url}/{id}", dto, cancellationToken);
+			var response = await _client.HttpPutAsync($"{_url}/{id}", dto,cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse(response.Message, response.StatusCode);
 
 			return new SuccessResponse();
@@ -83,7 +83,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 		
 		public async Task<Response> DeleteUser(string id,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.DeleteAsync($"{_url}/{id}", cancellationToken);
+			var response = await _client.DeleteAsync($"{_url}/{id}", cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse(response.Message, response.StatusCode);
 
 			return new SuccessResponse();
@@ -92,7 +92,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 		
 		public async Task<Response<UserDto>> GetCurrentUser(CancellationToken cancellationToken=default)
 		{
-			var response = await _client.GetAsync<UserDto>($"{_url}/CurrentUser", cancellationToken);
+			var response = await _client.GetAsync<UserDto>($"{_url}/CurrentUser",cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse<UserDto>(response.Message, response.StatusCode);
 
 			return new SuccessResponse<UserDto>(response.Data);
@@ -105,7 +105,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 		
 		public async Task<Response<List<SelectList<string>>>> GetRoles(CancellationToken cancellationToken=default)
 		{
-			var response = await _client.GetAsync<List<SelectList<string>>>($"{_url}/Roles", cancellationToken);
+			var response = await _client.GetAsync<List<SelectList<string>>>($"{_url}/Roles", cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse<List<SelectList<string>>>(response.Message, response.StatusCode);
 
 			return new SuccessResponse<List<SelectList<string>>>(response.Data);
@@ -114,7 +114,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 	
 		public async Task<Response<List<SelectList<string>>>> GetUserRoles(string id,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.GetAsync<List<SelectList<string>>>($"{_url}/{id}/Roles", cancellationToken);
+			var response = await _client.GetAsync<List<SelectList<string>>>($"{_url}/{id}/Roles", cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse<List<SelectList<string>>>(response.Message, response.StatusCode);
 
 			return new SuccessResponse<List<SelectList<string>>>(response.Data);
@@ -128,7 +128,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 	
 		public async Task<Response<string>> GenerateUserConfirmToken(string id,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.PostAsync($"{_url}/{id}/GenerateUserConfirmationToken",string.Empty, cancellationToken);
+			var response = await _client.PostAsync($"{_url}/{id}/GenerateUserConfirmationToken",string.Empty,cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse<string>(response.Message, response.StatusCode);
 
 			return new SuccessResponse<string>(response.Message);
@@ -138,7 +138,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 	
 		public async Task<Response> ConfirmUserToken(string id,string token,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.PostAsync($"{_url}/{id}/ValidateUserConfirmation?token={token}", string.Empty, cancellationToken);
+			var response = await _client.PostAsync($"{_url}/{id}/ValidateUserConfirmation?token={token}", string.Empty,cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse(response.Message, response.StatusCode);
 
 			return new SuccessResponse();
@@ -151,7 +151,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 	
 		public async Task<Response<string>> GeneratePassWordResetToken(string id,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.PostAsync($"{_url}/{id}/GeneratePasswordResetToken", string.Empty, cancellationToken);
+			var response = await _client.PostAsync($"{_url}/{id}/GeneratePasswordResetToken", string.Empty,cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse<string>(response.Message, response.StatusCode);
 
 			return new SuccessResponse<string>(response.Message);
@@ -160,7 +160,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 
 		public async Task<Response> ResetPassword(string id, ResetPasswordDto dto,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.PostAsync($"{_url}/{id}/ResetPassword", dto, cancellationToken);
+			var response = await _client.PostAsync($"{_url}/{id}/ResetPassword", dto,cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse(response.Message, response.StatusCode);
 
 			return new SuccessResponse();
@@ -170,7 +170,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.Identity
 	
 		public async Task<Response> ChangePassword(ChangePasswordDto dto,CancellationToken cancellationToken=default)
 		{
-			var response = await _client.PostAsync($"{_url}/ChangePassword", dto, cancellationToken);
+			var response = await _client.PostAsync($"{_url}/ChangePassword", dto,cancellationToken: cancellationToken);
 			if (!response.Success) return new ErrorResponse(response.Message, response.StatusCode);
 
 			return new SuccessResponse();

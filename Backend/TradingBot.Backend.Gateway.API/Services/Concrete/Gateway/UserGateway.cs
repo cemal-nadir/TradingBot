@@ -196,11 +196,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Gateway
 
 		#endregion
 
-		#region Indicators
-
-
-
-		#endregion
+		
 
 	}
 }

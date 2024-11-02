@@ -2,9 +2,10 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 2000
+EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Backend/Services/TradingBot.Backend.Services.Binance.API/TradingBot.Backend.Services.Binance.API.csproj", "Backend/Services/TradingBot.Backend.Services.Binance.API/"]
 COPY ["Backend/Libraries/TradingBot.Backend.Libraries.ApiCore/TradingBot.Backend.Libraries.ApiCore.csproj", "Backend/Libraries/TradingBot.Backend.Libraries.ApiCore/"]
@@ -12,13 +13,14 @@ COPY ["Backend/Libraries/TradingBot.Backend.Libraries.Infrastructure/TradingBot.
 COPY ["Backend/Libraries/TradingBot.Backend.Libraries.Application/TradingBot.Backend.Libraries.Application.csproj", "Backend/Libraries/TradingBot.Backend.Libraries.Application/"]
 COPY ["Backend/Libraries/TradingBot.Backend.Libraries.Domain/TradingBot.Backend.Libraries.Domain.csproj", "Backend/Libraries/TradingBot.Backend.Libraries.Domain/"]
 COPY ["Backend/Libraries/TradingBot.Backend.Libraries.Persistence/TradingBot.Backend.Libraries.Persistence.csproj", "Backend/Libraries/TradingBot.Backend.Libraries.Persistence/"]
-RUN dotnet restore "Backend/Services/TradingBot.Backend.Services.Binance.API/TradingBot.Backend.Services.Binance.API.csproj"
+RUN dotnet restore "./Backend/Services/TradingBot.Backend.Services.Binance.API/TradingBot.Backend.Services.Binance.API.csproj"
 COPY . .
 WORKDIR "/src/Backend/Services/TradingBot.Backend.Services.Binance.API"
-RUN dotnet build "TradingBot.Backend.Services.Binance.API.csproj" -c Release -o /app/build
+RUN dotnet build "./TradingBot.Backend.Services.Binance.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "TradingBot.Backend.Services.Binance.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./TradingBot.Backend.Services.Binance.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

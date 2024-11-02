@@ -10,5 +10,8 @@ namespace TradingBot.Backend.Libraries.Application.Services.User
 
 		Task<List<TradingAccountsDto>>
 			GetAllByUserIdAsync(string userId, CancellationToken cancellationToken = default);
-	}
+
+        Task UpdateAdjustedBalance(CancellationToken cancellationToken = default);
+
+    }
 }

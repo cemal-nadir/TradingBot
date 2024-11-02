@@ -2,7 +2,7 @@
 {
 	public enum OrderType
 	{
-		Spot,
-		Futures
+		Spot=1,
+		Futures=2
 	}
 }

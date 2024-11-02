@@ -2,7 +2,7 @@
 {
 	public enum MarginType
 	{
-		Isolated,
-		Cross
+		Isolated=1,
+		Cross=2
 	}
 }

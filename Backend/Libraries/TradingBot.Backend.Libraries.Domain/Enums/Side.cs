@@ -2,7 +2,7 @@
 {
 	public enum Side
 	{
-		Long,
-		Short
+		Long=1,
+		Short=2
 	}
 }

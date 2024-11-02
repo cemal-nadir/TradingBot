@@ -104,15 +104,17 @@ namespace TradingBot.Frontend.Web.Blazor.Pages.TradingAccounts
 		}
 		protected void AdjustBalance()
 		{
-			if (!(Entity.BalanceSettings is { CurrentBalance: > 0, AdjustFrequencyDay: > 0, AdjustBalancePercentage: > 0 }))
+			if (!(Entity.BalanceSettings is { CurrentBalance: > 0, Plan.AdjustFrequencyDay: > 0, Plan.AdjustBalancePercentage: > 0 }))
 			{
 				Snackbar.Add(Localizer["TradingAccount_AdjustBalanceError"], Severity.Error);
 				return;
 			}
 
-			Entity.BalanceSettings.CurrentAdjustedBalance =
-				(Entity.BalanceSettings.CurrentBalance * Entity.BalanceSettings.AdjustBalancePercentage) / 100;
-			Entity.BalanceSettings.LastAdjust = DateTime.Now;
+            var now = DateTime.UtcNow;
+
+            Entity.BalanceSettings.Plan.CurrentAdjustedBalance =
+				(Entity.BalanceSettings.CurrentBalance * Entity.BalanceSettings.Plan.AdjustBalancePercentage) / 100;
+			Entity.BalanceSettings.Plan.LastAdjust = new DateTime(now.Year,now.Month,now.Day,0,0,0);
 		}
 
 		protected async Task CheckAndSaveChangesAsync()

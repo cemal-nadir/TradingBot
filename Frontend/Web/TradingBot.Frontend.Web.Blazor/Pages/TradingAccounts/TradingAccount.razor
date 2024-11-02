@@ -140,12 +140,12 @@
 							<MudDivider DividerType="DividerType.FullWidth" Light="false"></MudDivider>
 
 							<MudItem xs="12">
-								<MudNumericField @bind-Value="Entity.BalanceSettings.AdjustBalancePercentage"
+								<MudNumericField @bind-Value="Entity.BalanceSettings.Plan.AdjustBalancePercentage"
 												 Label="@Localizer["TradingAccount_AdjustBalancePercentage"]"
 												 Step=".2M"
 												 Max="99"
 												 Min="0"
-												 For="@(() => Entity.BalanceSettings.AdjustBalancePercentage)"
+												 For="@(() => Entity.BalanceSettings.Plan.AdjustBalancePercentage)"
 												 AdornmentIcon="@Icons.Material.Filled.Percent"
 												 Adornment="Adornment.End"
 												 Immediate="true"
@@ -155,9 +155,9 @@
 
 							</MudItem>
 							<MudItem xs="12">
-								<MudNumericField @bind-Value="Entity.BalanceSettings.AdjustFrequencyDay"
+								<MudNumericField @bind-Value="Entity.BalanceSettings.Plan.AdjustFrequencyDay"
 												 Label="@Localizer["TradingAccount_AdjustFrequencyDay"]"
-												 For="@(() => Entity.BalanceSettings.AdjustFrequencyDay)"
+												 For="@(() => Entity.BalanceSettings.Plan.AdjustFrequencyDay)"
 												 AdornmentIcon="@Icons.Material.Filled.Today"
 												 Max="365"
 												 Min="1"
@@ -170,19 +170,19 @@
 						</MudPaper>
 					</MudItem>
 
-					@if (Entity.BalanceSettings.CurrentBalance > 0 && Entity.BalanceSettings.AdjustFrequencyDay > 0 && Entity.BalanceSettings.AdjustBalancePercentage > 0)
+					@if (Entity.BalanceSettings is { CurrentBalance: > 0, Plan: { AdjustFrequencyDay: > 0, AdjustBalancePercentage: > 0 } })
 					{
 						<MudItem xs="12" Class="pa-5" Style="box-shadow: 0 0 20px 0px #00000085;border-radius: 1rem; margin:1rem;">
 
 							<MudPaper Class="pa-3" Elevation="0">
 								<MudStack Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center">
 									<MudText Typo="Typo.inherit" Color="Color.Primary">@Localizer["TradingAccount_CurrentAdjustedBalanceSettings"]</MudText>
-									<MudIconButton OnClick="AdjustBalance" Disabled="@(!(Entity.BalanceSettings.CurrentBalance > 0 && Entity.BalanceSettings.AdjustFrequencyDay > 0 && Entity.BalanceSettings.AdjustBalancePercentage > 0))" Icon="@Icons.Material.Filled.Calculate" Color="Color.Primary"></MudIconButton>
+									<MudIconButton OnClick="AdjustBalance" Disabled="@(!(Entity.BalanceSettings.CurrentBalance > 0 && Entity.BalanceSettings.Plan.AdjustFrequencyDay > 0 && Entity.BalanceSettings.Plan.AdjustBalancePercentage > 0))" Icon="@Icons.Material.Filled.Calculate" Color="Color.Primary"></MudIconButton>
 								</MudStack>
 								<MudDivider DividerType="DividerType.FullWidth" Light="false"></MudDivider>
 								<MudItem xs="12">
-									<MudTextField @bind-Value="Entity.BalanceSettings.CurrentAdjustedBalance"
-											  For="@(() => Entity.BalanceSettings.CurrentAdjustedBalance)"
+									<MudTextField @bind-Value="Entity.BalanceSettings.Plan.CurrentAdjustedBalance"
+											  For="@(() => Entity.BalanceSettings.Plan.CurrentAdjustedBalance)"
 											  AdornmentIcon="@Icons.Material.Filled.PriceCheck"
 											  Adornment="Adornment.End"
 											  ReadOnly="true"
@@ -192,7 +192,7 @@
 								</MudItem>
 								<MudItem xs="12">
 									<MudDatePicker Label="@Localizer["TradingAccount_LastAdjust"]"
-											   @bind-Date="Entity.BalanceSettings.LastAdjust"
+											   @bind-Date="Entity.BalanceSettings.Plan.LastAdjust"
 											   ReadOnly="true"
 											   AdornmentIcon="@Icons.Material.Filled.Update"
 											   Adornment="Adornment.End" />

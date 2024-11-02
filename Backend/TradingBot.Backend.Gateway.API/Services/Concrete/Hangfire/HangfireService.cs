@@ -20,7 +20,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Hangfire
 			var accounts = await _tradingAccountService.GetAllAsync(cancellationToken);
 			if (!accounts.Success || accounts.Data is null) return;
 			List<Task> accountTasks = (from account in accounts.Data.Where(x => x.IsActive)
-									   where account.BalanceSettings?.LastAdjust == null || account.BalanceSettings.LastAdjust.Value.AddDays(account.BalanceSettings.AdjustFrequencyDay) <= DateTime.Now
+									   where account.BalanceSettings?.Plan.LastAdjust == null || account.BalanceSettings.Plan.LastAdjust.Value.AddDays(account.BalanceSettings.Plan.AdjustFrequencyDay) <= DateTime.Now
 									   select Task.Run(async () =>
 									   {
 										   var spotBalanceTask = _binanceAccountService.GetAccountBalanceSpotAsync(account.ApiKey ?? "", account.SecretKey ?? "", cancellationToken);
@@ -36,8 +36,8 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Hangfire
 										   if (account.BalanceSettings == null) return;
 
 										   account.BalanceSettings.CurrentBalance = balance.Value;
-										   account.BalanceSettings.LastAdjust = DateTime.Now;
-										   account.BalanceSettings.CurrentAdjustedBalance = (balance.Value * account.BalanceSettings.AdjustBalancePercentage) / 100;
+										   account.BalanceSettings.Plan.LastAdjust = DateTime.Now;
+										   account.BalanceSettings.Plan.CurrentAdjustedBalance = (balance.Value * account.BalanceSettings.Plan.AdjustBalancePercentage) / 100;
 
 										   await _tradingAccountService.UpdateAsync(account.Id ?? "", account, cancellationToken);
 									   }, cancellationToken)).ToList();

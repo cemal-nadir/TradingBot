@@ -21,7 +21,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.User
 
 		public async Task<Response<List<TradingAccountsDto>>> GetAllByUserIdAsync(string userId, CancellationToken cancellationToken = default)
 		{
-			var response = await _client.GetAsync<List<TradingAccountsDto>>($"{_url}/User/{userId}", cancellationToken);
+			var response = await _client.GetAsync<List<TradingAccountsDto>>($"{_url}/User/{userId}", cancellationToken: cancellationToken);
 			return response.Success
 				? new SuccessResponse<List<TradingAccountsDto>>(response.Data)
 				: new ErrorResponse<List<TradingAccountsDto>>(response.Message, response.StatusCode);
@@ -29,7 +29,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.User
 
 		public async Task<Response<TradingAccountsDto>> GetByIndicatorIdAsync(string indicatorId, CancellationToken cancellationToken = default)
 		{
-			var response = await _client.GetAsync<TradingAccountsDto>($"{_url}/Indicator/{indicatorId}", cancellationToken);
+			var response = await _client.GetAsync<TradingAccountsDto>($"{_url}/Indicator/{indicatorId}", cancellationToken: cancellationToken);
 			return response.Success
 				? new SuccessResponse<TradingAccountsDto>(response.Data)
 				: new ErrorResponse<TradingAccountsDto>(response.Message, response.StatusCode);

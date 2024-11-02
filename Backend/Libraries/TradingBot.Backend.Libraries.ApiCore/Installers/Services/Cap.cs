@@ -1,5 +1,6 @@
 using CNG.Cap;
 using CNG.Core;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using TradingBot.Backend.Libraries.Application;
 
@@ -11,10 +12,10 @@ public class Cap : IServiceInstaller
     {
         if (env is not { MongoDb: not null, RabbitMq: not null }) return;
         services.AddCapService(
-            options: new CapOption(
-                groupName: $"{env.Project?.GroupName}",
-                version: "v4",
-                mongoOption: new CapOption.Mongo(
+            new CapOption(
+                $"{env.Project?.GroupName}",
+                "v4",
+                new CapOption.Mongo(
                     string.IsNullOrEmpty(env.MongoDb.ConnectionString)
                         ? string.IsNullOrEmpty(env.MongoDb.UserName)
                             ? $"mongodb://{env.MongoDb.Host}:{env.MongoDb.Port}"
@@ -22,17 +23,18 @@ public class Cap : IServiceInstaller
                         : env.MongoDb.ConnectionString,
                     $"{env.Project?.GroupName}Cap"
                 ),
-                rabbitMqOption: new CapOption.RabbitMq(
-                    host: env.RabbitMq.Host,
-                    userName: env.RabbitMq.UserName,
-                    password: env.RabbitMq.Password,
-                    port: env.RabbitMq.Port
+                new CapOption.RabbitMq(
+                    env.RabbitMq.Host,
+                    env.RabbitMq.UserName,
+                    env.RabbitMq.Password,
+                    env.RabbitMq.Port
                 ),
-                dashboardUrl: "/cap-dashboard"
+                "/cap-dashboard"
             )
             {
                 FailedRetryCount = 1
             });
         ServiceTool.Create(services);
+
     }
 }

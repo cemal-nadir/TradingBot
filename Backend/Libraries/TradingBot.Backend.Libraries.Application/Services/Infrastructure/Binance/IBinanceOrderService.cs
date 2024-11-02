@@ -13,7 +13,10 @@ namespace TradingBot.Backend.Libraries.Application.Services.Infrastructure.Binan
 		Task<(decimal, decimal)> CalculateQuantityAndMarketPriceSpot(string symbol, decimal usdtAmount,
 			CancellationToken cancellationToken = default);
 
-		Task StopLossAndTakeProfitAsync(string symbol, OrderType orderType, Side side,
+        Task<decimal> GetMarketPriceForFutures(string symbol,
+            CancellationToken cancellationToken = default);
+
+        Task StopLossAndTakeProfitAsync(string symbol, OrderType orderType, Side side,
 			decimal quantity,
 			decimal? stopPrice = null, decimal? takeProfitPrice = null, CancellationToken cancellationToken = default);
 		Task<long> FuturesLong(string symbol, decimal quantity, int leverage = 1,

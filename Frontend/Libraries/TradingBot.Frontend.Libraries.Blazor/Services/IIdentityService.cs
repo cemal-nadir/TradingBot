@@ -1,4 +1,5 @@
-﻿using TradingBot.Frontend.Libraries.Blazor.Responses;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using TradingBot.Frontend.Libraries.Blazor.Responses;
 
 namespace TradingBot.Frontend.Libraries.Blazor.Services
 {
@@ -7,5 +8,7 @@ namespace TradingBot.Frontend.Libraries.Blazor.Services
 		Task GetAccessTokenByRefreshToken(CancellationToken cancellationToken = default);
 		Task<Response> SignOut(CancellationToken cancellationToken = default);
 		Task<Response> SignIn(string username, string password, CancellationToken cancellationToken = default);
-	}
+        Task<AuthenticationState> GetAuthenticationStateAsync();
+
+    }
 }

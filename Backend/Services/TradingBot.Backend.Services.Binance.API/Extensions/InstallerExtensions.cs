@@ -17,15 +17,9 @@ namespace TradingBot.Backend.Services.Binance.API.Extensions
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 			var env = new EnvironmentModel
 			{
-
-
-				MongoDb = new MongoDbModel(
-					host: Environment.GetEnvironmentVariable(variable: "MONGODB_HOST") ?? "",
-					userName: Environment.GetEnvironmentVariable(variable: "MONGODB_USER_NAME") ?? "",
-					password: Environment.GetEnvironmentVariable(variable: "MONGODB_PASSWORD") ?? "",
-					port: Environment.GetEnvironmentVariable(variable: "MONGODB_PORT").ToInt()
-				),
-				RabbitMq = new RabbitMqModel(
+                MongoDb = new MongoDbModel(Environment.GetEnvironmentVariable("MONGODB_CONNECTION") ?? ""
+                ),
+                RabbitMq = new RabbitMqModel(
 					host: Environment.GetEnvironmentVariable(variable: "RABBITMQ_HOST") ?? "",
 					userName: Environment.GetEnvironmentVariable(variable: "RABBITMQ_USER_NAME") ?? "",
 					password: Environment.GetEnvironmentVariable(variable: "RABBITMQ_PASSWORD") ?? "",
@@ -33,13 +27,13 @@ namespace TradingBot.Backend.Services.Binance.API.Extensions
 				),
 				Project = new ProjectModel(projectName: Environment.GetEnvironmentVariable(variable: "PROJECT_NAME") ?? "",
 					groupName: Environment.GetEnvironmentVariable(variable: "GROUP_NAME") ?? ""),
-				Identity = new IdentityModel(
+				Identity = new Libraries.Application.IdentityModel(
 					identityUrl: Environment.GetEnvironmentVariable(variable: "IDENTITY_URL") ?? "",
 					identityResourceName: Environment.GetEnvironmentVariable(variable: "IDENTITY_RESOURCE_NAME") ?? "")
 			};
 
 			services.AddSingleton(env);
-			services.AddSwaggerService(env.Project.ProjectName ?? throw new NotFoundException("Project name not found"));
+			services.AddSwaggerServiceWithBearer(env.Project.ProjectName ?? throw new NotFoundException("Project name not found"));
 
 			var installers = typeof(IServiceInstaller).Assembly.ExportedTypes
 				.Where(predicate: x => typeof(IServiceInstaller).IsAssignableFrom(c: x) && x is { IsInterface: false, IsAbstract: false })

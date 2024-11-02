@@ -36,7 +36,7 @@ namespace TradingBot.Backend.Services.User.API.Controllers
 			return Ok(await _service.GetAllByUserIdAsync(userId,cancellationToken));
 		}
 		[Authorize(Policy = "FullOrRead")]
-		[HttpGet(nameof(Indicator)+"/{indicatorId}")]
+		[HttpGet(nameof(TradingAccount.Indicator)+"/{indicatorId}")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		[ProducesResponseType(StatusCodes.Status401Unauthorized)]
 		[ProducesResponseType(StatusCodes.Status403Forbidden)]

@@ -25,7 +25,7 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Api.User
         {
 	       var response=await _client.PostAsync($"{_url}/LastOrder",
 		        new GetLastOrderDto { OrderType = orderType, Symbol = symbol, TradingAccountId = tradingAccountId },
-		        cancellationToken);
+		        cancellationToken: cancellationToken);
 	       if (!response.Success) return new ErrorResponse<TradingHistoriesDto>(response.Message, response.StatusCode);
 
 	       return new SuccessResponse<TradingHistoriesDto>(!string.IsNullOrEmpty(response.Message)

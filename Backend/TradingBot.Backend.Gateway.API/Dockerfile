@@ -2,18 +2,20 @@
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 1990
+EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Backend/TradingBot.Backend.Gateway.API/TradingBot.Backend.Gateway.API.csproj", "Backend/TradingBot.Backend.Gateway.API/"]
-RUN dotnet restore "Backend/TradingBot.Backend.Gateway.API/TradingBot.Backend.Gateway.API.csproj"
+RUN dotnet restore "./Backend/TradingBot.Backend.Gateway.API/TradingBot.Backend.Gateway.API.csproj"
 COPY . .
 WORKDIR "/src/Backend/TradingBot.Backend.Gateway.API"
-RUN dotnet build "TradingBot.Backend.Gateway.API.csproj" -c Release -o /app/build
+RUN dotnet build "./TradingBot.Backend.Gateway.API.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "TradingBot.Backend.Gateway.API.csproj" -c Release -o /app/publish /p:UseAppHost=false
+ARG BUILD_CONFIGURATION=Release
+RUN dotnet publish "./TradingBot.Backend.Gateway.API.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app

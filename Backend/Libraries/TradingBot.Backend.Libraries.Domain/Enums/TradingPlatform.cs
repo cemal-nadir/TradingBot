@@ -3,6 +3,7 @@ namespace TradingBot.Backend.Libraries.Domain.Enums
 {
 	public enum TradingPlatform
 	{
-		Binance
+		Binance=1,
+		Mexc=2
 	}
 }

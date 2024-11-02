@@ -2,6 +2,7 @@
 {
     public enum TradingPlatform
     {
-        Binance
+        Binance=1,
+        Mexc = 2
     }
 }

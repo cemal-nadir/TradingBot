@@ -9,7 +9,7 @@ public class MongoDb : IServiceInstaller
 {
     public void InstallServices(IServiceCollection services, EnvironmentModel env)
     {
-        if (env.MongoDb == null || string.IsNullOrEmpty(env.MongoDb.Host)) return;
+        if (env.MongoDb == null) return;
         var connectionString = string.IsNullOrEmpty(env.MongoDb.ConnectionString)
                 ? string.IsNullOrEmpty(env.MongoDb.UserName)
                     ? $"mongodb://{env.MongoDb.Host}:{env.MongoDb.Port}"
@@ -19,8 +19,8 @@ public class MongoDb : IServiceInstaller
 
         services.AddMongoDb(new MongoDbRepositoryOptions
         {
-            ConnectionString = connectionString,//$"mongodb://{env.MongoDb.UserName}:{env.MongoDb.Password}@{env.MongoDb.Host}:{env.MongoDb.Port}",
-            DbName = $"{env.Project?.GroupName}{env.Project?.ProjectName}",
+            ConnectionString = connectionString,
+            DbName = $"{env.Project.GroupName}{env.Project.ProjectName}API",
             CollectionNamingConvention = NamingConvention.Pascal
         });
     }

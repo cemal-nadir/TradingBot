@@ -47,10 +47,11 @@ namespace TradingBot.Backend.Gateway.API.Services.Concrete.Gateway
 				ApiKey = tradingAccount.ApiKey,
 				SecretKey = tradingAccount.SecretKey,
 				TradingHistoryId = tradingHistory.Data?.Id,
-				CurrentAdjustedBalance = tradingAccount.BalanceSettings?.CurrentAdjustedBalance??0,
+				CurrentAdjustedBalance = tradingAccount.BalanceSettings?.Plan?.CurrentAdjustedBalance??0,
 				MinimumBalance = tradingAccount.BalanceSettings?.MinimumBalance??0,
 				TradingHistoryQuantity = tradingHistory.Data?.Quantity??0,
-				TradingAccountId = tradingAccount.Id
+				TradingAccountId = tradingAccount.Id,
+				LossBasedPlan = tradingAccount.BalanceSettings?.Plan?.LossBased
 			}, Defaults.Cap.HookResponse, cancellationToken: cancellationToken);
 		}
 	}

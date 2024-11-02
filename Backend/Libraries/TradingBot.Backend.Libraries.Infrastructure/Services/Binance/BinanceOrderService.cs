@@ -29,7 +29,14 @@ namespace TradingBot.Backend.Libraries.Infrastructure.Services.Binance
 
 			return null;
 		}
-		public async Task<(decimal, decimal)> CalculateQuantityAndMarketPriceFutures(string symbol, decimal usdtAmount, int leverage = 1,
+
+        public async Task<decimal> GetMarketPriceForFutures(string symbol,
+            CancellationToken cancellationToken = default)
+        {
+            var response = await _binanceRestClient.UsdFuturesApi.ExchangeData.GetMarkPriceAsync(symbol, cancellationToken);
+            return response.Data.MarkPrice;
+        }
+        public async Task<(decimal, decimal)> CalculateQuantityAndMarketPriceFutures(string symbol, decimal usdtAmount, int leverage = 1,
 			CancellationToken cancellationToken = default)
 		{
 			

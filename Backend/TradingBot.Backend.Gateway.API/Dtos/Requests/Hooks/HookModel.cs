@@ -1,4 +1,6 @@
-﻿namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
+﻿using TradingBot.Backend.Gateway.API.Dtos.Requests.Users;
+
+namespace TradingBot.Backend.Gateway.API.Dtos.Requests.Hooks
 {
 	public class HookModel
 	{
@@ -10,5 +12,6 @@
 		public string? ApiKey { get; set; }
 		public string? SecretKey { get; set; }
 		public IndicatorHookDto? IndicatorHook { get; set; }
+		public TradingAccountDto.BalanceDetailDto.BudgetPlanDto.LossBasedPlanDto? LossBasedPlan { get; set; }
 	}
 }

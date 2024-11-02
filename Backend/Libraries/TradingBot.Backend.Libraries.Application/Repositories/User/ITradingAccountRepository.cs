@@ -8,5 +8,8 @@ namespace TradingBot.Backend.Libraries.Application.Repositories.User
 	    Task<TradingAccount?> GetByIndicatorId(string indicatorId,
 		    CancellationToken cancellationToken = default);
 
+        Task UpdateAdjustedBalances(
+            CancellationToken cancellationToken = default);
+
     }
 }

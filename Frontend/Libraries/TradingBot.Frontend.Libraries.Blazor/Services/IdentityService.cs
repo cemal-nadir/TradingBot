@@ -18,6 +18,7 @@ namespace TradingBot.Frontend.Libraries.Blazor.Services
 	{
 		private readonly IIdentityServerService _identityServerService;
 		private readonly ProtectedLocalStorage _localStorageService;
+		
 		public IdentityService(Env env, IIdentityServerService identityServerService, ProtectedLocalStorage localStorageService)
 		{
 			_identityServerService = identityServerService;

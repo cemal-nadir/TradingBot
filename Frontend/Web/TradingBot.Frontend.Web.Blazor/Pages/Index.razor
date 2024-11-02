@@ -1,9 +1,119 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+<PageTitle>Baba Sayfa</PageTitle>
 
-<h1>Hello, world!</h1>
+    <MudGrid Spacing="3">
+        <MudItem xs="12" md="4">
+            <MudPaper Elevation="4" Class="pa-4 text-center">
+                <MudIcon Icon="@Icons.Material.Filled.AccountBalanceWallet" Color="Color.Primary" Size="Size.Large" />
+                <MudText Typo="Typo.h6">Trading Accounts</MudText>
+                <MudText Typo="Typo.body1">@tradingAccountsCount</MudText>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudPaper Elevation="4" Class="pa-4 text-center">
+                <MudIcon Icon="@Icons.Material.Filled.Assessment" Color="Color.Secondary" Size="Size.Large" />
+                <MudText Typo="Typo.h6">Indicators</MudText>
+                <MudText Typo="Typo.body1">@indicatorsCount</MudText>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" md="4">
+            <MudPaper Elevation="4" Class="pa-4 text-center">
+                <MudIcon Icon="@Icons.Material.Filled.TrendingUp" Color="Color.Success" Size="Size.Large" />
+                <MudText Typo="Typo.h6">Trade Success Rate</MudText>
+                <MudProgressCircular Value="@successRate" Color="Color.Success" />
+                <MudText Typo="Typo.body1">@successRate%</MudText>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
 
-Welcome to your new app.
+    <MudGrid Spacing="3" Class="mt-4">
+        <MudItem xs="12">
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h5">
+                        <MudIcon Icon="@Icons.Material.Filled.AccountBalance" Color="Color.Primary" Class="mr-2" />
+                        Account Balances
+                    </MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid Spacing="3">
+                        @foreach (var balance in accountBalances)
+                        {
+                            <MudItem xs="12" md="4">
+                                <MudPaper Elevation="2" Class="pa-4">
+                                    <MudText Typo="Typo.h6">@balance.AccountName</MudText>
+                                    <MudText Typo="Typo.body1">@balance.Currency: @balance.Balance</MudText>
+                                </MudPaper>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    <MudGrid Spacing="3" Class="mt-4">
+        <MudItem xs="12">
+            <MudCard>
+                <MudCardHeader>
+                    <MudText Typo="Typo.h5">
+                        <MudIcon Icon="@Icons.Material.Filled.ShowChart" Color="Color.Primary" Class="mr-2" />
+                        Open Positions
+                    </MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudGrid Spacing="3">
+                        @foreach (var position in openPositions)
+                        {
+                            <MudItem xs="12" md="6">
+                                <MudPaper Elevation="2" Class="pa-4">
+                                    <MudText Typo="Typo.h6">@position.AccountName</MudText>
+                                    <MudText Typo="Typo.body1">@position.CurrencyPair</MudText>
+                                    <MudText Typo="Typo.body2">Position: @position.PositionType</MudText>
+                                    <MudText Typo="Typo.body2">Entry Price: @position.EntryPrice</MudText>
+                                    <MudText Typo="Typo.body2">Current Price: @position.CurrentPrice</MudText>
+                                </MudPaper>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+
+@code {
+    private int tradingAccountsCount = 5;
+    private int indicatorsCount = 12;
+    private double successRate = 75;
+
+    private List<AccountBalance> accountBalances = new()
+    {
+        new AccountBalance { AccountName = "Account 1", Currency = "BTC", Balance = 0.5M },
+        new AccountBalance { AccountName = "Account 2", Currency = "ETH", Balance = 2.3M },
+        // Daha fazla hesap bilgisi eklenebilir
+    };
+
+    private List<OpenPosition> openPositions = new()
+    {
+        new OpenPosition { AccountName = "Account 1", CurrencyPair = "BTC/USD", PositionType = "Long", EntryPrice = 30000M, CurrentPrice = 32000M },
+        new OpenPosition { AccountName = "Account 2", CurrencyPair = "ETH/USD", PositionType = "Short", EntryPrice = 2000M, CurrentPrice = 1900M },
+        // Daha fazla pozisyon bilgisi eklenebilir
+    };
+
+    public class AccountBalance
+    {
+        public string AccountName { get; set; }
+        public string Currency { get; set; }
+        public decimal Balance { get; set; }
+    }
+
+    public class OpenPosition
+    {
+        public string AccountName { get; set; }
+        public string CurrencyPair { get; set; }
+        public string PositionType { get; set; }
+        public decimal EntryPrice { get; set; }
+        public decimal CurrentPrice { get; set; }
+    }
+}
